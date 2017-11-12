@@ -1,16 +1,48 @@
-body{
-	font-family: 'Open Sans', sans-serif;
-	background: #e8e8e8;
-	min-width: 320px;
-	margin: 0;
-	padding: 0;
-	-webkit-font-smoothing: antialiased;
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Open Sans Light"), local("OpenSans-Light"),
+    url(./assets/fonts/Open_Sans/OpenSans-Light.ttf);
+}
+/* latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans Regular"), local("OpenSans-Regular"),
+    url(./assets/fonts/Open_Sans/OpenSans-Regular.ttf);
+}
+/* latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Open Sans SemiBold"), local("OpenSans-SemiBold"),
+    url(./assets/fonts/Open_Sans/OpenSans-SemiBold.ttf);
+}
+/* latin */
+@font-face {
+  font-family: "Rasa";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Rasa Regular"), local("Rasa-Regular"),
+    url(./assets/fonts/Rasa/Rasa-Regular.ttf);
 }
 
-button{
-	font-family: 'Open Sans', sans-serif;
+body {
+  font-family: "Open Sans", sans-serif;
+  background: #e8e8e8;
+  min-width: 320px;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
-b{
-	font-weight: 600;
+button {
+  font-family: "Open Sans", sans-serif;
+}
+
+b {
+  font-weight: 600;
 }

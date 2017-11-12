@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import WordCard from "../../components/WordCard";
+
 const renderWordsList = wordsList => {
   if (wordsList && wordsList.length) {
-    return wordsList.map(word => <div key={word}>{word}</div>);
+    return wordsList.map(word => <WordCard key={word} word={word} />);
   }
   return null;
 };
