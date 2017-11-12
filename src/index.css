@@ -1,0 +1,16 @@
+body{
+	font-family: 'Open Sans', sans-serif;
+	background: #e8e8e8;
+	min-width: 320px;
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+button{
+	font-family: 'Open Sans', sans-serif;
+}
+
+b{
+	font-weight: 600;
+}
