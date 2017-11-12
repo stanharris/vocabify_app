@@ -22,6 +22,10 @@
     font-size: 1rem;
 }
 
+.word-input-container input:invalid{
+    box-shadow: none;
+}
+
 .add-word-button{
     transition: opacity .2s, color .2s;
     background: 0;
@@ -43,4 +47,13 @@
 .add-word-button:disabled{
     opacity: 0;
     cursor: default;
+}
+
+.error-message{
+    color: #D32F2F;
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding-top: 5px;
 }

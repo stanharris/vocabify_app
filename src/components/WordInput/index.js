@@ -1,14 +1,21 @@
-import React, { Component } from 'react';
-import './styles.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import "./styles.css";
+
+import { addWord } from "../../actions/words";
+
+const initialState = {
+  wordValue: "",
+  disableAddWordButton: true,
+  error: false,
+  errorMessage: "",
+  isDuplicate: false
+};
 
 class WordInput extends Component {
+  state = initialState;
 
-  state = {
-    wordValue: '',
-    disableAddWordButton: true
-  }
-
-  onWordInputChange = (event) => {
+  onWordInputChange = event => {
     this.setState({
       wordValue: event.target.value
     });
@@ -21,32 +28,73 @@ class WordInput extends Component {
         disableAddWordButton: true
       });
     }
-  }
+    this.duplicateCheck(event.target.value);
+  };
+
+  duplicateCheck = word => {
+    const { wordsList } = this.props;
+    if (wordsList.includes(word)) {
+      this.setState({
+        disableAddWordButton: true,
+        error: true,
+        errorMessage: "Duplicate word",
+        isDuplicate: true
+      });
+    } else {
+      this.setState({
+        disableAddWordButton: false,
+        error: false,
+        errorMessage: "",
+        isDuplicate: false
+      });
+    }
+  };
+
+  handleAddWord = () => {
+    const { dispatch } = this.props;
+    const { wordValue } = this.state;
+    dispatch(addWord(wordValue));
+    this.setState(initialState);
+    // TODO - Fetch definition
+  };
 
   onAddWordClick = () => {
-    // Save word to words redux store
-    // Fetch definition
-    console.log('clicked')
-  }
+    this.handleAddWord();
+  };
+
+  handleKey = event => {
+    const { isDuplicate } = this.state;
+    if (event.key === "Enter" && !isDuplicate) {
+      this.handleAddWord();
+    }
+  };
 
   render() {
-    const {
-      disableAddWordButton
-    } = this.state;
-    return(
+    const { wordValue, disableAddWordButton, error, errorMessage } = this.state;
+    const errorElement = <p className="error-message">{errorMessage}</p>;
+    return (
       <div className="word-input-container">
         <input
           placeholder="Add word..."
           type="text"
           pattern="/^[a-zA-Z0-9]*$/"
-          onChange={this.onWordInputChange} />
+          value={wordValue}
+          onChange={this.onWordInputChange}
+          onKeyPress={this.handleKey}
+        />
         <button
           className="add-word-button"
           disabled={disableAddWordButton}
-          onClick={this.onAddWordClick}>Add word</button>
+          onClick={this.onAddWordClick}
+        >
+          Add word
+        </button>
+        {error && errorElement}
       </div>
-    )
+    );
   }
 }
 
-export default WordInput;
+export default connect(state => ({
+  wordsList: state.words.wordsList
+}))(WordInput);
