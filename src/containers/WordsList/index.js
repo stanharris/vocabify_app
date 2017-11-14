@@ -3,20 +3,30 @@ import { connect } from "react-redux";
 
 import WordCard from "../../components/WordCard";
 
-const renderWordsList = wordsList => {
-  if (wordsList && wordsList.length) {
-    return wordsList.map(word => <WordCard key={word} word={word} />);
+const renderWordsList = wordsData => {
+  if (wordsData && wordsData.length) {
+    return wordsData.map(item => {
+      const { word, fetchDefinition, dictionaryData } = item;
+      return (
+        <WordCard
+          key={word}
+          word={word}
+          fetchDefinition={fetchDefinition}
+          dictionaryData={dictionaryData}
+        />
+      );
+    });
   }
   return null;
 };
 
 class WordsList extends Component {
   render() {
-    const { wordsList } = this.props;
-    return <div>{renderWordsList(wordsList)}</div>;
+    const { wordsData } = this.props;
+    return <div>{renderWordsList(wordsData)}</div>;
   }
 }
 
 export default connect(state => ({
-  wordsList: state.words.wordsList
+  wordsData: state.words.wordsData
 }))(WordsList);

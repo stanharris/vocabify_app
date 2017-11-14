@@ -22,7 +22,7 @@
 
 .word-card .remove-icon-container {
   opacity: 0;
-  transition: 0.2s box-shadow, 0.2s opacity;
+  transition: 0.1s box-shadow, 0.1s opacity;
   position: absolute;
   top: -10px;
   left: -10px;
@@ -50,4 +50,36 @@
 
 .word-card:hover .remove-icon-container {
   opacity: 1;
+}
+
+.fetching-definition {
+  font-size: 1.1rem;
+  color: #626262;
+}
+
+.definition-not-found {
+  font-size: 1.1rem;
+  color: #626262;
+  margin: 10px 0 0;
+}
+
+.definition-index {
+  position: absolute;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.definition-text {
+  margin: 10px 0 0;
+  font-size: 1.1rem;
+  padding-left: 20px;
+  line-height: 1.4rem;
+}
+
+.definition-example {
+  font-size: 1.1rem;
+  margin-top: 0;
+  color: #626262;
+  padding-left: 20px;
+  line-height: 1.4rem;
 }

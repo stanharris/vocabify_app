@@ -35,14 +35,12 @@ class WordInput extends Component {
     const { wordsList } = this.props;
     if (wordsList.includes(word)) {
       this.setState({
-        disableAddWordButton: true,
         error: true,
         errorMessage: "Duplicate word",
         isDuplicate: true
       });
     } else {
       this.setState({
-        disableAddWordButton: false,
         error: false,
         errorMessage: "",
         isDuplicate: false
@@ -55,7 +53,6 @@ class WordInput extends Component {
     const { wordValue } = this.state;
     dispatch(addWord(wordValue));
     this.setState(initialState);
-    // TODO - Fetch definition
   };
 
   onAddWordClick = () => {
@@ -70,7 +67,13 @@ class WordInput extends Component {
   };
 
   render() {
-    const { wordValue, disableAddWordButton, error, errorMessage } = this.state;
+    const {
+      wordValue,
+      disableAddWordButton,
+      error,
+      errorMessage,
+      isDuplicate
+    } = this.state;
     const errorElement = <p className="error-message">{errorMessage}</p>;
     return (
       <div className="word-input-container">
@@ -84,7 +87,7 @@ class WordInput extends Component {
         />
         <button
           className="add-word-button"
-          disabled={disableAddWordButton}
+          disabled={disableAddWordButton || isDuplicate}
           onClick={this.onAddWordClick}
         >
           Add word
