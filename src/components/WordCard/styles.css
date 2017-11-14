@@ -52,15 +52,12 @@
   opacity: 1;
 }
 
-.fetching-definition {
-  font-size: 1.1rem;
-  color: #626262;
-}
-
+.fetching-definition,
 .definition-not-found {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: #626262;
   margin: 10px 0 0;
+  font-family: "Open Sans", sans-serif;
 }
 
 .definition-index {

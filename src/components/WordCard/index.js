@@ -45,7 +45,7 @@ class WordCard extends Component {
     }
   }
 
-  renderDefinitions() {
+  renderDefinitions = () => {
     const { dictionaryData } = this.props;
     if (!dictionaryData) {
       return null;
@@ -64,10 +64,18 @@ class WordCard extends Component {
         </div>
       );
     });
-  }
+  };
+
+  renderDefinitionNotFound = () => {
+    const { definitionNotFound } = this.state;
+    if (!definitionNotFound) {
+      return null;
+    }
+    return <div className="definition-not-found">Definition not found</div>;
+  };
 
   render() {
-    const { isFetchingDefinition, definitionNotFound } = this.state;
+    const { isFetchingDefinition } = this.state;
     const { word } = this.props;
     return (
       <div className="word-card">
@@ -79,9 +87,7 @@ class WordCard extends Component {
           <p className="fetching-definition">Searching for definition...</p>
         )}
         {this.renderDefinitions()}
-        {definitionNotFound && (
-          <div className="definition-not-found">Definition not found</div>
-        )}
+        {this.renderDefinitionNotFound()}
       </div>
     );
   }
