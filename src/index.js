@@ -3,13 +3,23 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from "./reducers";
+import throttle from "lodash/throttle";
 
-import "./index.css";
 import App from "./App";
+import rootReducer from "./reducers";
 import registerServiceWorker from "./registerServiceWorker";
+import { loadState, saveState } from "./localStorage";
+import "./index.css";
 
-const store = createStore(rootReducer, composeWithDevTools());
+const persistedState = loadState();
+const store = createStore(rootReducer, persistedState, composeWithDevTools());
+
+store.subscribe(
+  throttle(() => {
+    saveState(store.getState());
+  }),
+  1000
+);
 
 ReactDOM.render(
   <Provider store={store}>

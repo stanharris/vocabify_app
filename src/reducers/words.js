@@ -37,6 +37,18 @@ const words = (state = initialState, action) => {
         wordsData
       };
     }
+    case "NO_DEFINITION_FOUND": {
+      const wordsData = state.wordsData.map(item => {
+        if (item.word === action.word) {
+          item.fetchDefinition = false;
+        }
+        return item;
+      });
+      return {
+        ...state,
+        wordsData
+      };
+    }
     default:
       return state;
   }

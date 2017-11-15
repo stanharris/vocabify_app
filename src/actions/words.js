@@ -13,3 +13,8 @@ export const addDictionaryData = ({ word, dictionaryData }) => ({
   word,
   dictionaryData
 });
+
+export const noDefinitionFound = word => ({
+  type: "NO_DEFINITION_FOUND",
+  word
+});

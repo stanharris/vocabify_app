@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lodash": "^4.17.4",
+    "node-uuid": "^1.4.8",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-redux": "^5.0.6",
@@ -10,13 +12,14 @@
     "redux": "^3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently 'react-scripts start' 'npm run prettier-watch'",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "prettier-watch": "onchange 'src/**/*.{js,json,css}' -- prettier --write {{changed}}"
   },
   "devDependencies": {
+    "concurrently": "^3.5.0",
     "onchange": "^3.2.1",
     "prettier": "1.8.2",
     "redux-devtools-extension": "^2.13.2"

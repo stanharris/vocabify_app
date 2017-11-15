@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { v4 } from "node-uuid";
 
 import { host } from "../../config";
-import { removeWord, addDictionaryData } from "../../actions/words";
+import {
+  removeWord,
+  addDictionaryData,
+  noDefinitionFound
+} from "../../actions/words";
 import "./styles.css";
 
 class WordCard extends Component {
@@ -28,6 +33,7 @@ class WordCard extends Component {
             this.setState({
               definitionNotFound: true
             });
+            dispatch(noDefinitionFound(word));
           }
           return response.json();
         })
@@ -55,9 +61,12 @@ class WordCard extends Component {
         return null;
       }
       const definition = item.senses[0].definitions[0];
-      const example = item.senses[0].examples[0].text;
+      let example;
+      try {
+        example = item.senses[0].examples[0].text;
+      } catch (err) {}
       return (
-        <div key={item.senses[0].id}>
+        <div key={v4()}>
           <span className="definition-index">{index + 1}.</span>
           <p className="definition-text">{definition}</p>
           <p className="definition-example">&quot;{example}&quot;</p>
