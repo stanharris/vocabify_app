@@ -56,20 +56,26 @@ class WordCard extends Component {
     if (!dictionaryData) {
       return null;
     }
-    return dictionaryData.map((item, index) => {
-      if (!item) {
-        return null;
-      }
-      const definition = item.senses[0].definitions[0];
-      let example;
-      try {
-        example = item.senses[0].examples[0].text;
-      } catch (err) {}
+    return dictionaryData.map(item => {
+      const { lexicalCategory, definitionList } = item;
+      const definitionListElement = definitionList.map((defItem, index) => {
+        const { definition, example } = defItem;
+        const hasDefinition = Boolean(definition);
+        const hasExample = Boolean(example);
+        return (
+          <div className="definition-item">
+            <span className="definition-index">{index + 1}.</span>
+            {hasDefinition && <p className="definition-text">{definition}</p>}
+            {hasExample && (
+              <p className="definition-example">&quot;{example}&quot;</p>
+            )}
+          </div>
+        );
+      });
       return (
-        <div key={v4()}>
-          <span className="definition-index">{index + 1}.</span>
-          <p className="definition-text">{definition}</p>
-          <p className="definition-example">&quot;{example}&quot;</p>
+        <div>
+          <p class="lexical-category">{lexicalCategory}</p>
+          {definitionListElement}
         </div>
       );
     });
