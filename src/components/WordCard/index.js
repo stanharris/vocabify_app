@@ -63,7 +63,7 @@ class WordCard extends Component {
         const hasDefinition = Boolean(definition);
         const hasExample = Boolean(example);
         return (
-          <div className="definition-item">
+          <div className="definition-item" key={v4()}>
             <span className="definition-index">{index + 1}.</span>
             {hasDefinition && <p className="definition-text">{definition}</p>}
             {hasExample && (
@@ -73,8 +73,8 @@ class WordCard extends Component {
         );
       });
       return (
-        <div>
-          <p class="lexical-category">{lexicalCategory}</p>
+        <div key={v4()}>
+          <p className="lexical-category">{lexicalCategory}</p>
           {definitionListElement}
         </div>
       );
