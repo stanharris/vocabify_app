@@ -1,10 +1,12 @@
 # Vocabify
 
-https://vocabifyapp.com
+## Features
+* Save interesting words you come across
+* View definitions, examples, pronunciation and etymologies
+* Remember definitions using spaced repetition
 
-Here you can take part in the direction that Vocabify is headed:
-* View and vote on current features planned for Vocabify.
-* Report bugs or issues experienced.
-* Provide suggestions and make requests for new features.
+## Anti-features
+* Does not suggest words for you
 
-### [View Product Plan](https://github.com/paulbreslin/vocabify_app/projects/1?)
+## Run Vocabify
+Simple clone this repo and run `npm install && npm start`

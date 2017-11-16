@@ -12,7 +12,7 @@
 .header-logo {
   font-family: "Rasa", serif;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px 24px;
   font-size: 1.7rem;
   font-weight: 400;
   cursor: pointer;
@@ -30,7 +30,7 @@
   border: 0;
   transition: color 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
   color: rgb(200, 200, 200);
-  padding: 18px 20px;
+  padding: 18px 24px;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
