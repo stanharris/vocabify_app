@@ -8,10 +8,10 @@ const words = (state = initialState, action) => {
     case "ADD_WORD":
       return {
         ...state,
-        wordsList: [...state.wordsList, action.word],
+        wordsList: [action.word, ...state.wordsList],
         wordsData: [
-          ...state.wordsData,
-          { word: action.word, fetchDefinition: true }
+          { word: action.word, fetchDefinition: true },
+          ...state.wordsData
         ]
       };
     case "REMOVE_WORD": {

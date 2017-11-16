@@ -62,15 +62,18 @@ class WordCard extends Component {
         const { definition, example } = defItem;
         const hasDefinition = Boolean(definition);
         const hasExample = Boolean(example);
-        return (
-          <div className="definition-item" key={v4()}>
-            <span className="definition-index">{index + 1}.</span>
-            {hasDefinition && <p className="definition-text">{definition}</p>}
-            {hasExample && (
-              <p className="definition-example">&quot;{example}&quot;</p>
-            )}
-          </div>
-        );
+        if (index < 2) {
+          return (
+            <div className="definition-item" key={v4()}>
+              <span className="definition-index">{index + 1}.</span>
+              {hasDefinition && <p className="definition-text">{definition}</p>}
+              {hasExample && (
+                <p className="definition-example">&quot;{example}&quot;</p>
+              )}
+            </div>
+          );
+        }
+        return null;
       });
       return (
         <div key={v4()}>
