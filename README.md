@@ -10,6 +10,8 @@
 * Simple and elegant design
 * Offline-first Progressive Web App
 
+[View Feature Plan](https://github.com/paulbreslin/vocabify_app/projects/3)
+
 ## Anti-features
 * Does not suggest words for you
 * Does not require an email address to use
