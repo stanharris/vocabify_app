@@ -1,25 +1,3 @@
 .words-list-container {
-  margin: 0 auto;
-  padding: 15px;
-  max-width: 400px;
-}
-
-@media (min-width: 800px) {
-  .words-list-container {
-    columns: 5 352px;
-    column-gap: 16px;
-    max-width: 760px;
-  }
-}
-
-@media (min-width: 1120px) {
-  .words-list-container {
-    max-width: 1120px;
-  }
-}
-
-@media (min-width: 1480px) {
-  .words-list-container {
-    max-width: 1480px;
-  }
+  padding: 16px;
 }

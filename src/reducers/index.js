@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
 import words from "./words";
+import view from "./view";
 
 const rootReducer = combineReducers({
-  words
+  words,
+  view
 });
 
 export default rootReducer;

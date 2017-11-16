@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "date-fns": "^1.29.0",
     "lodash": "^4.17.4",
     "node-uuid": "^1.4.8",
     "react": "^16.1.0",

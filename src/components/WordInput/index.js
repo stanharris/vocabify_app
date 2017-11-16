@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./styles.css";
+import addDays from "date-fns/add_days";
 
+import { defaultReviewInterval } from "../../config";
 import { addWord } from "../../actions/words";
+import "./styles.css";
 
 const initialState = {
   wordValue: "",
@@ -51,7 +53,12 @@ class WordInput extends Component {
   handleAddWord = () => {
     const { dispatch } = this.props;
     const { wordValue } = this.state;
-    dispatch(addWord(wordValue));
+    dispatch(
+      addWord({
+        wordValue,
+        reviewDate: addDays(new Date(), defaultReviewInterval)
+      })
+    );
     this.setState(initialState);
   };
 

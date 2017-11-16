@@ -1,3 +1,5 @@
+import { defaultReviewInterval } from "../config";
+
 const initialState = {
   wordsList: [],
   wordsData: []
@@ -10,7 +12,12 @@ const words = (state = initialState, action) => {
         ...state,
         wordsList: [action.word, ...state.wordsList],
         wordsData: [
-          { word: action.word, fetchDefinition: true },
+          {
+            word: action.word,
+            fetchDefinition: true,
+            reviewDate: action.reviewDate,
+            reviewInterval: defaultReviewInterval
+          },
           ...state.wordsData
         ]
       };
