@@ -1,1 +1,1 @@
-export const host = "http://localhost:4005";
+export const host = "https://beta.vocabifyapp.com";
