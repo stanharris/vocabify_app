@@ -18,3 +18,8 @@
 
 ## Run Vocabify
 Simple clone this repo and run `npm install && npm start`
+
+## API
+Vocabify uses an API to fetch definitions (and in the future, backup and sync words to a server).
+
+The code for the API can be found on GitHub [here](https://github.com/paulbreslin/vocabify_api).
