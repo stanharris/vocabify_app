@@ -1,0 +1,14 @@
+.app-footer {
+  padding: 16px;
+}
+
+.app-footer a {
+  font-size: 0.8rem;
+  color: rgb(200, 200, 200);
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}

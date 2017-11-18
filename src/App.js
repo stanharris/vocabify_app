@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import AppHeader from "./components/AppHeader";
+import AppFooter from "./components/AppFooter";
 import WordInput from "./components/WordInput";
 import WordsList from "./containers/WordsList";
 import { WORDS, REVIEW } from "./constants/viewTypes";
@@ -33,7 +34,8 @@ class App extends Component {
     return (
       <div className="app">
         <AppHeader />
-        {this.renderView()}
+        <div className="app-view">{this.renderView()}</div>
+        <AppFooter />
       </div>
     );
   }
