@@ -32,13 +32,13 @@ class AppHeader extends Component {
             className={this.addActiveClass(WORDS)}
             onClick={this.onWordsClick}
           >
-            Words
+            {WORDS}
           </button>
           <button
             className={this.addActiveClass(REVIEW)}
             onClick={this.onReviewClick}
           >
-            Review
+            {REVIEW}
           </button>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import addDays from "date-fns/add_days";
 
-import { defaultReviewInterval } from "../../config";
+import { defaultReviewInterval } from "../../constants";
 import { addWord } from "../../actions/words";
 import "./styles.css";
 

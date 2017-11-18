@@ -21,35 +21,41 @@ class WordCard extends Component {
   };
 
   componentDidMount() {
-    const { word, fetchDefinition, dispatch } = this.props;
+    const { fetchDefinition } = this.props;
     if (fetchDefinition) {
-      this.setState({
-        isFetchingDefinition: true
-      });
-      fetch(`${host}/api/v1/definition/${word}`)
-        .then(response => {
-          const { status } = response;
-          if (status === 404) {
-            this.setState({
-              definitionNotFound: true
-            });
-            dispatch(noDefinitionFound(word));
-          }
-          return response.json();
-        })
-        .then(json => {
-          this.setState({
-            isFetchingDefinition: false
-          });
-          dispatch(addDictionaryData({ word, dictionaryData: json }));
-        })
-        .catch(error => {
-          this.setState({
-            isFetchingDefinition: false
-          });
-        });
+      this.setState(
+        {
+          isFetchingDefinition: true
+        },
+        this.fetchDefinition
+      );
     }
   }
+
+  fetchDefinition = async () => {
+    const { word, dispatch } = this.props;
+    try {
+      const response = await fetch(`${host}/api/v1/definition/${word}`);
+      const { status } = response;
+      if (status === 404) {
+        this.setState({
+          definitionNotFound: true
+        });
+        dispatch(noDefinitionFound(word));
+      } else {
+        const data = await response.json();
+        this.setState({
+          isFetchingDefinition: false
+        });
+        dispatch(addDictionaryData({ word, dictionaryData: data }));
+      }
+    } catch (error) {
+      // TODO - Add better error handling
+      this.setState({
+        isFetchingDefinition: false
+      });
+    }
+  };
 
   renderDefinitions = () => {
     const { dictionaryData } = this.props;

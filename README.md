@@ -5,7 +5,7 @@
 
 ## Features
 * Save interesting words you come across
-* View definitions, examples, pronunciation and etymologies
+* View definitions, examples, pronunciations and etymologies
 * Remember definitions using spaced repetition
 * Simple and elegant design
 * Offline-first Progressive Web App

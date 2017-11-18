@@ -1,4 +1,4 @@
-import { defaultReviewInterval } from "../config";
+import { defaultReviewInterval } from "../constants";
 
 const initialState = {
   wordsList: [],
