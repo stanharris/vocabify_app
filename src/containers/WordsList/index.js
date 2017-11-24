@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { v4 } from "node-uuid";
 
 import WordCard from "../../components/WordCard";
-import "./styles.css";
 
 const renderWordsList = wordsData => {
   if (wordsData && wordsData.length) {
@@ -25,9 +24,7 @@ const renderWordsList = wordsData => {
 class WordsList extends Component {
   render() {
     const { wordsData } = this.props;
-    return (
-      <div className="words-list-container">{renderWordsList(wordsData)}</div>
-    );
+    return <div style={{ padding: 16 }}>{renderWordsList(wordsData)}</div>;
   }
 }
 

@@ -59,33 +59,3 @@
   margin: 16px 0 0;
   font-family: "Open Sans", sans-serif;
 }
-
-.lexical-category {
-  margin: 16px 0 0;
-  font-style: italic;
-}
-
-.definition-item {
-  margin-top: 8px;
-}
-
-.definition-index {
-  position: absolute;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.definition-text {
-  margin: 0;
-  font-size: 1.1rem;
-  padding-left: 24px;
-  line-height: 1.4rem;
-}
-
-.definition-example {
-  font-size: 1.1rem;
-  margin: 0;
-  color: #626262;
-  padding-left: 24px;
-  line-height: 1.4rem;
-}

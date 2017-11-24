@@ -1,7 +1,8 @@
-export const addWord = ({ wordValue, reviewDate }) => ({
+export const addWord = ({ wordValue, reviewDate, reviewInterval }) => ({
   type: "ADD_WORD",
   word: wordValue,
-  reviewDate
+  reviewDate,
+  reviewInterval
 });
 
 export const removeWord = word => ({

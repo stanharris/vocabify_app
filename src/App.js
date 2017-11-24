@@ -5,6 +5,7 @@ import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import WordInput from "./components/WordInput";
 import WordsList from "./containers/WordsList";
+import ReviewView from "./containers/ReviewView";
 import { WORDS, REVIEW } from "./constants/viewTypes";
 import "./App.css";
 
@@ -24,7 +25,7 @@ class App extends Component {
       case REVIEW: {
         return (
           <div>
-            <h2>Review</h2>
+            <ReviewView />
           </div>
         );
       }

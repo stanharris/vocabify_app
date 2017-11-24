@@ -4,6 +4,7 @@
 
 .app-footer a {
   font-size: 0.8rem;
+  font-weight: 600;
   color: rgb(200, 200, 200);
   text-decoration: none;
 }

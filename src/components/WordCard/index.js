@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { v4 } from "node-uuid";
 
 import { host } from "../../config";
 import {
@@ -8,6 +7,7 @@ import {
   addDictionaryData,
   noDefinitionFound
 } from "../../actions/words";
+import DefinitionList from "../DefinitionList";
 import "./styles.css";
 
 class WordCard extends Component {
@@ -57,39 +57,6 @@ class WordCard extends Component {
     }
   };
 
-  renderDefinitions = () => {
-    const { dictionaryData } = this.props;
-    if (!dictionaryData) {
-      return null;
-    }
-    return dictionaryData.map(item => {
-      const { lexicalCategory, definitionList } = item;
-      const definitionListElement = definitionList.map((defItem, index) => {
-        const { definition, example } = defItem;
-        const hasDefinition = Boolean(definition);
-        const hasExample = Boolean(example);
-        if (index < 2) {
-          return (
-            <div className="definition-item" key={v4()}>
-              <span className="definition-index">{index + 1}.</span>
-              {hasDefinition && <p className="definition-text">{definition}</p>}
-              {hasExample && (
-                <p className="definition-example">&quot;{example}&quot;</p>
-              )}
-            </div>
-          );
-        }
-        return null;
-      });
-      return (
-        <div key={v4()}>
-          <p className="lexical-category">{lexicalCategory}</p>
-          {definitionListElement}
-        </div>
-      );
-    });
-  };
-
   renderDefinitionNotFound = () => {
     const { definitionNotFound } = this.state;
     if (!definitionNotFound) {
@@ -100,7 +67,7 @@ class WordCard extends Component {
 
   render() {
     const { isFetchingDefinition } = this.state;
-    const { word } = this.props;
+    const { word, dictionaryData } = this.props;
     return (
       <div className="word-card">
         <div onClick={this.handleRemoveClick} className="remove-icon-container">
@@ -110,7 +77,7 @@ class WordCard extends Component {
         {isFetchingDefinition && (
           <p className="fetching-definition">Searching for definition...</p>
         )}
-        {this.renderDefinitions()}
+        <DefinitionList dictionaryData={dictionaryData} />
         {this.renderDefinitionNotFound()}
       </div>
     );
