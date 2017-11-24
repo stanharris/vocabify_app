@@ -56,7 +56,8 @@ class WordInput extends Component {
     dispatch(
       addWord({
         wordValue,
-        reviewDate: addDays(new Date(), defaultReviewInterval)
+        reviewDate: addDays(new Date(), defaultReviewInterval),
+        reviewInterval: defaultReviewInterval
       })
     );
     this.setState(initialState);
