@@ -1,11 +1,26 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import addDays from "date-fns/add_days";
 
 import DefinitionList from "../DefinitionList";
+import { updateReviewDate } from "../../actions/words";
 import "./styles.css";
 
 class ReviewCard extends Component {
   state = {
     showDefinition: false
+  };
+
+  handleUpdateReviewDate = (multiplier = 1) => {
+    const { dispatch, currentWord } = this.props;
+    const { word, reviewDate, reviewInterval } = currentWord;
+    dispatch(
+      updateReviewDate({
+        word,
+        reviewDate: addDays(reviewDate, reviewInterval * multiplier),
+        reviewInterval: reviewInterval * multiplier
+      })
+    );
   };
 
   onCheckDefinitionClick = () => {
@@ -14,10 +29,13 @@ class ReviewCard extends Component {
     });
   };
 
-  // Update review date and interval on word
-  onEasyButtonClick = () => {};
+  onEasyButtonClick = () => {
+    this.handleUpdateReviewDate();
+  };
 
-  onHardButtonClick = () => {};
+  onHardButtonClick = () => {
+    this.handleUpdateReviewDate(2);
+  };
 
   render() {
     const { currentWord } = this.props;
@@ -49,11 +67,11 @@ class ReviewCard extends Component {
             <div className="difficulty-action-buttons">
               <div className="button-container easy">
                 <button onClick={this.onEasyButtonClick}>Easy</button>
-                <span className="interval">({reviewInterval * 2} days)</span>
+                <span className="interval">({reviewInterval} days)</span>
               </div>
               <div className="button-container hard">
                 <button onClick={this.onHardButtonClick}>Hard</button>
-                <span className="interval">({reviewInterval} days)</span>
+                <span className="interval">({reviewInterval * 2} days)</span>
               </div>
             </div>
           </div>
@@ -63,4 +81,4 @@ class ReviewCard extends Component {
   }
 }
 
-export default ReviewCard;
+export default connect()(ReviewCard);

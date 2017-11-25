@@ -7,23 +7,12 @@ import NoWordsPendingReview from "../../components/NoWordsPendingReview";
 import "./styles.css";
 
 class ReviewView extends Component {
-  state = {
-    wordsPendingReview: []
-  };
-
-  componentDidMount() {
+  render() {
     const { wordsData } = this.props;
     const wordsPendingReview = wordsData.filter(word =>
       isPast(word.reviewDate)
     );
-    this.setState({
-      wordsPendingReview,
-      currentWord: wordsPendingReview[0]
-    });
-  }
-
-  render() {
-    const { wordsPendingReview, currentWord } = this.state;
+    const currentWord = wordsPendingReview[0];
     return (
       <div className="review-view">
         <h1>Review</h1>

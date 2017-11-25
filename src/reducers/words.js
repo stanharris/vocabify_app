@@ -54,6 +54,19 @@ const words = (state = initialState, action) => {
         wordsData
       };
     }
+    case "UPDATE_REVIEW_DATE": {
+      const wordsData = state.wordsData.map(item => {
+        if (item.word === action.word) {
+          item.reviewDate = action.reviewDate;
+          item.reviewInterval = action.reviewInterval;
+        }
+        return item;
+      });
+      return {
+        ...state,
+        wordsData
+      };
+    }
     default:
       return state;
   }

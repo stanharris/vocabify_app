@@ -3,7 +3,7 @@
   background: #ffeade;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  padding: 16px 16px 40px;
+  padding: 16px 16px 24px;
   width: 100%;
   position: relative;
   margin-top: 8px;
@@ -45,7 +45,7 @@
   font-size: 0.9rem;
   width: 160px;
   letter-spacing: -0.06;
-  margin: 30px auto 0;
+  margin: 32px auto 16px;
 }
 
 .review-intro button.check-definition:hover {
@@ -63,7 +63,7 @@
   font-weight: 600;
   text-align: center;
   border-top: solid #ebebeb 1px;
-  margin: 40px -15px 0;
+  margin: 40px -16px 0;
   padding-top: 40px;
 }
 
@@ -86,7 +86,7 @@
   box-sizing: border-box;
   margin: 0;
   display: block;
-  padding: 10px 15px;
+  padding: 8px 16px;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   color: #685f3e;

@@ -20,3 +20,10 @@ export const noDefinitionFound = word => ({
   type: "NO_DEFINITION_FOUND",
   word
 });
+
+export const updateReviewDate = ({ word, reviewDate, reviewInterval }) => ({
+  type: "UPDATE_REVIEW_DATE",
+  word,
+  reviewDate,
+  reviewInterval
+});
