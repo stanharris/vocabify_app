@@ -1,10 +1,16 @@
 import React, { PureComponent } from "react";
 
+import summerImg from "../../assets/img/summer.svg";
 import "./styles.css";
 
 class NoWordsPendingReview extends PureComponent {
   render() {
-    return <div>No words to review</div>;
+    return (
+      <div className="no-words-card">
+        <img src={summerImg} alt="" />
+        <h2>All done for today 👍</h2>
+      </div>
+    );
   }
 }
 

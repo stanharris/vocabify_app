@@ -7,6 +7,13 @@ import NoWordsPendingReview from "../../components/NoWordsPendingReview";
 import "./styles.css";
 
 class ReviewView extends Component {
+  renderReviewCard = (wordsPendingReview, currentWord) => {
+    if (!wordsPendingReview.length) {
+      return null;
+    }
+    return <ReviewCard currentWord={currentWord} />;
+  };
+
   render() {
     const { wordsData } = this.props;
     const wordsPendingReview = wordsData.filter(word =>
@@ -16,7 +23,7 @@ class ReviewView extends Component {
     return (
       <div className="review-view">
         <h1>Review</h1>
-        {wordsPendingReview.length && <ReviewCard currentWord={currentWord} />}
+        {this.renderReviewCard(wordsPendingReview, currentWord)}
         {!wordsPendingReview.length && <NoWordsPendingReview />}
       </div>
     );
