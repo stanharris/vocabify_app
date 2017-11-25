@@ -16,8 +16,8 @@
 * Does not suggest words for you
 * Does not require an email address to use
 
-## Run Vocabify
-Simple clone this repo and run `npm install && npm start`
+## Setup
+Simply clone this repo and run `npm install && npm start`
 
 ## [Vocabify API](https://github.com/paulbreslin/vocabify_api)
 * Acts as an intermediary between the Vocabify App and the [Oxford Dictionaries API](https://developer.oxforddictionaries.com/) (to format and reduce the size of the response)
