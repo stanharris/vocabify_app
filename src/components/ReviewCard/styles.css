@@ -32,8 +32,9 @@
   transition: background 0.1s;
   /*background: #a33524;*/
   /*background: #b4912b;*/
-  background: #685f3e;
+  /*background: #685f3e;*/
   /*background: #a08f7d;*/
+  background: #8c571a;
   border: none;
   color: white;
   border-radius: 2px;
@@ -49,7 +50,7 @@
 }
 
 .review-intro button.check-definition:hover {
-  background: #817754;
+  background: #a26621;
 }
 
 .review-card .view-definition {
@@ -58,11 +59,11 @@
 
 .difficulty {
   font-family: "Open Sans", sans-serif;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.64);
   font-size: 13px;
   font-weight: 600;
   text-align: center;
-  border-top: solid #ebebeb 1px;
+  border-top: solid rgba(0, 0, 0, 0.2) 1px;
   margin: 40px -16px 0;
   padding-top: 40px;
 }
@@ -89,7 +90,7 @@
   padding: 8px 16px;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  color: #685f3e;
+  color: #704616;
 }
 
 .difficulty-action-buttons button:hover {
@@ -115,4 +116,5 @@
   color: rgba(0, 0, 0, 0.54);
   margin-top: 8px;
   text-transform: lowercase;
+  font-weight: 600;
 }

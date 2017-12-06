@@ -22,7 +22,6 @@ class ReviewView extends Component {
     const currentWord = wordsPendingReview[0];
     return (
       <div className="review-view">
-        <h1>Review</h1>
         {this.renderReviewCard(wordsPendingReview, currentWord)}
         {!wordsPendingReview.length && <NoWordsPendingReview />}
       </div>

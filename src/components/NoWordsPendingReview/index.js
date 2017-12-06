@@ -8,7 +8,9 @@ class NoWordsPendingReview extends PureComponent {
     return (
       <div className="no-words-card">
         <img src={summerImg} alt="" />
-        <h2>All done for today 👍</h2>
+        <h2>
+          All done for today <span role="img">👍</span>
+        </h2>
       </div>
     );
   }
