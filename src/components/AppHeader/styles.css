@@ -7,6 +7,7 @@
   z-index: 50;
   width: 100%;
   text-align: left;
+  display: flex;
 }
 
 .header-logo {
@@ -22,10 +23,12 @@
 }
 
 .header-navigation {
-  display: inline-block;
+  flex: 1;
+  text-transform: uppercase;
 }
 
-.header-navigation button {
+.header-navigation button,
+.google-sign-in {
   background: 0;
   border: 0;
   transition: color 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -33,14 +36,55 @@
   padding: 18px 24px;
   font-weight: 600;
   font-size: 0.9rem;
-  text-transform: uppercase;
   cursor: pointer;
 }
 
-.header-navigation button:hover {
+.header-navigation button:hover,
+.google-sign-in:hover,
+.header-navigation button.active {
   color: white;
 }
 
-.header-navigation button.active {
-  color: white;
+img.user-profile {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-right: 24px;
+  cursor: pointer;
+}
+
+.profile-detail {
+  box-sizing: border-box;
+  background: #ffeade;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: absolute;
+  padding: 16px;
+  top: 52px;
+  right: 24px;
+  text-align: right;
+  color: #000;
+}
+
+.profile-detail-email {
+  font-size: 0.9rem;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+.google-sign-out {
+  border: 0;
+  background: 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b5d2e;
+  cursor: pointer;
+  padding: 0;
+}
+
+.google-sign-out:hover {
+  color: #704616;
 }
