@@ -67,7 +67,7 @@ const words = (state = initialState, action) => {
         wordsData
       };
     }
-    case "RECEIVE_SYNCED_WORDS":
+    case "UPDATE_WORDS":
       return action.words;
     default:
       return state;
