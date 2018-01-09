@@ -11,15 +11,15 @@
     "react-google-login": "^3.0.2",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "concurrently 'react-scripts start' 'npm run prettier-watch'",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier-watch":
-      "onchange '**/*.{js,json,css,html}' -- prettier --write {{changed}}"
+    "prettier-watch": "onchange '**/*.{js,json,css,html}' -- prettier --write {{changed}}"
   },
   "devDependencies": {
     "concurrently": "^3.5.0",
