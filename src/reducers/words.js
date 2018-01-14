@@ -67,8 +67,6 @@ const words = (state = initialState, action) => {
         wordsData
       };
     }
-    case "SYNC_WORDS":
-      return action.words;
     default:
       return state;
   }

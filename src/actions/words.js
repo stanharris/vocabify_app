@@ -27,8 +27,3 @@ export const updateReviewDate = ({ word, reviewDate, reviewInterval }) => ({
   reviewDate,
   reviewInterval
 });
-
-export const syncWords = words => ({
-  type: "SYNC_WORDS",
-  words
-});

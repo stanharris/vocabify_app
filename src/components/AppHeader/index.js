@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 
-import { host } from "../../config";
 import { WORDS, REVIEW } from "../../constants/viewTypes";
 import { updateView } from "../../actions/view";
-import { syncWords } from "../../actions/words";
 import { signIn, signOut } from "../../actions/auth";
 import "./styles.css";
 
@@ -31,26 +29,10 @@ class AppHeader extends Component {
     }
   };
 
-  onSignInSuccess = async response => {
-    const { dispatch, words } = this.props;
+  onSignInSuccess = response => {
+    const { dispatch } = this.props;
     const { profileObj: userProfile } = response;
     dispatch(signIn(userProfile));
-
-    const { email } = userProfile;
-    const syncData = {
-      email,
-      words
-    };
-    const syncResponse = await fetch(`${host}/api/v1/sync`, {
-      method: "put",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(syncData)
-    });
-    const data = await syncResponse.json();
-    dispatch(syncWords(data));
   };
 
   onSignInFailure = error => {
@@ -131,6 +113,5 @@ class AppHeader extends Component {
 
 export default connect(state => ({
   auth: state.auth,
-  activeView: state.view.activeView,
-  words: state.words
+  activeView: state.view.activeView
 }))(AppHeader);
