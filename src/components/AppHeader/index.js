@@ -40,8 +40,6 @@ class AppHeader extends Component {
   };
 
   onSignOutClick = () => {
-    // Remove user profile from app state
-    // (Doesn't trigger call to Google but I wonder if that's necessary?)
     const { dispatch } = this.props;
     dispatch(signOut);
     this.setState({
@@ -54,7 +52,6 @@ class AppHeader extends Component {
     this.setState({
       showProfile: !showProfile
     });
-    // TODO - Add window event listener to close popup on click outside of component
   };
 
   render() {
