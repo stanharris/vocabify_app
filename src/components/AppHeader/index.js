@@ -4,9 +4,8 @@ import { GoogleLogin } from "react-google-login";
 
 import { WORDS, REVIEW } from "../../constants/viewTypes";
 import { updateView } from "../../actions/view";
-import { updateWords } from "../../actions/words";
+import { syncWords } from "../../actions/words";
 import { signIn, signOut } from "../../actions/auth";
-import { host } from "../../config";
 import "./styles.css";
 
 class AppHeader extends Component {
@@ -41,16 +40,7 @@ class AppHeader extends Component {
       email,
       words
     };
-    const syncResponse = await fetch(`${host}/api/v1/sync`, {
-      method: "put",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(browserWords)
-    });
-    const data = await syncResponse.json();
-    dispatch(updateWords(data));
+    dispatch(syncWords(browserWords));
   };
 
   onSignInFailure = error => {

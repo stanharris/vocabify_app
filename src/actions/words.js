@@ -30,7 +30,30 @@ export const updateReviewDate = ({ word, reviewDate, reviewInterval }) => ({
   reviewInterval
 });
 
-export const updateWords = words => ({
-  type: "UPDATE_WORDS",
+const requestSync = {
+  type: "REQUEST_SYNC"
+};
+
+const receiveSyncedWords = words => ({
+  type: "RECEIVE_SYNCED_WORDS",
   words
 });
+
+export const syncWords = browserWords => {
+  return dispatch => {
+    dispatch(requestSync);
+    return fetch(`${host}/api/v1/sync`, {
+      method: "put",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(browserWords)
+    })
+      .then(response => response.json())
+      .then(words => dispatch(receiveSyncedWords(words)))
+      .catch(error => {
+        // TODO
+      });
+  };
+};

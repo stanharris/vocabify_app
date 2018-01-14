@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import thunk from "redux-thunk";
+import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import throttle from "lodash/throttle";
 
@@ -9,33 +10,20 @@ import App from "./App";
 import rootReducer from "./reducers";
 import registerServiceWorker from "./registerServiceWorker";
 import { loadState, saveState } from "./localStorage";
-import { host } from "./config";
 import "./index.css";
 
+const middlewares = [thunk];
+
 const persistedState = loadState();
-const store = createStore(rootReducer, persistedState, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  persistedState,
+  composeWithDevTools(applyMiddleware(...middlewares))
+);
 
 store.subscribe(
   throttle(() => {
-    const currentState = store.getState();
-    saveState(currentState);
-
-    const { auth, words } = currentState;
-    if (auth.isSignedIn) {
-      const { email } = auth.userProfile;
-      const browserWords = {
-        email,
-        words
-      };
-      fetch(`${host}/api/v1/sync`, {
-        method: "put",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(browserWords)
-      });
-    }
+    saveState(store.getState());
   }),
   1000
 );
