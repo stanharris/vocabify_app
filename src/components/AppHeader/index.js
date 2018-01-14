@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 
+import { host } from "../../config";
 import { WORDS, REVIEW } from "../../constants/viewTypes";
 import { updateView } from "../../actions/view";
 import { syncWords } from "../../actions/words";
@@ -36,11 +37,20 @@ class AppHeader extends Component {
     dispatch(signIn(userProfile));
 
     const { email } = userProfile;
-    const browserWords = {
+    const syncData = {
       email,
       words
     };
-    dispatch(syncWords(browserWords));
+    const syncResponse = await fetch(`${host}/api/v1/sync`, {
+      method: "put",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(syncData)
+    });
+    const data = await syncResponse.json();
+    dispatch(syncWords(data));
   };
 
   onSignInFailure = error => {
@@ -48,6 +58,8 @@ class AppHeader extends Component {
   };
 
   onSignOutClick = () => {
+    // Remove user profile from app state
+    // (Doesn't trigger call to Google but I wonder if that's necessary?)
     const { dispatch } = this.props;
     dispatch(signOut);
     this.setState({

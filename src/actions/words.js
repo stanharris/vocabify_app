@@ -1,5 +1,3 @@
-import { host } from "../config";
-
 export const addWord = ({ wordValue, reviewDate, reviewInterval }) => ({
   type: "ADD_WORD",
   word: wordValue,
@@ -30,30 +28,7 @@ export const updateReviewDate = ({ word, reviewDate, reviewInterval }) => ({
   reviewInterval
 });
 
-const requestSync = {
-  type: "REQUEST_SYNC"
-};
-
-const receiveSyncedWords = words => ({
-  type: "RECEIVE_SYNCED_WORDS",
+export const syncWords = words => ({
+  type: "SYNC_WORDS",
   words
 });
-
-export const syncWords = browserWords => {
-  return dispatch => {
-    dispatch(requestSync);
-    return fetch(`${host}/api/v1/sync`, {
-      method: "put",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(browserWords)
-    })
-      .then(response => response.json())
-      .then(words => dispatch(receiveSyncedWords(words)))
-      .catch(error => {
-        // TODO
-      });
-  };
-};
