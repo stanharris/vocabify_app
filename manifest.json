@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Vocabify",
+    "applications": {
+        "gecko": {
+            "id": "addon@vocabifyapp.com"
+        }
+    },
+  "description": "Improve your vocabulary. Add words to Vocabify with one click.",
+  "version": "2.0.0",
+  "browser_action": {
+        "default_icon": "icon48.png",
+        "default_popup": "index.html",
+        "default_title": "Vocabify"
+    },
+    "icons": {
+        "48": "icon48.png"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "contextMenus",
+        "notifications",
+        "http://*/*",
+        "https://*/*"
+    ]
+}

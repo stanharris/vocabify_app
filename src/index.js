@@ -7,7 +7,6 @@ import throttle from "lodash/throttle";
 
 import App from "./App";
 import rootReducer from "./reducers";
-import registerServiceWorker from "./registerServiceWorker";
 import { loadState, saveState } from "./localStorage";
 import "./index.css";
 
@@ -27,4 +26,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-registerServiceWorker();

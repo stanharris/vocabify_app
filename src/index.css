@@ -40,7 +40,8 @@ html {
 body {
   font-family: "Open Sans", sans-serif;
   background: #9d675b;
-  min-width: 320px;
+  min-width: 352px;
+  min-height: 480px;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
