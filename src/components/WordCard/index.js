@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-import { host } from "../../config";
 import DefinitionList from "../DefinitionList";
-import { storage } from "../../constants";
+import { host, storage } from "../../constants";
 import "./styles.css";
 
 class WordCard extends Component {

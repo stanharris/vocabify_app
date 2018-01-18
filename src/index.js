@@ -11,13 +11,13 @@ const initialState = {
   wordsData: []
 };
 
-const initState = async () => {
+const initApp = async () => {
   const { wordsList, wordsData } = await storage.get();
   if (isUndefined(wordsList) || isUndefined(wordsData)) {
     storage.set(initialState);
   }
+
+  ReactDOM.render(<App />, document.getElementById("root"));
 };
 
-initState();
-
-ReactDOM.render(<App />, document.getElementById("root"));
+initApp();
