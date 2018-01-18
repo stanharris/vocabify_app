@@ -1,8 +1,8 @@
-/* global browser */
 import React, { Component } from "react";
 import { v4 } from "node-uuid";
 
 import WordCard from "../../components/WordCard";
+import { storage, storageEvent } from "../../constants";
 
 const renderWordsList = wordsData => {
   if (wordsData && wordsData.length) {
@@ -31,11 +31,11 @@ class WordsList extends Component {
 
   componentDidMount() {
     this.updateWords();
-    browser.storage.onChanged.addListener(this.updateWords);
+    storageEvent.onChanged.addListener(this.updateWords);
   }
 
   updateWords = async () => {
-    const { wordsData } = await browser.storage.local.get();
+    const { wordsData } = await storage.get();
     this.setState({
       wordsData
     });

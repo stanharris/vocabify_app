@@ -1,8 +1,8 @@
-/* global browser */
 import React, { Component } from "react";
 
 import { host } from "../../config";
 import DefinitionList from "../DefinitionList";
+import { storage } from "../../constants";
 import "./styles.css";
 
 class WordCard extends Component {
@@ -12,12 +12,12 @@ class WordCard extends Component {
 
   handleRemoveClick = async () => {
     const { word } = this.props;
-    const { wordsList, wordsData } = await browser.storage.local.get();
+    const { wordsList, wordsData } = await storage.get();
 
     const filteredWordsList = wordsList.filter(item => item !== word);
     const filteredWordsData = wordsData.filter(item => item.word !== word);
 
-    browser.storage.local.set({
+    storage.set({
       wordsList: filteredWordsList,
       wordsData: filteredWordsData
     });
@@ -37,7 +37,7 @@ class WordCard extends Component {
 
   fetchDefinition = async () => {
     const { word } = this.props;
-    const { wordsData } = await browser.storage.local.get();
+    const { wordsData } = await storage.get();
     try {
       const response = await fetch(`${host}/api/v1/definition/${word}`);
       let dictionaryData;
@@ -62,7 +62,7 @@ class WordCard extends Component {
         return item;
       });
 
-      browser.storage.local.set({ wordsData: updatedWordsData });
+      storage.set({ wordsData: updatedWordsData });
     } catch (error) {
       // TODO - Add better error handling
       this.setState({

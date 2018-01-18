@@ -1,8 +1,7 @@
-/* global browser */
 import React, { Component } from "react";
 import addDays from "date-fns/add_days";
 
-import { defaultReviewInterval } from "../../constants";
+import { defaultReviewInterval, storage } from "../../constants";
 import "./styles.css";
 
 const initialState = {
@@ -33,7 +32,7 @@ class WordInput extends Component {
   };
 
   duplicateCheck = async word => {
-    const { wordsList } = await browser.storage.local.get();
+    const { wordsList } = await storage.get();
     if (wordsList.includes(word)) {
       this.setState({
         error: true,
@@ -52,7 +51,7 @@ class WordInput extends Component {
   handleAddWord = async () => {
     const { wordValue } = this.state;
 
-    const { wordsList, wordsData } = await browser.storage.local.get();
+    const { wordsList, wordsData } = await storage.get();
 
     wordsList.unshift(wordValue);
     wordsData.unshift({
@@ -61,7 +60,7 @@ class WordInput extends Component {
       reviewDate: addDays(new Date(), defaultReviewInterval),
       reviewInterval: defaultReviewInterval
     });
-    browser.storage.local.set({ wordsList, wordsData });
+    storage.set({ wordsList, wordsData });
 
     this.setState(initialState);
   };

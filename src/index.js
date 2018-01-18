@@ -1,8 +1,8 @@
-/* global browser */
 import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
+import { storage } from "./constants";
 import "./index.css";
 
 const initialState = {
@@ -10,6 +10,6 @@ const initialState = {
   wordsData: []
 };
 
-browser.storage.local.set(initialState);
+storage.set(initialState);
 
 ReactDOM.render(<App />, document.getElementById("root"));
