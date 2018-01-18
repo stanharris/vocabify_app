@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import addDays from "date-fns/add_days";
 
 import DefinitionList from "../DefinitionList";
-import { updateReviewDate } from "../../actions/words";
 import "./styles.css";
 
 class ReviewCard extends Component {
@@ -14,13 +12,14 @@ class ReviewCard extends Component {
   handleUpdateReviewDate = (multiplier = 1) => {
     const { dispatch, currentWord } = this.props;
     const { word, reviewDate, reviewInterval } = currentWord;
-    dispatch(
-      updateReviewDate({
-        word,
-        reviewDate: addDays(reviewDate, reviewInterval * multiplier),
-        reviewInterval: reviewInterval * multiplier
-      })
-    );
+    // Update word in browser storage
+    // dispatch(
+    //   updateReviewDate({
+    //     word,
+    //     reviewDate: addDays(reviewDate, reviewInterval * multiplier),
+    //     reviewInterval: reviewInterval * multiplier
+    //   })
+    // );
   };
 
   onCheckDefinitionClick = () => {
@@ -81,4 +80,4 @@ class ReviewCard extends Component {
   }
 }
 
-export default connect()(ReviewCard);
+export default ReviewCard;

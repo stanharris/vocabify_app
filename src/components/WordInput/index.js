@@ -1,9 +1,8 @@
+/* global browser */
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import addDays from "date-fns/add_days";
 
 import { defaultReviewInterval } from "../../constants";
-import { addWord } from "../../actions/words";
 import "./styles.css";
 
 const initialState = {
@@ -33,8 +32,8 @@ class WordInput extends Component {
     this.duplicateCheck(event.target.value);
   };
 
-  duplicateCheck = word => {
-    const { wordsList } = this.props;
+  duplicateCheck = async word => {
+    const { wordsList } = await browser.storage.local.get();
     if (wordsList.includes(word)) {
       this.setState({
         error: true,
@@ -50,16 +49,20 @@ class WordInput extends Component {
     }
   };
 
-  handleAddWord = () => {
-    const { dispatch } = this.props;
+  handleAddWord = async () => {
     const { wordValue } = this.state;
-    dispatch(
-      addWord({
-        wordValue,
-        reviewDate: addDays(new Date(), defaultReviewInterval),
-        reviewInterval: defaultReviewInterval
-      })
-    );
+
+    const { wordsList, wordsData } = await browser.storage.local.get();
+
+    wordsList.unshift(wordValue);
+    wordsData.unshift({
+      word: wordValue,
+      fetchDefinition: true,
+      reviewDate: addDays(new Date(), defaultReviewInterval),
+      reviewInterval: defaultReviewInterval
+    });
+    browser.storage.local.set({ wordsList, wordsData });
+
     this.setState(initialState);
   };
 
@@ -106,6 +109,4 @@ class WordInput extends Component {
   }
 }
 
-export default connect(state => ({
-  wordsList: state.words.wordsList
-}))(WordInput);
+export default WordInput;

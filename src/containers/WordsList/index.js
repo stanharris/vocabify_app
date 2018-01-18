@@ -1,5 +1,5 @@
+/* global browser */
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { v4 } from "node-uuid";
 
 import WordCard from "../../components/WordCard";
@@ -22,12 +22,29 @@ const renderWordsList = wordsData => {
 };
 
 class WordsList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      wordsData: []
+    };
+  }
+
+  componentDidMount() {
+    this.updateWords();
+    browser.storage.onChanged.addListener(this.updateWords);
+  }
+
+  updateWords = async () => {
+    const { wordsData } = await browser.storage.local.get();
+    this.setState({
+      wordsData
+    });
+  };
+
   render() {
-    const { wordsData } = this.props;
+    const { wordsData } = this.state;
     return <div style={{ padding: 16 }}>{renderWordsList(wordsData)}</div>;
   }
 }
 
-export default connect(state => ({
-  wordsData: state.words.wordsData
-}))(WordsList);
+export default WordsList;

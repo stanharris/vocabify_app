@@ -1,12 +1,7 @@
+/* global browser */
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 import { host } from "../../config";
-import {
-  removeWord,
-  addDictionaryData,
-  noDefinitionFound
-} from "../../actions/words";
 import DefinitionList from "../DefinitionList";
 import "./styles.css";
 
@@ -15,9 +10,17 @@ class WordCard extends Component {
     isFetchingDefinition: false
   };
 
-  handleRemoveClick = () => {
-    const { word, dispatch } = this.props;
-    dispatch(removeWord(word));
+  handleRemoveClick = async () => {
+    const { word } = this.props;
+    const { wordsList, wordsData } = await browser.storage.local.get();
+
+    const filteredWordsList = wordsList.filter(item => item !== word);
+    const filteredWordsData = wordsData.filter(item => item.word !== word);
+
+    browser.storage.local.set({
+      wordsList: filteredWordsList,
+      wordsData: filteredWordsData
+    });
   };
 
   componentDidMount() {
@@ -33,22 +36,33 @@ class WordCard extends Component {
   }
 
   fetchDefinition = async () => {
-    const { word, dispatch } = this.props;
+    const { word } = this.props;
+    const { wordsData } = await browser.storage.local.get();
     try {
       const response = await fetch(`${host}/api/v1/definition/${word}`);
-      const { status } = response;
-      if (status === 404) {
+      let dictionaryData;
+      if (response.status === 404) {
+        dictionaryData = null;
         this.setState({
           definitionNotFound: true
         });
-        dispatch(noDefinitionFound(word));
       } else {
         const data = await response.json();
+        dictionaryData = data;
         this.setState({
           isFetchingDefinition: false
         });
-        dispatch(addDictionaryData({ word, dictionaryData: data }));
       }
+
+      const updatedWordsData = wordsData.map(item => {
+        if (item.word === word) {
+          item.dictionaryData = dictionaryData;
+          item.fetchDefinition = false;
+        }
+        return item;
+      });
+
+      browser.storage.local.set({ wordsData: updatedWordsData });
     } catch (error) {
       // TODO - Add better error handling
       this.setState({
@@ -58,6 +72,7 @@ class WordCard extends Component {
   };
 
   renderDefinitionNotFound = () => {
+    // TODO not working
     const { definitionNotFound } = this.state;
     if (!definitionNotFound) {
       return null;
@@ -84,4 +99,4 @@ class WordCard extends Component {
   }
 }
 
-export default connect()(WordCard);
+export default WordCard;
