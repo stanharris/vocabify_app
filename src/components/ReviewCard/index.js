@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import addDays from "date-fns/add_days";
 
+import { storage } from "../../constants";
 import DefinitionList from "../DefinitionList";
 import "./styles.css";
 
@@ -9,17 +10,20 @@ class ReviewCard extends Component {
     showDefinition: false
   };
 
-  handleUpdateReviewDate = (multiplier = 1) => {
-    const { dispatch, currentWord } = this.props;
+  handleUpdateReviewDate = async (multiplier = 1) => {
+    const { currentWord } = this.props;
     const { word, reviewDate, reviewInterval } = currentWord;
-    // Update word in browser storage
-    // dispatch(
-    //   updateReviewDate({
-    //     word,
-    //     reviewDate: addDays(reviewDate, reviewInterval * multiplier),
-    //     reviewInterval: reviewInterval * multiplier
-    //   })
-    // );
+    const { wordsData } = await storage.get();
+
+    const updatedWordsData = wordsData.map(item => {
+      if (item.word === word) {
+        item.reviewDate = addDays(reviewDate, reviewInterval * multiplier);
+        item.reviewInterval = reviewInterval * multiplier;
+      }
+      return item;
+    });
+
+    storage.set({ wordsData: updatedWordsData });
   };
 
   onCheckDefinitionClick = () => {

@@ -3,7 +3,7 @@
   max-width: 512px;
   width: calc(100% - 30px);
   text-align: left;
-  margin: 96px auto 15px;
+  margin: 32px auto 16px;
 }
 
 .review-view h1 {

@@ -43,7 +43,7 @@ class WordsList extends Component {
 
   render() {
     const { wordsData } = this.state;
-    return <div style={{ padding: 16 }}>{renderWordsList(wordsData)}</div>;
+    return <div>{renderWordsList(wordsData)}</div>;
   }
 }
 

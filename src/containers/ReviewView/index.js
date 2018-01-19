@@ -1,12 +1,30 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import isPast from "date-fns/is_past";
 
 import ReviewCard from "../../components/ReviewCard";
 import NoWordsPendingReview from "../../components/NoWordsPendingReview";
+import { storage } from "../../constants";
 import "./styles.css";
 
 class ReviewView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      wordsData: []
+    };
+  }
+
+  componentDidMount() {
+    this.updateWords();
+  }
+
+  updateWords = async () => {
+    const { wordsData } = await storage.get();
+    this.setState({
+      wordsData
+    });
+  };
+
   renderReviewCard = (wordsPendingReview, currentWord) => {
     if (!wordsPendingReview.length) {
       return null;
@@ -15,7 +33,7 @@ class ReviewView extends Component {
   };
 
   render() {
-    const { wordsData } = this.props;
+    const { wordsData } = this.state;
     const wordsPendingReview = wordsData.filter(word =>
       isPast(word.reviewDate)
     );
@@ -29,6 +47,4 @@ class ReviewView extends Component {
   }
 }
 
-export default connect(state => ({
-  wordsData: state.words.wordsData
-}))(ReviewView);
+export default ReviewView;
