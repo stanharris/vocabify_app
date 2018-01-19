@@ -1,6 +1,6 @@
 .review-view {
   box-sizing: border-box;
-  max-width: 512px;
+  max-width: 304px;
   width: calc(100% - 30px);
   text-align: left;
   margin: 32px auto 16px;
@@ -12,4 +12,10 @@
   margin: 0;
   font-weight: 400;
   color: #fff;
+}
+
+@media (min-width: 700px) {
+  .review-view {
+    max-width: 512px;
+  }
 }

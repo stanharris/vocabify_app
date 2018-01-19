@@ -3,6 +3,7 @@ import { v4 } from "node-uuid";
 
 import WordCard from "../../components/WordCard";
 import { storage, storageEvent } from "../../constants";
+import "./styles.css";
 
 const renderWordsList = wordsData => {
   if (wordsData && wordsData.length) {
@@ -43,7 +44,9 @@ class WordsList extends Component {
 
   render() {
     const { wordsData } = this.state;
-    return <div>{renderWordsList(wordsData)}</div>;
+    return (
+      <div className="word-list-container">{renderWordsList(wordsData)}</div>
+    );
   }
 }
 

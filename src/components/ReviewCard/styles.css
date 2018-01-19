@@ -30,10 +30,6 @@
 
 .review-intro button.check-definition {
   transition: background 0.1s;
-  /*background: #a33524;*/
-  /*background: #b4912b;*/
-  /*background: #685f3e;*/
-  /*background: #a08f7d;*/
   background: #8c571a;
   border: none;
   color: white;
