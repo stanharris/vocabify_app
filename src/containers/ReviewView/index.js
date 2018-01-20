@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import isPast from "date-fns/is_past";
+import isNull from "lodash/isNull";
 
 import ReviewCard from "../../components/ReviewCard";
 import NoWordsPendingReview from "../../components/NoWordsPendingReview";
@@ -36,8 +37,9 @@ class ReviewView extends Component {
 
   render() {
     const { wordsData } = this.state;
-    const wordsPendingReview = wordsData.filter(word =>
-      isPast(word.reviewDate)
+    console.log(wordsData);
+    const wordsPendingReview = wordsData.filter(
+      word => isPast(word.reviewDate) && !isNull(word.dictionaryData)
     );
     const currentWord = wordsPendingReview[0];
     return (
