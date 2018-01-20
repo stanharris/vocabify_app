@@ -3,7 +3,7 @@ import isPast from "date-fns/is_past";
 
 import ReviewCard from "../../components/ReviewCard";
 import NoWordsPendingReview from "../../components/NoWordsPendingReview";
-import { storage } from "../../constants";
+import { storage, storageEvent } from "../../constants";
 import "./styles.css";
 
 class ReviewView extends Component {
@@ -16,6 +16,7 @@ class ReviewView extends Component {
 
   componentDidMount() {
     this.updateWords();
+    storageEvent.onChanged.addListener(this.updateWords);
   }
 
   updateWords = async () => {
@@ -29,7 +30,8 @@ class ReviewView extends Component {
     if (!wordsPendingReview.length) {
       return null;
     }
-    return <ReviewCard currentWord={currentWord} />;
+    const { word } = currentWord;
+    return <ReviewCard key={word} currentWord={currentWord} />;
   };
 
   render() {

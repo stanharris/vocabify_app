@@ -11,6 +11,10 @@
   margin-bottom: 0;
 }
 
+.word-list-container .word-card:last-child {
+  margin-bottom: 0;
+}
+
 .recently-added-title {
   color: rgb(200, 200, 200);
   font-weight: 600;

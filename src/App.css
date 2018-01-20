@@ -66,6 +66,10 @@
 }
 
 @media (min-width: 700px) {
+  .app-view {
+    padding-bottom: 48px;
+  }
+
   .header-logo {
     font-family: "Rasa", serif;
     margin: 0;
