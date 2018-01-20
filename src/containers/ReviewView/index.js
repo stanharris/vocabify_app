@@ -37,7 +37,6 @@ class ReviewView extends Component {
 
   render() {
     const { wordsData } = this.state;
-    console.log(wordsData);
     const wordsPendingReview = wordsData.filter(
       word => isPast(word.reviewDate) && !isNull(word.dictionaryData)
     );
