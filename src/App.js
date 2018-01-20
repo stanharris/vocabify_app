@@ -38,32 +38,36 @@ class App extends Component {
 
   render() {
     const { showWordsView, showReviewView } = this.state;
-    const wordsView = (
-      <div>
-        <WordInput />
-        <WordsList />
-      </div>
-    );
     return (
       <div className="app">
         <div className="app-view">
-          <div className="header-navigation">
-            <button
-              onClick={this.handleWordsClick}
-              className={showWordsView ? "active" : ""}
-            >
-              Words
-            </button>
-            <button
-              onClick={this.handleReviewClick}
-              className={showReviewView ? "active" : ""}
-            >
-              Review
-            </button>
-            <button onClick={this.handleAppClick}>App</button>
+          <header className="app-header">
+            <h1 className="header-logo">Vocabify</h1>
+            <div className="header-navigation">
+              <button
+                onClick={this.handleWordsClick}
+                className={showWordsView ? "active" : ""}
+              >
+                Words
+              </button>
+              <button
+                onClick={this.handleReviewClick}
+                className={showReviewView ? "active" : ""}
+              >
+                Review
+              </button>
+            </div>
+          </header>
+          <div className={showWordsView ? "" : "hide"}>
+            <WordInput />
+            <WordsList />
           </div>
-          {showWordsView && wordsView}
-          {showReviewView && <ReviewView />}
+          <div className={showReviewView ? "" : "hide"}>
+            <ReviewView />
+          </div>
+          <button className="open-app" onClick={this.handleAppClick}>
+            Open app
+          </button>
         </div>
         <AppFooter />
       </div>

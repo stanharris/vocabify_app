@@ -9,16 +9,16 @@
   flex: 1;
 }
 
+.app-header {
+  display: flex;
+}
+
 .header-logo {
-  font-family: "Rasa", serif;
-  margin: 0;
-  padding: 10px 24px;
-  font-size: 1.7rem;
-  font-weight: 400;
-  cursor: pointer;
-  display: inline-block;
-  letter-spacing: -0.06em;
-  display: inline-block;
+  display: none;
+}
+
+.hide {
+  display: none !important;
 }
 
 .header-navigation {
@@ -43,4 +43,43 @@
 
 .header-navigation button.active {
   color: white;
+}
+
+.open-app {
+  transition: background 0.1s;
+  background: #ffeade;
+  border: none;
+  border-radius: 2px;
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: -0.06;
+  margin: 32px auto 16px;
+  color: #704616;
+}
+
+.open-app:hover {
+  background: #f5dcd0;
+}
+
+@media (min-width: 700px) {
+  .header-logo {
+    font-family: "Rasa", serif;
+    margin: 0;
+    padding: 10px 24px;
+    font-size: 1.7rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: inline-block;
+    letter-spacing: -0.06em;
+    display: inline-block;
+    color: white;
+  }
+
+  .open-app {
+    display: none;
+  }
 }

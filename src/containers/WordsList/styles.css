@@ -1,3 +1,39 @@
 .word-list-container {
   padding: 0 16px;
 }
+
+.word-list-container .word-card:nth-child(n + 2) {
+  display: none;
+}
+
+.word-list-container .word-card:first-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.recently-added-title {
+  color: rgb(200, 200, 200);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  padding: 32px 0 8px;
+  max-width: 304px;
+  margin: 0 auto;
+}
+
+@media (min-width: 700px) {
+  .word-list-container {
+    padding-top: 64px;
+  }
+
+  .word-list-container .word-card:nth-child(n + 2) {
+    display: block;
+  }
+
+  .recently-added-title {
+    display: none;
+  }
+}

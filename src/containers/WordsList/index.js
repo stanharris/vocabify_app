@@ -45,7 +45,10 @@ class WordsList extends Component {
   render() {
     const { wordsData } = this.state;
     return (
-      <div className="word-list-container">{renderWordsList(wordsData)}</div>
+      <div>
+        <h2 className="recently-added-title">Recently added</h2>
+        <div className="word-list-container">{renderWordsList(wordsData)}</div>
+      </div>
     );
   }
 }
