@@ -15,8 +15,7 @@
     "default_title": "Vocabify"
   },
   "background": {
-    "scripts": ["eventpage.js"],
-    "persistent": false
+    "scripts": ["eventpage.js"]
   },
   "icons": {
     "48": "icon48.png"

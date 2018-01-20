@@ -1,6 +1,6 @@
 module.exports = {
-  entry: './eventpage.js',
+  entry: "./eventpage.js",
   output: {
-    filename: 'build/eventpage.js'
+    filename: "build/eventpage.js"
   }
 };

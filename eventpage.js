@@ -28,7 +28,8 @@ browser.contextMenus.onClicked.addListener(contextInfo => {
   addWord(contextInfo.selectionText);
   browser.notifications.create({
     type: "basic",
-    title: `'${contextInfo.selectionText}' added to Vocabify`,
+    title: contextInfo.selectionText,
+    message: 'Successfully added to Vocabify',
     iconUrl: "icon256.png"
   });
 });
