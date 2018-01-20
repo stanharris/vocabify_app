@@ -12,7 +12,6 @@ const addWord = async word => {
     word,
     fetchDefinition: true,
     reviewDate: addDays(new Date(), defaultReviewInterval),
-    // reviewDate: new Date(),
     reviewInterval: defaultReviewInterval
   });
   storage.set({ wordsList, wordsData });
