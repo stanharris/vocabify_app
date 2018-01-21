@@ -6,7 +6,8 @@ import "./styles.css";
 
 class WordCard extends Component {
   state = {
-    isFetchingDefinition: false
+    isFetchingDefinition: false,
+    definitionNotFound: false
   };
 
   handleRemoveClick = async () => {
@@ -43,7 +44,8 @@ class WordCard extends Component {
       if (response.status === 404) {
         dictionaryData = null;
         this.setState({
-          definitionNotFound: true
+          definitionNotFound: true,
+          isFetchingDefinition: false
         });
       } else {
         const data = await response.json();
@@ -70,17 +72,8 @@ class WordCard extends Component {
     }
   };
 
-  renderDefinitionNotFound = () => {
-    // TODO not working
-    const { definitionNotFound } = this.state;
-    if (!definitionNotFound) {
-      return null;
-    }
-    return <div className="definition-not-found">Definition not found</div>;
-  };
-
   render() {
-    const { isFetchingDefinition } = this.state;
+    const { isFetchingDefinition, definitionNotFound } = this.state;
     const { word, dictionaryData } = this.props;
     return (
       <div className="word-card">
@@ -92,7 +85,9 @@ class WordCard extends Component {
           <p className="fetching-definition">Searching for definition...</p>
         )}
         <DefinitionList dictionaryData={dictionaryData} />
-        {this.renderDefinitionNotFound()}
+        {definitionNotFound && (
+          <div className="definition-not-found">Definition not found</div>
+        )}
       </div>
     );
   }

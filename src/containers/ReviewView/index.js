@@ -3,7 +3,7 @@ import isPast from "date-fns/is_past";
 import isNull from "lodash/isNull";
 
 import ReviewCard from "../../components/ReviewCard";
-import NoWordsPendingReview from "../../components/NoWordsPendingReview";
+import CompletedReview from "../../components/CompletedReview";
 import { storage, storageEvent } from "../../constants";
 import "./styles.css";
 
@@ -44,7 +44,7 @@ class ReviewView extends Component {
     return (
       <div className="review-view">
         {this.renderReviewCard(wordsPendingReview, currentWord)}
-        {!wordsPendingReview.length && <NoWordsPendingReview />}
+        {!wordsPendingReview.length && <CompletedReview />}
       </div>
     );
   }

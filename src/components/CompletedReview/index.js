@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import summerImg from "../../assets/img/summer.svg";
 import "./styles.css";
 
-class NoWordsPendingReview extends PureComponent {
+class CompletedReview extends PureComponent {
   render() {
     return (
       <div className="no-words-card">
@@ -16,4 +16,4 @@ class NoWordsPendingReview extends PureComponent {
   }
 }
 
-export default NoWordsPendingReview;
+export default CompletedReview;

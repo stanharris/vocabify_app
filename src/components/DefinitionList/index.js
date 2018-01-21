@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { v4 } from "node-uuid";
 
 import "./styles.css";
 
@@ -17,7 +16,7 @@ class DefinitionList extends PureComponent {
         const hasExample = Boolean(example);
         if (index < 2) {
           return (
-            <div className="definition-item" key={v4()}>
+            <div className="definition-item">
               <span className="definition-index">{index + 1}.</span>
               {hasDefinition && <p className="definition-text">{definition}</p>}
               {hasExample && (
@@ -29,7 +28,7 @@ class DefinitionList extends PureComponent {
         return null;
       });
       return (
-        <div className="definition-list" key={v4()}>
+        <div className="definition-list">
           <p className="lexical-category">{lexicalCategory}</p>
           {definitionListElement}
         </div>

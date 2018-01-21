@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { v4 } from "node-uuid";
 
 import WordCard from "../../components/WordCard";
 import { storage, storageEvent } from "../../constants";
@@ -11,7 +10,7 @@ const renderWordsList = wordsData => {
       const { word, fetchDefinition, dictionaryData } = item;
       return (
         <WordCard
-          key={v4()}
+          key={word}
           word={word}
           fetchDefinition={fetchDefinition}
           dictionaryData={dictionaryData}

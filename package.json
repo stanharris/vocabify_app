@@ -5,7 +5,6 @@
   "dependencies": {
     "date-fns": "^1.29.0",
     "lodash": "^4.17.4",
-    "node-uuid": "^1.4.8",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-redux": "^5.0.6",
@@ -15,18 +14,14 @@
   "scripts": {
     "start": "concurrently 'react-scripts start' 'npm run prettier-watch'",
     "build": "react-scripts build",
-    "build:watch":
-      "onchange 'src/**/*.{js,json,css}' -- npm run build:extension ",
-    "build:extension":
-      "npm run build && npm run build:eventpage && npm run postbuild && echo 'Finished'",
+    "build:watch": "onchange 'src/**/*.{js,json,css}' -- npm run build:extension ",
+    "build:extension": "npm run build && npm run build:eventpage && npm run postbuild && echo 'Finished'",
     "build:eventpage": "npx webpack --config eventpage.webpack.config.js",
-    "postbuild":
-      "cp manifest.json build/manifest.json && cp icon48.png build/icon48.png && cp icon256.png build/icon256.png",
+    "postbuild": "cp manifest.json build/manifest.json && cp icon48.png build/icon48.png && cp icon256.png build/icon256.png",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "prettier": "prettier --write '**/*.{js,json,css}'",
-    "prettier-watch":
-      "onchange '**/*.{js,json,css}' -- prettier --write {{changed}}"
+    "prettier-watch": "onchange 'src/**/*.{js,json,css}' -- prettier --write {{changed}}"
   },
   "devDependencies": {
     "concurrently": "^3.5.0",
