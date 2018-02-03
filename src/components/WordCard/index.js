@@ -43,16 +43,14 @@ class WordCard extends Component {
       if (response.status === 404) {
         dictionaryData = null;
         this.setState({
-          definitionNotFound: true,
-          isFetchingDefinition: false
+          isFetchingDefinition: false,
+          definitionNotFound: true
         });
-      } else {
-        const data = await response.json();
-        dictionaryData = data;
-        this.setState({
-          isFetchingDefinition: false
-        });
+        return;
       }
+
+      const data = await response.json();
+      dictionaryData = data;
 
       /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
       const { wordsData } = await storage.get();
@@ -64,7 +62,11 @@ class WordCard extends Component {
         return item;
       });
 
-      storage.set({ wordsData: updatedWordsData });
+      await storage.set({ wordsData: updatedWordsData });
+
+      this.setState({
+        isFetchingDefinition: false
+      });
     } catch (error) {
       // TODO - Add better error handling
       this.setState({

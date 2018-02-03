@@ -39,7 +39,7 @@ class WordsList extends Component {
   renderWordsList = () => {
     const { wordsData } = this.state;
     if (wordsData && wordsData.length) {
-      return wordsData.map(item => {
+      const wordsList = wordsData.map(item => {
         const { word, fetchDefinition, dictionaryData } = item;
         return (
           <WordCard
@@ -50,6 +50,12 @@ class WordsList extends Component {
           />
         );
       });
+      return (
+        <div>
+          <h2 className="recently-added-title">Recently added</h2>
+          <div className="word-list-container">{wordsList}</div>
+        </div>
+      );
     }
     return null;
   };
@@ -69,8 +75,7 @@ class WordsList extends Component {
   render() {
     return (
       <div>
-        <h2 className="recently-added-title">Recently added</h2>
-        <div className="word-list-container">{this.renderWordsList()}</div>
+        {this.renderWordsList()}
         {this.renderShowMoreButton()}
       </div>
     );

@@ -75,12 +75,12 @@ class ImportWords extends Component {
   };
 
   renderErrorMessage = () => {
-    const {showError, errorMessage} = this.state;
+    const { showError, errorMessage } = this.state;
     if (showError) {
-      return <p className="import-error">{errorMessage}</p>
+      return <p className="import-error">{errorMessage}</p>;
     }
-    return null
-  }
+    return null;
+  };
 
   render() {
     const { email, importDisabled, requestPending } = this.state;
@@ -104,7 +104,7 @@ class ImportWords extends Component {
             onClick={this.handleImportClick}
             disabled={importDisabled}
           >
-            {requestPending ? 'Loading...' : 'Import words'}
+            {requestPending ? "Loading..." : "Import words"}
           </button>
           {this.renderErrorMessage()}
         </div>
