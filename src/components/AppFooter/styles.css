@@ -2,14 +2,19 @@
   padding: 16px;
 }
 
-.app-footer a {
+.app-footer a,
+.app-footer span {
   font-size: 0.8rem;
   font-weight: 600;
   color: rgb(200, 200, 200);
   text-decoration: none;
+  display: inline-block;
+  margin: 0 16px;
+  cursor: pointer;
 }
 
-.app-footer a:hover {
+.app-footer a:hover,
+.app-footer span:hover {
   color: #fff;
   text-decoration: underline;
 }

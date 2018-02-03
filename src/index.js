@@ -8,12 +8,17 @@ import "./index.css";
 
 const initialState = {
   wordsList: [],
-  wordsData: []
+  wordsData: [],
+  showImportCard: true
 };
 
 const initApp = async () => {
-  const { wordsList, wordsData } = await storage.get();
-  if (isUndefined(wordsList) || isUndefined(wordsData)) {
+  const { wordsList, wordsData, showImportCard } = await storage.get();
+  if (
+    isUndefined(wordsList) ||
+    isUndefined(wordsData) ||
+    isUndefined(showImportCard)
+  ) {
     storage.set(initialState);
   }
 

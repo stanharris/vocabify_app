@@ -4,30 +4,11 @@ import WordCard from "../../components/WordCard";
 import { storage, storageEvent } from "../../constants";
 import "./styles.css";
 
-const renderWordsList = wordsData => {
-  if (wordsData && wordsData.length) {
-    return wordsData.map(item => {
-      const { word, fetchDefinition, dictionaryData } = item;
-      return (
-        <WordCard
-          key={word}
-          word={word}
-          fetchDefinition={fetchDefinition}
-          dictionaryData={dictionaryData}
-        />
-      );
-    });
-  }
-  return null;
-};
-
 class WordsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      wordsData: []
-    };
-  }
+  state = {
+    wordsData: [],
+    listLength: 10
+  };
 
   componentDidMount() {
     this.updateWords();
@@ -35,18 +16,62 @@ class WordsList extends Component {
   }
 
   updateWords = async () => {
+    const { listLength } = this.state;
     const { wordsData } = await storage.get();
+    const wordsDataLength = wordsData.length;
+    wordsData.length = listLength;
     this.setState({
-      wordsData
+      wordsData,
+      wordsDataLength
     });
   };
 
-  render() {
+  handleMoreClick = () => {
+    const { listLength } = this.state;
+    this.setState(
+      {
+        listLength: listLength + 10
+      },
+      this.updateWords
+    );
+  };
+
+  renderWordsList = () => {
     const { wordsData } = this.state;
+    if (wordsData && wordsData.length) {
+      return wordsData.map(item => {
+        const { word, fetchDefinition, dictionaryData } = item;
+        return (
+          <WordCard
+            key={word}
+            word={word}
+            fetchDefinition={fetchDefinition}
+            dictionaryData={dictionaryData}
+          />
+        );
+      });
+    }
+    return null;
+  };
+
+  renderShowMoreButton = () => {
+    const { listLength, wordsDataLength } = this.state;
+    if (listLength < wordsDataLength) {
+      return (
+        <button className="show-more-button" onClick={this.handleMoreClick}>
+          Show more
+        </button>
+      );
+    }
+    return null;
+  };
+
+  render() {
     return (
       <div>
         <h2 className="recently-added-title">Recently added</h2>
-        <div className="word-list-container">{renderWordsList(wordsData)}</div>
+        <div className="word-list-container">{this.renderWordsList()}</div>
+        {this.renderShowMoreButton()}
       </div>
     );
   }

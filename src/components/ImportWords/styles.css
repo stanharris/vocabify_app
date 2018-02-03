@@ -1,0 +1,94 @@
+.import-card {
+  box-sizing: border-box;
+  background: #ffeade;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 24px;
+  margin: 48px auto;
+  width: 100%;
+  max-width: 304px;
+  position: relative;
+  text-align: left;
+  display: block;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.import-card .title {
+  font-family: "Rasa", serif;
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+.import-form {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.import-error {
+  font-size: 0.8rem;
+  color: red;
+  text-align: left;
+  margin-top: 24px;
+}
+
+.email-input {
+  background: none;
+  border: 0;
+  outline: 0;
+  width: 190px;
+  line-height: normal;
+  box-sizing: border-box;
+  padding: 8px 8px;
+  font-size: 0.8rem;
+  border-bottom: solid #d5c5c5 1px;
+  margin-right: 16px;
+}
+
+.email-input::placeholder {
+  color: #626262;
+}
+
+.import-button {
+  margin-top: 16px;
+}
+
+.import-button,
+.dismiss-button {
+  transition: opacity 0.2s, color 0.2s;
+  background: 0;
+  border: 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.add-word-button:hover,
+.dismiss-button:hover {
+  color: #6b5d2e;
+}
+
+.dismiss-message {
+  margin: 64px 0 32px;
+}
+
+.dismiss-button {
+  display: block;
+  margin: 0 auto;
+}
+
+@media (min-width: 700px) {
+  .import-card {
+    max-width: 608px;
+  }
+
+  .import-button {
+    margin-top: 0;
+  }
+}

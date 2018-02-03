@@ -1,10 +1,13 @@
 /* global browser */
 import React, { Component } from "react";
 
+import ImportWords from "./components/ImportWords";
+import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import WordInput from "./components/WordInput";
 import WordsList from "./containers/WordsList";
 import ReviewView from "./containers/ReviewView";
+import { storage, storageEvent } from "./constants";
 import "./App.css";
 
 class App extends Component {
@@ -12,9 +15,28 @@ class App extends Component {
     super(props);
     this.state = {
       showWordsView: true,
-      showReviewView: false
+      showReviewView: false,
+      showImportCard: false
     };
   }
+
+  componentDidMount() {
+    this.checkImportCardVisibility();
+    storageEvent.onChanged.addListener(this.checkImportCardVisibility);
+  }
+
+  checkImportCardVisibility = async () => {
+    const { showImportCard } = await storage.get();
+    if (showImportCard) {
+      this.setState({
+        showImportCard: true
+      });
+    } else {
+      this.setState({
+        showImportCard: false
+      });
+    }
+  };
 
   handleWordsClick = () => {
     this.setState({
@@ -37,29 +59,19 @@ class App extends Component {
   };
 
   render() {
-    const { showWordsView, showReviewView } = this.state;
+    const { showWordsView, showReviewView, showImportCard } = this.state;
     return (
       <div className="app">
         <div className="app-view">
-          <header className="app-header">
-            <h1 className="header-logo">Vocabify</h1>
-            <div className="header-navigation">
-              <button
-                onClick={this.handleWordsClick}
-                className={showWordsView ? "active" : ""}
-              >
-                Words
-              </button>
-              <button
-                onClick={this.handleReviewClick}
-                className={showReviewView ? "active" : ""}
-              >
-                Review
-              </button>
-            </div>
-          </header>
+          <AppHeader
+            showWordsView={showWordsView}
+            showReviewView={showReviewView}
+            handleWordsClick={this.handleWordsClick}
+            handleReviewClick={this.handleReviewClick}
+          />
           <div className={showWordsView ? "" : "hide"}>
             <WordInput />
+            {showImportCard && <ImportWords />}
             <WordsList />
           </div>
           <div className={showReviewView ? "" : "hide"}>

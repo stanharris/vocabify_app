@@ -28,6 +28,10 @@
   margin: 0 auto;
 }
 
+.show-more-button {
+  display: none;
+}
+
 @media (min-width: 700px) {
   .word-list-container {
     padding-top: 64px;
@@ -39,5 +43,26 @@
 
   .recently-added-title {
     display: none;
+  }
+
+  .show-more-button {
+    display: block;
+    transition: background 0.1s;
+    background: #ffeade;
+    border: none;
+    border-radius: 2px;
+    padding: 12px 24px;
+    cursor: pointer;
+    box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: -0.06;
+    margin: 64px auto 16px;
+    color: #704616;
+  }
+
+  .show-more-button:hover {
+    background: #f5dcd0;
   }
 }

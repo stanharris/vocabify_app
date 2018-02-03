@@ -37,7 +37,6 @@ class WordCard extends Component {
 
   fetchDefinition = async () => {
     const { word } = this.props;
-    const { wordsData } = await storage.get();
     try {
       const response = await fetch(`${host}/api/v1/definition/${word}`);
       let dictionaryData;
@@ -55,6 +54,8 @@ class WordCard extends Component {
         });
       }
 
+      /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
+      const { wordsData } = await storage.get();
       const updatedWordsData = wordsData.map(item => {
         if (item.word === word) {
           item.dictionaryData = dictionaryData;

@@ -9,40 +9,8 @@
   flex: 1;
 }
 
-.app-header {
-  display: flex;
-}
-
-.header-logo {
-  display: none;
-}
-
 .hide {
   display: none !important;
-}
-
-.header-navigation {
-  text-align: left;
-}
-
-.header-navigation button {
-  background: 0;
-  border: 0;
-  transition: color 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
-  color: rgb(200, 200, 200);
-  padding: 16px 24px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.header-navigation button:hover {
-  color: white;
-}
-
-.header-navigation button.active {
-  color: white;
 }
 
 .open-app {
@@ -68,18 +36,6 @@
 @media (min-width: 700px) {
   .app-view {
     padding-bottom: 48px;
-  }
-
-  .header-logo {
-    font-family: "Rasa", serif;
-    margin: 0;
-    padding: 10px 24px;
-    font-size: 1.7rem;
-    font-weight: 400;
-    display: inline-block;
-    letter-spacing: -0.06em;
-    display: inline-block;
-    color: white;
   }
 
   .open-app {
