@@ -4,7 +4,7 @@
 
 ## Features
 * Save interesting words you come across
-* View definitions, examples, pronunciations and etymologies
+* View definitions and examples (pronunciations and etymologies coming soon!)
 * Remember definitions using spaced repetition
 * Simple and elegant design
 * Offline-first
