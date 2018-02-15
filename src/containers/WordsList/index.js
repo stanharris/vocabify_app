@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import WordCard from "../../components/WordCard";
-import { storage, storageEvent } from "../../constants";
+// import { storage, storageEvent } from "../../constants";
 import "./styles.css";
 
 class WordsList extends Component {
@@ -11,19 +11,19 @@ class WordsList extends Component {
   };
 
   componentDidMount() {
-    this.updateWords();
-    storageEvent.onChanged.addListener(this.updateWords);
+    // this.updateWords();
+    // storageEvent.onChanged.addListener(this.updateWords);
   }
 
   updateWords = async () => {
-    const { listLength } = this.state;
-    const { wordsData } = await storage.get();
-    const wordsDataLength = wordsData.length;
-    wordsData.length = listLength;
-    this.setState({
-      wordsData,
-      wordsDataLength
-    });
+    // const { listLength } = this.state;
+    // const { wordsData } = await storage.get();
+    // const wordsDataLength = wordsData.length;
+    // wordsData.length = listLength;
+    // this.setState({
+    //   wordsData,
+    //   wordsDataLength
+    // });
   };
 
   handleMoreClick = () => {

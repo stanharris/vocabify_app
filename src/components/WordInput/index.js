@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import addDays from "date-fns/add_days";
 
-import { defaultReviewInterval, storage } from "../../constants";
+import { defaultReviewInterval } from "../../constants";
 import "./styles.css";
 
 const initialState = {
@@ -32,37 +32,37 @@ class WordInput extends Component {
   };
 
   duplicateCheck = async word => {
-    const { wordsList } = await storage.get();
-    if (wordsList.includes(word)) {
-      this.setState({
-        error: true,
-        errorMessage: "Duplicate word",
-        isDuplicate: true
-      });
-    } else {
-      this.setState({
-        error: false,
-        errorMessage: "",
-        isDuplicate: false
-      });
-    }
+    // const { wordsList } = await storage.get();
+    // if (wordsList.includes(word)) {
+    //   this.setState({
+    //     error: true,
+    //     errorMessage: "Duplicate word",
+    //     isDuplicate: true
+    //   });
+    // } else {
+    //   this.setState({
+    //     error: false,
+    //     errorMessage: "",
+    //     isDuplicate: false
+    //   });
+    // }
   };
 
   handleAddWord = async () => {
-    const { wordValue } = this.state;
+    // const { wordValue } = this.state;
 
-    const { wordsList, wordsData } = await storage.get();
+    // const { wordsList, wordsData } = await storage.get();
 
-    wordsList.unshift(wordValue);
-    wordsData.unshift({
-      word: wordValue,
-      fetchDefinition: true,
-      reviewDate: addDays(new Date(), defaultReviewInterval),
-      reviewInterval: defaultReviewInterval
-    });
-    storage.set({ wordsList, wordsData });
+    // wordsList.unshift(wordValue);
+    // wordsData.unshift({
+    //   word: wordValue,
+    //   fetchDefinition: true,
+    //   reviewDate: addDays(new Date(), defaultReviewInterval),
+    //   reviewInterval: defaultReviewInterval
+    // });
+    // storage.set({ wordsList, wordsData });
 
-    this.setState(initialState);
+    // this.setState(initialState);
   };
 
   onAddWordClick = () => {

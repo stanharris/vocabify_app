@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 
-import { storage } from "../../constants";
 import "./styles.css";
 
 class AppFooter extends Component {
-  handleImportClick = () => {
-    storage.set({ showImportCard: true });
-  };
-
   render() {
     return (
       <div className="app-footer">
@@ -18,7 +13,6 @@ class AppFooter extends Component {
         >
           View code on GitHub
         </a>
-        <span onClick={this.handleImportClick}>Import words</span>
       </div>
     );
   }

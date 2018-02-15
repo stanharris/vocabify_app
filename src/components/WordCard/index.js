@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import DefinitionList from "../DefinitionList";
-import { host, storage } from "../../constants";
+import { host } from "../../constants";
 import "./styles.css";
 
 class WordCard extends Component {
@@ -11,16 +11,16 @@ class WordCard extends Component {
   };
 
   handleRemoveClick = async () => {
-    const { word } = this.props;
-    const { wordsList, wordsData } = await storage.get();
+    // const { word } = this.props;
+    // const { wordsList, wordsData } = await storage.get();
 
-    const filteredWordsList = wordsList.filter(item => item !== word);
-    const filteredWordsData = wordsData.filter(item => item.word !== word);
+    // const filteredWordsList = wordsList.filter(item => item !== word);
+    // const filteredWordsData = wordsData.filter(item => item.word !== word);
 
-    storage.set({
-      wordsList: filteredWordsList,
-      wordsData: filteredWordsData
-    });
+    // storage.set({
+    //   wordsList: filteredWordsList,
+    //   wordsData: filteredWordsData
+    // });
   };
 
   componentDidMount() {
@@ -53,20 +53,20 @@ class WordCard extends Component {
       dictionaryData = data;
 
       /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
-      const { wordsData } = await storage.get();
-      const updatedWordsData = wordsData.map(item => {
-        if (item.word === word) {
-          item.dictionaryData = dictionaryData;
-          item.fetchDefinition = false;
-        }
-        return item;
-      });
+      // const { wordsData } = await storage.get();
+      // const updatedWordsData = wordsData.map(item => {
+      //   if (item.word === word) {
+      //     item.dictionaryData = dictionaryData;
+      //     item.fetchDefinition = false;
+      //   }
+      //   return item;
+      // });
 
-      await storage.set({ wordsData: updatedWordsData });
+      // await storage.set({ wordsData: updatedWordsData });
 
-      this.setState({
-        isFetchingDefinition: false
-      });
+      // this.setState({
+      //   isFetchingDefinition: false
+      // });
     } catch (error) {
       // TODO - Add better error handling
       this.setState({

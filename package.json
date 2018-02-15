@@ -4,32 +4,23 @@
   "private": true,
   "dependencies": {
     "date-fns": "^1.29.0",
+    "firebase": "^4.9.1",
     "lodash": "^4.17.4",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
+    "react-firebaseui": "^1.0.10",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
     "redux": "^3.7.2"
   },
   "scripts": {
-    "start": "concurrently 'react-scripts start' 'npm run prettier-watch'",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:watch":
-      "onchange 'src/**/*.{js,json,css}' -- npm run build:extension ",
-    "build:extension":
-      "npm run build && npm run build:eventpage && npm run postbuild && echo 'Finished'",
-    "build:eventpage": "npx webpack --config eventpage.webpack.config.js",
-    "postbuild":
-      "cp manifest.json build/manifest.json && cp icon16.png build/icon16.png && cp icon48.png build/icon48.png && cp icon128.png build/icon128.png && cp icon256.png build/icon256.png",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write '**/*.{js,json,css}'",
-    "prettier-watch":
-      "onchange 'src/**/*.{js,json,css}' -- prettier --write {{changed}}"
+    "prettier": "prettier --write '**/*.{js,json,css}'"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "onchange": "^3.2.1",
     "prettier": "1.8.2",
     "redux-devtools-extension": "^2.13.2"
   }

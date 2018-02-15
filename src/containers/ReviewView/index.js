@@ -4,7 +4,7 @@ import isNull from "lodash/isNull";
 
 import ReviewCard from "../../components/ReviewCard";
 import CompletedReview from "../../components/CompletedReview";
-import { storage, storageEvent } from "../../constants";
+// import { storage, storageEvent } from "../../constants";
 import "./styles.css";
 
 class ReviewView extends Component {
@@ -16,15 +16,15 @@ class ReviewView extends Component {
   }
 
   componentDidMount() {
-    this.updateWords();
-    storageEvent.onChanged.addListener(this.updateWords);
+    // this.updateWords();
+    // storageEvent.onChanged.addListener(this.updateWords);
   }
 
   updateWords = async () => {
-    const { wordsData } = await storage.get();
-    this.setState({
-      wordsData
-    });
+    // const { wordsData } = await storage.get();
+    // this.setState({
+    //   wordsData
+    // });
   };
 
   renderReviewCard = (wordsPendingReview, currentWord) => {

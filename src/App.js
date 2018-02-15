@@ -1,41 +1,55 @@
-/* global browser */
 import React, { Component } from "react";
+import { FirebaseAuth } from "react-firebaseui";
+import firebase from "firebase";
 
-import ImportWords from "./components/ImportWords";
 import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import WordInput from "./components/WordInput";
 import WordsList from "./containers/WordsList";
 import ReviewView from "./containers/ReviewView";
-import { storage, storageEvent } from "./constants";
 import "./App.css";
 
+const config = {
+  apiKey: "AIzaSyBwTk_erRP-kFLroaPA-lQZeaC4ZU6HSXk",
+  authDomain: "vocabify.firebaseapp.com",
+  databaseURL: "https://vocabify.firebaseio.com"
+};
+firebase.initializeApp(config);
+
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: "popup",
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  signInSuccessUrl: "/",
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ]
+};
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log(user);
+    // // User is signed in.
+    // var displayName = user.displayName;
+    // var email = user.email;
+    // var emailVerified = user.emailVerified;
+    // var photoURL = user.photoURL;
+    // var isAnonymous = user.isAnonymous;
+    // var uid = user.uid;
+    // var providerData = user.providerData;
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+  }
+});
+
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showWordsView: true,
-      showReviewView: false,
-      showImportCard: false
-    };
-  }
-
-  componentDidMount() {
-    this.checkImportCardVisibility();
-    storageEvent.onChanged.addListener(this.checkImportCardVisibility);
-  }
-
-  checkImportCardVisibility = async () => {
-    const { showImportCard } = await storage.get();
-    if (showImportCard) {
-      this.setState({
-        showImportCard: true
-      });
-    } else {
-      this.setState({
-        showImportCard: false
-      });
-    }
+  state = {
+    showWordsView: true,
+    showReviewView: false
   };
 
   handleWordsClick = () => {
@@ -53,15 +67,16 @@ class App extends Component {
   };
 
   handleAppClick = () => {
-    browser.tabs.create({
-      url: "/index.html"
-    });
+    // browser.tabs.create({
+    //   url: "/index.html"
+    // });
   };
 
   render() {
-    const { showWordsView, showReviewView, showImportCard } = this.state;
+    const { showWordsView, showReviewView } = this.state;
     return (
       <div className="app">
+        <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <div className="app-view">
           <AppHeader
             showWordsView={showWordsView}
@@ -71,7 +86,6 @@ class App extends Component {
           />
           <div className={showWordsView ? "" : "hide"}>
             <WordInput />
-            {showImportCard && <ImportWords />}
             <WordsList />
           </div>
           <div className={showReviewView ? "" : "hide"}>
