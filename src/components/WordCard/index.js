@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import DefinitionList from "../DefinitionList";
-import { host } from "../../constants";
-import "./styles.css";
+import DefinitionList from '../DefinitionList';
+import { host } from '../../constants';
+import { fetchDefinition } from '../../utils';
+import './styles.css';
 
 class WordCard extends Component {
   state = {
@@ -13,10 +14,8 @@ class WordCard extends Component {
   handleRemoveClick = async () => {
     // const { word } = this.props;
     // const { wordsList, wordsData } = await storage.get();
-
     // const filteredWordsList = wordsList.filter(item => item !== word);
     // const filteredWordsData = wordsData.filter(item => item.word !== word);
-
     // storage.set({
     //   wordsList: filteredWordsList,
     //   wordsData: filteredWordsData
@@ -37,42 +36,44 @@ class WordCard extends Component {
 
   fetchDefinition = async () => {
     const { word } = this.props;
-    try {
-      const response = await fetch(`${host}/api/v1/definition/${word}`);
-      let dictionaryData;
-      if (response.status === 404) {
-        dictionaryData = null;
-        this.setState({
-          isFetchingDefinition: false,
-          definitionNotFound: true
-        });
-        return;
-      }
+    const definitionResponse = await fetchDefinition(word);
+    console.log(definitionResponse);
+    // try {
+    //   const response = await fetch(`${host}/api/v1/definition/${word}`);
+    //   let dictionaryData;
+    //   if (response.status === 404) {
+    //     dictionaryData = null;
+    //     this.setState({
+    //       isFetchingDefinition: false,
+    //       definitionNotFound: true
+    //     });
+    //     return;
+    //   }
 
-      const data = await response.json();
-      dictionaryData = data;
+    //   const data = await response.json();
+    //   dictionaryData = data;
 
-      /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
-      // const { wordsData } = await storage.get();
-      // const updatedWordsData = wordsData.map(item => {
-      //   if (item.word === word) {
-      //     item.dictionaryData = dictionaryData;
-      //     item.fetchDefinition = false;
-      //   }
-      //   return item;
-      // });
+    /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
+    // const { wordsData } = await storage.get();
+    // const updatedWordsData = wordsData.map(item => {
+    //   if (item.word === word) {
+    //     item.dictionaryData = dictionaryData;
+    //     item.fetchDefinition = false;
+    //   }
+    //   return item;
+    // });
 
-      // await storage.set({ wordsData: updatedWordsData });
+    // await storage.set({ wordsData: updatedWordsData });
 
-      // this.setState({
-      //   isFetchingDefinition: false
-      // });
-    } catch (error) {
-      // TODO - Add better error handling
-      this.setState({
-        isFetchingDefinition: false
-      });
-    }
+    // this.setState({
+    //   isFetchingDefinition: false
+    // });
+    // } catch (error) {
+    //   // TODO - Add better error handling
+    //   this.setState({
+    //     isFetchingDefinition: false
+    //   });
+    // }
   };
 
   render() {

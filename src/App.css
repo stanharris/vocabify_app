@@ -13,32 +13,8 @@
   display: none !important;
 }
 
-.open-app {
-  transition: background 0.1s;
-  background: #ffeade;
-  border: none;
-  border-radius: 2px;
-  padding: 12px 24px;
-  cursor: pointer;
-  box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.5);
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: -0.06;
-  margin: 64px auto 16px;
-  color: #704616;
-}
-
-.open-app:hover {
-  background: #f5dcd0;
-}
-
 @media (min-width: 700px) {
   .app-view {
     padding-bottom: 48px;
-  }
-
-  .open-app {
-    display: none;
   }
 }

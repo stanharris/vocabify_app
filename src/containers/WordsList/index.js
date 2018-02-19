@@ -1,19 +1,42 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
-import WordCard from "../../components/WordCard";
+import WordCard from '../../components/WordCard';
 // import { storage, storageEvent } from "../../constants";
-import "./styles.css";
+import './styles.css';
 
 class WordsList extends Component {
   state = {
-    wordsData: [],
+    words: [],
     listLength: 10
   };
 
   componentDidMount() {
-    // this.updateWords();
-    // storageEvent.onChanged.addListener(this.updateWords);
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const { uid } = user;
+        this.initWords(uid);
+      } else {
+        // TODO - handle case of non-signed in users
+        // Unsubscribe listener?
+      }
+    });
   }
+
+  initWords = uid => {
+    const db = firebase.firestore();
+    db
+      .collection('users')
+      .doc(uid)
+      .collection('words')
+      .onSnapshot(snapshot => {
+        const { docs } = snapshot;
+        const words = docs.map(doc => doc.data());
+        console.log(words);
+        this.setState({ words });
+      });
+  };
 
   updateWords = async () => {
     // const { listLength } = this.state;
@@ -37,9 +60,9 @@ class WordsList extends Component {
   };
 
   renderWordsList = () => {
-    const { wordsData } = this.state;
-    if (wordsData && wordsData.length) {
-      const wordsList = wordsData.map(item => {
+    const { words } = this.state;
+    if (words && words.length) {
+      const wordsList = words.map(item => {
         const { word, fetchDefinition, dictionaryData } = item;
         return (
           <WordCard

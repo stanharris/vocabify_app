@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import addDays from "date-fns/add_days";
+import React, { Component } from 'react';
+import firebase from 'firebase';
+import 'firebase/firestore';
+import addDays from 'date-fns/add_days';
 
-import { defaultReviewInterval } from "../../constants";
-import "./styles.css";
+import { defaultReviewInterval } from '../../constants';
+import './styles.css';
 
 const initialState = {
-  wordValue: "",
+  wordValue: '',
   disableAddWordButton: true,
   error: false,
-  errorMessage: "",
+  errorMessage: '',
   isDuplicate: false
 };
 
@@ -49,16 +51,42 @@ class WordInput extends Component {
   };
 
   handleAddWord = async () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const { uid } = user;
+        const { wordValue: word } = this.state;
+        const db = firebase.firestore();
+        // TODO
+        // Should use transaction/batch write to save to words/ and wordsList/
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .add({
+            word,
+            fetchDefinition: true,
+            reviewDate: addDays(new Date(), defaultReviewInterval),
+            reviewInterval: defaultReviewInterval
+          })
+          .catch(error => {
+            // TODO
+            console.error('Error adding document: ', error);
+          });
+      } else {
+        // TODO - handle case of non-signed in users
+      }
+    });
+
     // const { wordValue } = this.state;
 
     // const { wordsList, wordsData } = await storage.get();
 
     // wordsList.unshift(wordValue);
     // wordsData.unshift({
-    //   word: wordValue,
-    //   fetchDefinition: true,
-    //   reviewDate: addDays(new Date(), defaultReviewInterval),
-    //   reviewInterval: defaultReviewInterval
+    // word: wordValue,
+    // fetchDefinition: true,
+    // reviewDate: addDays(new Date(), defaultReviewInterval),
+    // reviewInterval: defaultReviewInterval
     // });
     // storage.set({ wordsList, wordsData });
 
@@ -71,7 +99,7 @@ class WordInput extends Component {
 
   handleKey = event => {
     const { isDuplicate } = this.state;
-    if (event.key === "Enter" && !isDuplicate) {
+    if (event.key === 'Enter' && !isDuplicate) {
       this.handleAddWord();
     }
   };
