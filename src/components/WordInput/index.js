@@ -3,7 +3,6 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 import addDays from 'date-fns/add_days';
 
-import { defaultReviewInterval } from '../../constants';
 import './styles.css';
 
 const initialState = {
@@ -13,6 +12,8 @@ const initialState = {
   errorMessage: '',
   isDuplicate: false
 };
+
+const defaultReviewInterval = 3;
 
 class WordInput extends Component {
   state = initialState;

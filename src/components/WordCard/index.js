@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import DefinitionList from '../DefinitionList';
-import { host } from '../../constants';
 import { fetchDefinition } from '../../utils';
 import './styles.css';
 
