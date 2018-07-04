@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore';
+import get from 'lodash/get';
 
 import DefinitionList from '../DefinitionList';
 import { fetchDefinition } from '../../utils';
@@ -63,7 +64,7 @@ class WordCard extends Component {
           .doc(firebaseId)
           .set(
             {
-              definition: definitionResponse,
+              dictionaryData: definitionResponse,
               fetchDefinition: false
             },
             { merge: true }
@@ -80,6 +81,7 @@ class WordCard extends Component {
   render() {
     const { isFetchingDefinition, definitionNotFound } = this.state;
     const { word, dictionaryData } = this.props;
+    const definitionList = get(dictionaryData, 'results', []);
     return (
       <div className="word-card">
         <div onClick={this.handleRemoveClick} className="remove-icon-container">
@@ -89,7 +91,9 @@ class WordCard extends Component {
         {isFetchingDefinition && (
           <p className="fetching-definition">Searching for definition...</p>
         )}
-        <DefinitionList dictionaryData={dictionaryData} />
+        {definitionList.length && (
+          <DefinitionList definitionList={definitionList} />
+        )}
         {definitionNotFound && (
           <div className="definition-not-found">Definition not found</div>
         )}

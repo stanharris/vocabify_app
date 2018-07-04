@@ -19,10 +19,11 @@ class WordInput extends Component {
   state = initialState;
 
   onWordInputChange = event => {
+    const { value: wordValue } = event.target;
     this.setState({
-      wordValue: event.target.value
+      wordValue
     });
-    if (event.target.value) {
+    if (wordValue) {
       this.setState({
         disableAddWordButton: false
       });
@@ -31,7 +32,7 @@ class WordInput extends Component {
         disableAddWordButton: true
       });
     }
-    this.duplicateCheck(event.target.value);
+    this.duplicateCheck(wordValue);
   };
 
   duplicateCheck = async word => {
@@ -68,11 +69,14 @@ class WordInput extends Component {
             fetchDefinition: true,
             reviewDate: addDays(new Date(), defaultReviewInterval),
             reviewInterval: defaultReviewInterval
-          })
-          .catch(error => {
-            // TODO
-            console.error('Error adding document: ', error);
           });
+        this.setState({
+          wordValue: '',
+          disableAddWordButton: true
+        }).catch(error => {
+          // TODO
+          console.error('Error adding document: ', error);
+        });
       } else {
         // TODO - handle case of non-signed in users
       }
