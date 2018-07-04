@@ -77,21 +77,6 @@ class WordInput extends Component {
         // TODO - handle case of non-signed in users
       }
     });
-
-    // const { wordValue } = this.state;
-
-    // const { wordsList, wordsData } = await storage.get();
-
-    // wordsList.unshift(wordValue);
-    // wordsData.unshift({
-    // word: wordValue,
-    // fetchDefinition: true,
-    // reviewDate: addDays(new Date(), defaultReviewInterval),
-    // reviewInterval: defaultReviewInterval
-    // });
-    // storage.set({ wordsList, wordsData });
-
-    // this.setState(initialState);
   };
 
   onAddWordClick = () => {
