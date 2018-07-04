@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
-import { FirebaseAuth } from 'react-firebaseui';
 
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
@@ -31,14 +29,9 @@ class App extends Component {
 
   render() {
     const { showWordsView, showReviewView } = this.state;
-    const uiConfig = {
-      signInFlow: 'popup',
-      signInSuccessUrl: '/',
-      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
-    };
+
     return (
       <div className="app">
-        <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <div className="app-view">
           <AppHeader
             showWordsView={showWordsView}
