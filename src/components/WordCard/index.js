@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
 import DefinitionList from '../DefinitionList';
 import { fetchDefinition } from '../../utils';
@@ -11,14 +13,22 @@ class WordCard extends Component {
   };
 
   handleRemoveClick = async () => {
-    // const { word } = this.props;
-    // const { wordsList, wordsData } = await storage.get();
-    // const filteredWordsList = wordsList.filter(item => item !== word);
-    // const filteredWordsData = wordsData.filter(item => item.word !== word);
-    // storage.set({
-    //   wordsList: filteredWordsList,
-    //   wordsData: filteredWordsData
-    // });
+    // TODO - Keep UID in redux store(?)
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { firebaseId } = this.props;
+
+        const db = firebase.firestore();
+
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(firebaseId)
+          .delete();
+      }
+    });
   };
 
   componentDidMount() {
@@ -33,46 +43,36 @@ class WordCard extends Component {
     }
   }
 
-  fetchDefinition = async () => {
-    const { word } = this.props;
-    const definitionResponse = await fetchDefinition(word);
-    console.log(definitionResponse);
-    // try {
-    //   const response = await fetch(`${host}/api/v1/definition/${word}`);
-    //   let dictionaryData;
-    //   if (response.status === 404) {
-    //     dictionaryData = null;
-    //     this.setState({
-    //       isFetchingDefinition: false,
-    //       definitionNotFound: true
-    //     });
-    //     return;
-    //   }
+  fetchDefinition = () => {
+    // TODO - Keep UID in redux store(?)
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { word, firebaseId } = this.props;
+        const definitionResponse = await fetchDefinition(word);
 
-    //   const data = await response.json();
-    //   dictionaryData = data;
+        // TODO - Handle definition not found
 
-    /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
-    // const { wordsData } = await storage.get();
-    // const updatedWordsData = wordsData.map(item => {
-    //   if (item.word === word) {
-    //     item.dictionaryData = dictionaryData;
-    //     item.fetchDefinition = false;
-    //   }
-    //   return item;
-    // });
-
-    // await storage.set({ wordsData: updatedWordsData });
-
-    // this.setState({
-    //   isFetchingDefinition: false
-    // });
-    // } catch (error) {
-    //   // TODO - Add better error handling
-    //   this.setState({
-    //     isFetchingDefinition: false
-    //   });
-    // }
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(firebaseId)
+          .set(
+            {
+              definition: definitionResponse,
+              fetchDefinition: false
+            },
+            { merge: true }
+          );
+        this.setState({
+          isFetchingDefinition: false
+        });
+      } else {
+        // TODO - handle case of non-signed in users
+      }
+    });
   };
 
   render() {
