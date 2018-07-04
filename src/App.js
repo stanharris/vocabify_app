@@ -5,8 +5,8 @@ import { FirebaseAuth } from 'react-firebaseui';
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import WordInput from './components/WordInput';
-import WordsList from './containers/WordsList';
-import ReviewView from './containers/ReviewView';
+import WordsList from './components/WordsList';
+import ReviewView from './components/ReviewView';
 import './App.css';
 
 class App extends Component {
