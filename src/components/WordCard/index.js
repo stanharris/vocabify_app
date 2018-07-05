@@ -14,7 +14,7 @@ class WordCard extends Component {
   };
 
   handleRemoveClick = async () => {
-    // TODO - Keep UID in redux store(?)
+    // TODO - Persist UID somewhere
     // https://firebase.google.com/docs/auth/web/auth-state-persistence
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
@@ -46,7 +46,7 @@ class WordCard extends Component {
   }
 
   fetchDefinition = () => {
-    // TODO - Keep UID in redux store(?)
+    // TODO - Persist UID somewhere
     // https://firebase.google.com/docs/auth/web/auth-state-persistence
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {

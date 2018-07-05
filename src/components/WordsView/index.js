@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore';
 
-import WordCard from '../../components/WordCard';
+import WordCard from '../WordCard';
+import WordInput from '../WordInput';
 import './styles.css';
 
-class WordsList extends Component {
+class WordsView extends Component {
   state = {
     words: [],
     listLength: 10
@@ -30,6 +31,7 @@ class WordsList extends Component {
       .doc(uid)
       .collection('words')
       .onSnapshot(snapshot => {
+        // Runs whenever words collection changes
         const { docs } = snapshot;
         const words = docs.map(doc => ({ ...doc.data(), id: doc.id }));
         this.setState({ words });
@@ -97,6 +99,7 @@ class WordsList extends Component {
   render() {
     return (
       <div>
+        <WordInput />
         {this.renderWordsList()}
         {this.renderShowMoreButton()}
       </div>
@@ -104,4 +107,4 @@ class WordsList extends Component {
   }
 }
 
-export default WordsList;
+export default WordsView;

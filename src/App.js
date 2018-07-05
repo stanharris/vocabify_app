@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
-import WordInput from './components/WordInput';
-import WordsList from './components/WordsList';
+import WordsView from './components/WordsView';
 import ReviewView from './components/ReviewView';
 import './App.css';
 
@@ -13,6 +12,7 @@ class App extends Component {
     showReviewView: false
   };
 
+  // TODO - Add a router when number of views increase
   handleWordsClick = () => {
     this.setState({
       showWordsView: true,
@@ -40,8 +40,7 @@ class App extends Component {
             handleReviewClick={this.handleReviewClick}
           />
           <div className={showWordsView ? '' : 'hide'}>
-            <WordInput />
-            <WordsList />
+            <WordsView />
           </div>
           <div className={showReviewView ? '' : 'hide'}>
             <ReviewView />
