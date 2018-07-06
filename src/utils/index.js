@@ -21,9 +21,7 @@ export const fetchDefinition = (word: string) => {
         const data = await response.json();
         resolve(data);
       } else {
-        resolve({
-          error: true
-        });
+        resolve(null);
       }
     } catch (error) {
       reject();

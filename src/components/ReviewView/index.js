@@ -1,50 +1,57 @@
-import React, { Component } from "react";
-import isPast from "date-fns/is_past";
-import isNull from "lodash/isNull";
+// @flow
+import React, { Component } from 'react';
+import isPast from 'date-fns/is_past';
+import isNull from 'lodash/isNull';
+import firebase from 'firebase';
 
-import ReviewCard from "../../components/ReviewCard";
-import CompletedReview from "../../components/CompletedReview";
-// import { storage, storageEvent } from "../../constants";
-import "./styles.css";
+import ReviewCard from '../../components/ReviewCard';
+import CompletedReview from '../../components/CompletedReview';
+import './styles.css';
 
-class ReviewView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      wordsData: []
-    };
-  }
-
-  componentDidMount() {
-    // this.updateWords();
-    // storageEvent.onChanged.addListener(this.updateWords);
-  }
-
-  updateWords = async () => {
-    // const { wordsData } = await storage.get();
-    // this.setState({
-    //   wordsData
-    // });
+class ReviewView extends Component<{}> {
+  state = {
+    words: []
   };
 
-  renderReviewCard = (wordsPendingReview, currentWord) => {
-    if (!wordsPendingReview.length) {
-      return null;
-    }
-    const { word } = currentWord;
-    return <ReviewCard key={word} currentWord={currentWord} />;
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const { uid } = user;
+        this.initWords(uid);
+      } else {
+        // TODO - handle case of non-signed in users
+        // TODO - Check all listeners to see if unsubscribe is required
+      }
+    });
+  }
+
+  initWords = (uid: string) => {
+    const db = firebase.firestore();
+    db
+      .collection('users')
+      .doc(uid)
+      .collection('words')
+      .onSnapshot(snapshot => {
+        // Runs whenever words collection changes
+        const { docs } = snapshot;
+        const words = docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        this.setState({ words });
+      });
   };
 
   render() {
-    const { wordsData } = this.state;
-    const wordsPendingReview = wordsData.filter(
+    const { words } = this.state;
+    const wordsPendingReview = words.filter(
       word => isPast(word.reviewDate) && !isNull(word.dictionaryData)
     );
+    const canReviewWords = Boolean(wordsPendingReview.length);
     const currentWord = wordsPendingReview[0];
     return (
       <div className="review-view">
-        {this.renderReviewCard(wordsPendingReview, currentWord)}
-        {!wordsPendingReview.length && <CompletedReview />}
+        {canReviewWords && (
+          <ReviewCard key={currentWord.word} currentWord={currentWord} />
+        )}
+        {!canReviewWords && <CompletedReview />}
       </div>
     );
   }

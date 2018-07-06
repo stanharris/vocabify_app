@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore';
 import get from 'lodash/get';
+import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
 import { fetchDefinition } from '../../utils';
@@ -93,7 +94,7 @@ class WordCard extends Component<Props, State> {
     const { word, dictionaryData, fetchDefinition } = this.props;
     const definitionList = get(dictionaryData, 'results', []);
     const showDefinitionList = Boolean(definitionList.length);
-    const showNotFound = !fetchDefinition && dictionaryData.error;
+    const showNotFound = !fetchDefinition && isNull(dictionaryData);
     return (
       <div className="word-card">
         <div onClick={this.handleRemoveClick} className="remove-icon-container">
