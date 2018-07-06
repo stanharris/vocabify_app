@@ -1,11 +1,21 @@
+// @flow
 import React, { PureComponent } from 'react';
 import firebase from 'firebase';
 
 import './styles.css';
 
-class AppHeader extends PureComponent {
+type Props = {
+  showWordsView: boolean,
+  showReviewView: boolean
+};
+
+type State = {
+  showSignIn: boolean
+};
+
+class AppHeader extends PureComponent<Props, State> {
   state = {
-    showSignIn: null
+    showSignIn: false
   };
 
   handleSignInClick = () => {

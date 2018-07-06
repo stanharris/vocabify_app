@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore';
@@ -7,7 +8,18 @@ import DefinitionList from '../DefinitionList';
 import { fetchDefinition } from '../../utils';
 import './styles.css';
 
-class WordCard extends Component {
+type Props = {
+  firebaseId: string,
+  fetchDefinition: boolean,
+  word: string
+};
+
+type State = {
+  isFetchingDefinition: boolean,
+  definitionNotFound: boolean
+};
+
+class WordCard extends Component<Props, State> {
   state = {
     isFetchingDefinition: false,
     definitionNotFound: false

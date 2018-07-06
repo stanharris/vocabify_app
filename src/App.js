@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 
 import AppHeader from './components/AppHeader';
@@ -6,7 +7,12 @@ import WordsView from './components/WordsView';
 import ReviewView from './components/ReviewView';
 import './App.css';
 
-class App extends Component {
+type State = {
+  showWordsView: boolean,
+  showReviewView: boolean
+};
+
+class App extends Component<{}, State> {
   state = {
     showWordsView: true,
     showReviewView: false

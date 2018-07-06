@@ -1,5 +1,7 @@
+// @flow
+
 // TODO - Replace with Cloud function
-export const fetchDefinition = word => {
+export const fetchDefinition = (word: string) => {
   return new Promise(async (resolve, reject) => {
     const headers = new Headers();
     headers.append(

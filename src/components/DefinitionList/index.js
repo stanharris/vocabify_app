@@ -1,8 +1,9 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import './styles.css';
 
-class DefinitionList extends PureComponent {
+class DefinitionList extends PureComponent<{}> {
   render() {
     const { definitionList } = this.props;
     if (!definitionList) {

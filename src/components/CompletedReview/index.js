@@ -1,9 +1,10 @@
+// @flow
 import React, { PureComponent } from 'react';
 
 import summerImg from '../../assets/img/summer.svg';
 import './styles.css';
 
-class CompletedReview extends PureComponent {
+class CompletedReview extends PureComponent<{}> {
   render() {
     return (
       <div className="no-words-card">
