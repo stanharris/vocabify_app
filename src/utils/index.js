@@ -15,8 +15,16 @@ export const fetchDefinition = (word: string) => {
           headers
         }
       );
-      const data = await response.json();
-      resolve(data);
+      const { ok } = response;
+
+      if (ok) {
+        const data = await response.json();
+        resolve(data);
+      } else {
+        resolve({
+          error: true
+        });
+      }
     } catch (error) {
       reject();
       // TODO - Log error

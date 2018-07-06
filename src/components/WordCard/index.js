@@ -15,14 +15,12 @@ type Props = {
 };
 
 type State = {
-  isFetchingDefinition: boolean,
-  definitionNotFound: boolean
+  isFetchingDefinition: boolean
 };
 
 class WordCard extends Component<Props, State> {
   state = {
-    isFetchingDefinition: false,
-    definitionNotFound: false
+    isFetchingDefinition: false
   };
 
   handleRemoveClick = async () => {
@@ -64,9 +62,8 @@ class WordCard extends Component<Props, State> {
       if (user) {
         const { uid } = user;
         const { word, firebaseId } = this.props;
-        const definitionResponse = await fetchDefinition(word);
 
-        // TODO - Handle definition not found
+        const definitionResponse = await fetchDefinition(word);
 
         const db = firebase.firestore();
         db
@@ -81,6 +78,7 @@ class WordCard extends Component<Props, State> {
             },
             { merge: true }
           );
+
         this.setState({
           isFetchingDefinition: false
         });
@@ -91,9 +89,11 @@ class WordCard extends Component<Props, State> {
   };
 
   render() {
-    const { isFetchingDefinition, definitionNotFound } = this.state;
-    const { word, dictionaryData } = this.props;
+    const { isFetchingDefinition } = this.state;
+    const { word, dictionaryData, fetchDefinition } = this.props;
     const definitionList = get(dictionaryData, 'results', []);
+    const showDefinitionList = Boolean(definitionList.length);
+    const showNotFound = !fetchDefinition && dictionaryData.error;
     return (
       <div className="word-card">
         <div onClick={this.handleRemoveClick} className="remove-icon-container">
@@ -103,10 +103,10 @@ class WordCard extends Component<Props, State> {
         {isFetchingDefinition && (
           <p className="fetching-definition">Searching for definition...</p>
         )}
-        {definitionList.length && (
+        {showDefinitionList && (
           <DefinitionList definitionList={definitionList} />
         )}
-        {definitionNotFound && (
+        {showNotFound && (
           <div className="definition-not-found">Definition not found</div>
         )}
       </div>
