@@ -18,6 +18,32 @@ const defaultReviewInterval = 3;
 class WordInput extends Component {
   state = initialState;
 
+  componentDidMount() {
+    this.initWords();
+  }
+
+  initWords = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const { uid } = user;
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .onSnapshot(snapshot => {
+            // Runs whenever words collection changes
+            const { docs } = snapshot;
+            const words = docs.map(doc => doc.data().word);
+            this.setState({ words });
+          });
+      } else {
+        // TODO - handle case of non-signed in users
+        // Unsubscribe listener?
+      }
+    });
+  };
+
   onWordInputChange = event => {
     const { value: wordValue } = event.target;
     this.setState({
@@ -36,20 +62,20 @@ class WordInput extends Component {
   };
 
   duplicateCheck = async word => {
-    // const { wordsList } = await storage.get();
-    // if (wordsList.includes(word)) {
-    //   this.setState({
-    //     error: true,
-    //     errorMessage: "Duplicate word",
-    //     isDuplicate: true
-    //   });
-    // } else {
-    //   this.setState({
-    //     error: false,
-    //     errorMessage: "",
-    //     isDuplicate: false
-    //   });
-    // }
+    const { words } = this.state;
+    if (words.includes(word)) {
+      this.setState({
+        error: true,
+        errorMessage: 'Duplicate word',
+        isDuplicate: true
+      });
+    } else {
+      this.setState({
+        error: false,
+        errorMessage: '',
+        isDuplicate: false
+      });
+    }
   };
 
   handleAddWord = async () => {
