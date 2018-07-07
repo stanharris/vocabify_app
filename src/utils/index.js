@@ -23,7 +23,9 @@ const fetchDefinition = (word: string) =>
       const { ok } = request;
       const definitionResponse = await request.json();
 
-      resolve(ok ? definitionResponse.results : null);
+      const returnDefinitionList = ok && Boolean(definitionResponse.results);
+
+      resolve(returnDefinitionList ? definitionResponse.results : null);
     } catch (error) {
       reject();
       // TODO - Log error
