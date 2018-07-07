@@ -84,8 +84,6 @@ class WordInput extends Component {
         const { uid } = user;
         const { wordValue: word } = this.state;
         const db = firebase.firestore();
-        // TODO
-        // Should use transaction/batch write to save to words/ and wordsList/
         db
           .collection('users')
           .doc(uid)

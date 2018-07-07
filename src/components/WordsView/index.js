@@ -7,8 +7,13 @@ import WordCard from '../WordCard';
 import WordInput from '../WordInput';
 import './styles.css';
 
-class WordsView extends Component<{}> {
+type State = {
+  isFetchingWords: boolean
+};
+
+class WordsView extends Component<{}, State> {
   state = {
+    isFetchingWords: true,
     words: []
   };
 
@@ -29,7 +34,7 @@ class WordsView extends Component<{}> {
             // Runs whenever words collection changes
             const { docs } = snapshot;
             const words = docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            this.setState({ words });
+            this.setState({ words, isFetchingWords: false });
           });
       } else {
         // TODO - handle case of non-signed in users
@@ -53,21 +58,18 @@ class WordsView extends Component<{}> {
           />
         );
       });
-      return (
-        <div>
-          <h2 className="recently-added-title">Recently added</h2>
-          <div className="word-list-container">{wordsList}</div>
-        </div>
-      );
+      return <div className="word-list-container">{wordsList}</div>;
     }
-    return null;
+    return <p className="words-status">No words added</p>;
   };
 
   render() {
+    const { isFetchingWords } = this.state;
     return (
       <div>
         <WordInput />
-        {this.renderWordsList()}
+        {isFetchingWords && <p className="words-status">Loading...</p>}
+        {!isFetchingWords && this.renderWordsList()}
       </div>
     );
   }
