@@ -1,39 +1,31 @@
-import React, { PureComponent } from "react";
+// @flow
+import React, { PureComponent } from 'react';
 
-import "./styles.css";
+import './styles.css';
 
-class DefinitionList extends PureComponent {
-  render() {
-    const { dictionaryData } = this.props;
-    if (!dictionaryData) {
-      return null;
-    }
-    return dictionaryData.map(item => {
-      const { lexicalCategory, definitionList } = item;
-      const definitionListElement = definitionList.map((defItem, index) => {
-        const { definition, example } = defItem;
-        const hasDefinition = Boolean(definition);
-        const hasExample = Boolean(example);
-        if (index < 2) {
-          return (
-            <div className="definition-item">
-              <span className="definition-index">{index + 1}.</span>
-              {hasDefinition && <p className="definition-text">{definition}</p>}
-              {hasExample && (
-                <p className="definition-example">&quot;{example}&quot;</p>
-              )}
-            </div>
-          );
-        }
-        return null;
-      });
+class DefinitionList extends PureComponent<{}> {
+  renderDefinitionList = () =>
+    this.props.definitionList.map((item, index) => {
+      const { definition, examples } = item;
+      const hasDefinition = Boolean(definition);
+      const hasExample = Boolean(examples);
       return (
-        <div className="definition-list">
-          <p className="lexical-category">{lexicalCategory}</p>
-          {definitionListElement}
+        <div className="definition-item">
+          <span className="definition-index">{index + 1}.</span>
+          {hasDefinition && <p className="definition-text">{definition}</p>}
+          {hasExample && (
+            <p className="definition-example">&quot;{examples[0]}&quot;</p>
+          )}
         </div>
       );
     });
+
+  render() {
+    const { definitionList } = this.props;
+    if (!definitionList) {
+      return null;
+    }
+    return <div className="definition-list">{this.renderDefinitionList()}</div>;
   }
 }
 

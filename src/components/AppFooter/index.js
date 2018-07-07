@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+// @flow
+import React, { PureComponent } from 'react';
 
-import { storage } from "../../constants";
-import "./styles.css";
+import './styles.css';
 
-class AppFooter extends Component {
-  handleImportClick = () => {
-    storage.set({ showImportCard: true });
-  };
-
+class AppFooter extends PureComponent<{}> {
   render() {
     return (
       <div className="app-footer">
@@ -18,7 +14,6 @@ class AppFooter extends Component {
         >
           View code on GitHub
         </a>
-        <span onClick={this.handleImportClick}>Import words</span>
       </div>
     );
   }

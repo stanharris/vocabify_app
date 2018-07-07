@@ -1,43 +1,24 @@
-/* global browser */
-import React, { Component } from "react";
+// @flow
+import React, { Component } from 'react';
 
-import ImportWords from "./components/ImportWords";
-import AppHeader from "./components/AppHeader";
-import AppFooter from "./components/AppFooter";
-import WordInput from "./components/WordInput";
-import WordsList from "./containers/WordsList";
-import ReviewView from "./containers/ReviewView";
-import { storage, storageEvent } from "./constants";
-import "./App.css";
+import AppHeader from './components/AppHeader';
+import AppFooter from './components/AppFooter';
+import WordsView from './components/WordsView';
+import ReviewView from './components/ReviewView';
+import './App.css';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showWordsView: true,
-      showReviewView: false,
-      showImportCard: false
-    };
-  }
+type State = {
+  showWordsView: boolean,
+  showReviewView: boolean
+};
 
-  componentDidMount() {
-    this.checkImportCardVisibility();
-    storageEvent.onChanged.addListener(this.checkImportCardVisibility);
-  }
-
-  checkImportCardVisibility = async () => {
-    const { showImportCard } = await storage.get();
-    if (showImportCard) {
-      this.setState({
-        showImportCard: true
-      });
-    } else {
-      this.setState({
-        showImportCard: false
-      });
-    }
+class App extends Component<{}, State> {
+  state = {
+    showWordsView: true,
+    showReviewView: false
   };
 
+  // TODO - Add a router when number of views increase
   handleWordsClick = () => {
     this.setState({
       showWordsView: true,
@@ -52,14 +33,9 @@ class App extends Component {
     });
   };
 
-  handleAppClick = () => {
-    browser.tabs.create({
-      url: "/index.html"
-    });
-  };
-
   render() {
-    const { showWordsView, showReviewView, showImportCard } = this.state;
+    const { showWordsView, showReviewView } = this.state;
+
     return (
       <div className="app">
         <div className="app-view">
@@ -69,17 +45,12 @@ class App extends Component {
             handleWordsClick={this.handleWordsClick}
             handleReviewClick={this.handleReviewClick}
           />
-          <div className={showWordsView ? "" : "hide"}>
-            <WordInput />
-            {showImportCard && <ImportWords />}
-            <WordsList />
+          <div className={showWordsView ? '' : 'hide'}>
+            <WordsView />
           </div>
-          <div className={showReviewView ? "" : "hide"}>
+          <div className={showReviewView ? '' : 'hide'}>
             <ReviewView />
           </div>
-          <button className="open-app" onClick={this.handleAppClick}>
-            Open app
-          </button>
         </div>
         <AppFooter />
       </div>

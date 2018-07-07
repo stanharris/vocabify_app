@@ -8,6 +8,12 @@
 
 .header-navigation {
   text-align: left;
+  display: flex;
+  flex: 1;
+}
+
+.button-divider {
+  flex: 1;
 }
 
 .header-navigation button {
@@ -32,7 +38,7 @@
 
 @media (min-width: 700px) {
   .header-logo {
-    font-family: "Rasa", serif;
+    font-family: 'Rasa', serif;
     margin: 0;
     padding: 10px 24px;
     font-size: 1.7rem;

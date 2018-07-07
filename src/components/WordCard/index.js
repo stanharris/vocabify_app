@@ -1,26 +1,26 @@
-import React, { Component } from "react";
+// @flow
+import React, { Component } from 'react';
+import firebase from 'firebase';
+import 'firebase/firestore';
+import isNull from 'lodash/isNull';
 
-import DefinitionList from "../DefinitionList";
-import { host, storage } from "../../constants";
-import "./styles.css";
+import DefinitionList from '../DefinitionList';
+import { fetchDefinition } from '../../utils';
+import './styles.css';
 
-class WordCard extends Component {
+type Props = {
+  firebaseId: string,
+  fetchDefinition: boolean,
+  word: string
+};
+
+type State = {
+  isFetchingDefinition: boolean
+};
+
+class WordCard extends Component<Props, State> {
   state = {
-    isFetchingDefinition: false,
-    definitionNotFound: false
-  };
-
-  handleRemoveClick = async () => {
-    const { word } = this.props;
-    const { wordsList, wordsData } = await storage.get();
-
-    const filteredWordsList = wordsList.filter(item => item !== word);
-    const filteredWordsData = wordsData.filter(item => item.word !== word);
-
-    storage.set({
-      wordsList: filteredWordsList,
-      wordsData: filteredWordsData
-    });
+    isFetchingDefinition: false
   };
 
   componentDidMount() {
@@ -30,54 +30,70 @@ class WordCard extends Component {
         {
           isFetchingDefinition: true
         },
-        this.fetchDefinition
+        this.fetchAndSaveDefinition
       );
     }
   }
 
-  fetchDefinition = async () => {
-    const { word } = this.props;
-    try {
-      const response = await fetch(`${host}/api/v1/definition/${word}`);
-      let dictionaryData;
-      if (response.status === 404) {
-        dictionaryData = null;
-        this.setState({
-          isFetchingDefinition: false,
-          definitionNotFound: true
-        });
-        return;
+  handleRemoveClick = async () => {
+    // TODO - Persist UID somewhere
+    // https://firebase.google.com/docs/auth/web/auth-state-persistence
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { firebaseId: wordId } = this.props;
+
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(wordId)
+          .delete();
       }
+    });
+  };
 
-      const data = await response.json();
-      dictionaryData = data;
+  fetchAndSaveDefinition = () => {
+    // TODO - Persist UID somewhere
+    // https://firebase.google.com/docs/auth/web/auth-state-persistence
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { word, firebaseId: wordId } = this.props;
 
-      /* TODO - fix race condition: storage get/set is asynchronous and if multiple words are added at once the saved deinitions can overwrite each other */
-      const { wordsData } = await storage.get();
-      const updatedWordsData = wordsData.map(item => {
-        if (item.word === word) {
-          item.dictionaryData = dictionaryData;
-          item.fetchDefinition = false;
-        }
-        return item;
-      });
+        const definitionList = await fetchDefinition(word);
 
-      await storage.set({ wordsData: updatedWordsData });
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(wordId)
+          .set(
+            {
+              definitionList,
+              fetchDefinition: false
+            },
+            { merge: true }
+          );
 
-      this.setState({
-        isFetchingDefinition: false
-      });
-    } catch (error) {
-      // TODO - Add better error handling
-      this.setState({
-        isFetchingDefinition: false
-      });
-    }
+        this.setState({
+          isFetchingDefinition: false
+        });
+      } else {
+        // TODO - handle case of non-signed in users
+      }
+    });
   };
 
   render() {
-    const { isFetchingDefinition, definitionNotFound } = this.state;
-    const { word, dictionaryData } = this.props;
+    const { isFetchingDefinition } = this.state;
+    const { word, definitionList, fetchDefinition } = this.props;
+
+    const showDefinitionList = !isNull(definitionList);
+    const showNotFound = !fetchDefinition && isNull(definitionList);
+
     return (
       <div className="word-card">
         <div onClick={this.handleRemoveClick} className="remove-icon-container">
@@ -87,8 +103,10 @@ class WordCard extends Component {
         {isFetchingDefinition && (
           <p className="fetching-definition">Searching for definition...</p>
         )}
-        <DefinitionList dictionaryData={dictionaryData} />
-        {definitionNotFound && (
+        {showDefinitionList && (
+          <DefinitionList definitionList={definitionList} />
+        )}
+        {showNotFound && (
           <div className="definition-not-found">Definition not found</div>
         )}
       </div>

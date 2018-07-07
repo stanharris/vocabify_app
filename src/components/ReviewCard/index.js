@@ -1,30 +1,42 @@
-import React, { Component } from "react";
-import addDays from "date-fns/add_days";
+// @flow
+import React, { Component } from 'react';
+import addDays from 'date-fns/add_days';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
-import { storage } from "../../constants";
-import DefinitionList from "../DefinitionList";
-import "./styles.css";
+import DefinitionList from '../DefinitionList';
+import './styles.css';
 
-class ReviewCard extends Component {
+type State = {
+  showDefinition: boolean
+};
+
+class ReviewCard extends Component<Props, State> {
   state = {
     showDefinition: false
   };
 
-  handleUpdateReviewDate = async (multiplier = 1) => {
-    const { currentWord } = this.props;
-    const { word, reviewInterval } = currentWord;
-    const { wordsData } = await storage.get();
+  handleUpdateReviewDate = async (multiplier: number = 1) => {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { reviewInterval, id: wordId } = this.props.currentWord;
 
-    const updatedWordsData = wordsData.map(item => {
-      if (item.word === word) {
-        const today = Date.now();
-        item.reviewDate = addDays(today, reviewInterval * multiplier);
-        item.reviewInterval = reviewInterval * multiplier;
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(wordId)
+          .set(
+            {
+              reviewInterval: reviewInterval * multiplier,
+              reviewDate: addDays(Date.now(), reviewInterval * multiplier)
+            },
+            { merge: true }
+          );
       }
-      return item;
     });
-
-    storage.set({ wordsData: updatedWordsData });
   };
 
   onCheckDefinitionClick = () => {
@@ -34,17 +46,17 @@ class ReviewCard extends Component {
   };
 
   onEasyButtonClick = () => {
-    this.handleUpdateReviewDate();
+    this.handleUpdateReviewDate(2);
   };
 
   onHardButtonClick = () => {
-    this.handleUpdateReviewDate(2);
+    this.handleUpdateReviewDate();
   };
 
   render() {
     const { currentWord } = this.props;
     const { showDefinition } = this.state;
-    const { word, dictionaryData, reviewInterval } = currentWord;
+    const { word, definitionList, reviewInterval } = currentWord;
     return (
       <div className="review-card">
         {!showDefinition && (
@@ -64,18 +76,22 @@ class ReviewCard extends Component {
         {showDefinition && (
           <div className="view-definition">
             <h3>{word}</h3>
-            <DefinitionList dictionaryData={dictionaryData} />
+            <DefinitionList definitionList={definitionList} />
             <p className="difficulty">
               How difficult did you find this definition?
             </p>
             <div className="difficulty-action-buttons">
               <div className="button-container easy">
                 <button onClick={this.onEasyButtonClick}>Easy</button>
-                <span className="interval">({reviewInterval * 2} days)</span>
+                <span className="interval">
+                  (Review in {reviewInterval * 2} days)
+                </span>
               </div>
               <div className="button-container hard">
                 <button onClick={this.onHardButtonClick}>Hard</button>
-                <span className="interval">({reviewInterval} days)</span>
+                <span className="interval">
+                  (Review in {reviewInterval} days)
+                </span>
               </div>
             </div>
           </div>

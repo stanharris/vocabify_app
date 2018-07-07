@@ -1,28 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import isUndefined from "lodash/isUndefined";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
-import App from "./App";
-import { storage } from "./constants";
-import "./index.css";
+import App from './App';
+import './index.css';
 
-const initialState = {
-  wordsList: [],
-  wordsData: [],
-  showImportCard: true
+const config = {
+  apiKey: 'AIzaSyBwTk_erRP-kFLroaPA-lQZeaC4ZU6HSXk',
+  authDomain: 'vocabify.firebaseapp.com',
+  databaseURL: 'https://vocabify.firebaseio.com',
+  projectId: 'vocabify'
 };
+firebase.initializeApp(config);
 
-const initApp = async () => {
-  const { wordsList, wordsData, showImportCard } = await storage.get();
-  if (
-    isUndefined(wordsList) ||
-    isUndefined(wordsData) ||
-    isUndefined(showImportCard)
-  ) {
-    storage.set(initialState);
-  }
-
-  ReactDOM.render(<App />, document.getElementById("root"));
-};
-
-initApp();
+ReactDOM.render(<App />, document.getElementById('root'));
