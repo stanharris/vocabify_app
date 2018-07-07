@@ -2,6 +2,8 @@
 
 // This is for requests which HAVE to run server-side,
 // i.e. because the request includes an API key
+// Or, when there are multiple clients which share the same logic, then it
+// should be moved to a Cloud function
 
 // TODO - Replace with Cloud function
 const fetchDefinition = (word: string) =>

@@ -14,29 +14,29 @@ class WordsView extends Component<{}> {
   };
 
   componentDidMount() {
+    this.initWords();
+  }
+
+  initWords = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const { uid } = user;
-        this.initWords(uid);
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .onSnapshot(snapshot => {
+            // Runs whenever words collection changes
+            const { docs } = snapshot;
+            const words = docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            this.setState({ words });
+          });
       } else {
         // TODO - handle case of non-signed in users
         // Unsubscribe listener?
       }
     });
-  }
-
-  initWords = (uid: string) => {
-    const db = firebase.firestore();
-    db
-      .collection('users')
-      .doc(uid)
-      .collection('words')
-      .onSnapshot(snapshot => {
-        // Runs whenever words collection changes
-        const { docs } = snapshot;
-        const words = docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        this.setState({ words });
-      });
   };
 
   updateWords = async () => {
