@@ -9,8 +9,7 @@ import './styles.css';
 
 class WordsView extends Component<{}> {
   state = {
-    words: [],
-    listLength: 10 // TODO - Remove/re-do
+    words: []
   };
 
   componentDidMount() {
@@ -39,27 +38,6 @@ class WordsView extends Component<{}> {
     });
   };
 
-  updateWords = async () => {
-    // const { listLength } = this.state;
-    // const { wordsData } = await storage.get();
-    // const wordsDataLength = wordsData.length;
-    // wordsData.length = listLength;
-    // this.setState({
-    //   wordsData,
-    //   wordsDataLength
-    // });
-  };
-
-  handleMoreClick = () => {
-    // const { listLength } = this.state;
-    // this.setState(
-    //   {
-    //     listLength: listLength + 10
-    //   },
-    //   this.updateWords
-    // );
-  };
-
   renderWordsList = () => {
     const { words } = this.state;
     if (words && words.length) {
@@ -85,24 +63,11 @@ class WordsView extends Component<{}> {
     return null;
   };
 
-  renderShowMoreButton = () => {
-    // const { listLength, wordsDataLength } = this.state;
-    // if (listLength < wordsDataLength) {
-    //   return (
-    //     <button className="show-more-button" onClick={this.handleMoreClick}>
-    //       Show more
-    //     </button>
-    //   );
-    // }
-    return null;
-  };
-
   render() {
     return (
       <div>
         <WordInput />
         {this.renderWordsList()}
-        {this.renderShowMoreButton()}
       </div>
     );
   }
