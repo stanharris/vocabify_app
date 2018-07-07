@@ -74,8 +74,7 @@ class WordInput extends Component {
           wordValue: '',
           disableAddWordButton: true
         }).catch(error => {
-          // TODO
-          console.error('Error adding document: ', error);
+          // TODO - Display error message (Toast?)
         });
       } else {
         // TODO - handle case of non-signed in users
