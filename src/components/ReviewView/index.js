@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import isPast from 'date-fns/is_past';
 import isNull from 'lodash/isNull';
 import firebase from 'firebase';
+import 'firebase/firestore';
 
 import ReviewCard from '../../components/ReviewCard';
 import CompletedReview from '../../components/CompletedReview';

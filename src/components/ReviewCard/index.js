@@ -1,14 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import addDays from 'date-fns/add_days';
-import get from 'lodash/get';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
 import DefinitionList from '../DefinitionList';
 import './styles.css';
-
-type Props = {
-  key: string
-};
 
 type State = {
   showDefinition: boolean
@@ -20,18 +17,26 @@ class ReviewCard extends Component<Props, State> {
   };
 
   handleUpdateReviewDate = async (multiplier: number = 1) => {
-    // const { currentWord } = this.props;
-    // const { word, reviewInterval } = currentWord;
-    // const { wordsData } = await storage.get();
-    // const updatedWordsData = wordsData.map(item => {
-    //   if (item.word === word) {
-    //     const today = Date.now();
-    //     item.reviewDate = addDays(today, reviewInterval * multiplier);
-    //     item.reviewInterval = reviewInterval * multiplier;
-    //   }
-    //   return item;
-    // });
-    // storage.set({ wordsData: updatedWordsData });
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { reviewInterval, id: wordId } = this.props.currentWord;
+
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(wordId)
+          .set(
+            {
+              reviewInterval: reviewInterval * multiplier,
+              reviewDate: addDays(Date.now(), reviewInterval * multiplier)
+            },
+            { merge: true }
+          );
+      }
+    });
   };
 
   onCheckDefinitionClick = () => {
@@ -41,11 +46,11 @@ class ReviewCard extends Component<Props, State> {
   };
 
   onEasyButtonClick = () => {
-    this.handleUpdateReviewDate();
+    this.handleUpdateReviewDate(2);
   };
 
   onHardButtonClick = () => {
-    this.handleUpdateReviewDate(2);
+    this.handleUpdateReviewDate();
   };
 
   render() {
