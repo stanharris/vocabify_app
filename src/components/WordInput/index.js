@@ -73,8 +73,6 @@ class WordInput extends Component {
         this.setState({
           wordValue: '',
           disableAddWordButton: true
-        }).catch(error => {
-          // TODO - Display error message (Toast?)
         });
       } else {
         // TODO - handle case of non-signed in users
