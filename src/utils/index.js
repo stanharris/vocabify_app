@@ -1,31 +1,31 @@
 // @flow
 
+// This is for requests which HAVE to run server-side,
+// i.e. because the request includes an API key
+
 // TODO - Replace with Cloud function
-export const fetchDefinition = (word: string) => {
-  return new Promise(async (resolve, reject) => {
+const fetchDefinition = (word: string) =>
+  new Promise(async (resolve, reject) => {
     const headers = new Headers();
     headers.append(
       'X-Mashape-Key',
       'sGDbkk4oV4mshtHSJqX6FoPtRvrmp1S9XCqjsnzSWWhDPeohMt'
     );
     try {
-      const response = await fetch(
+      const request = await fetch(
         `https://wordsapiv1.p.mashape.com/words/${word}`,
         {
           headers
         }
       );
-      const { ok } = response;
+      const { ok } = request;
+      const definitionResponse = await request.json();
 
-      if (ok) {
-        const data = await response.json();
-        resolve(data);
-      } else {
-        resolve(null);
-      }
+      resolve(ok ? definitionResponse.results : null);
     } catch (error) {
       reject();
       // TODO - Log error
     }
   });
-};
+
+export { fetchDefinition };

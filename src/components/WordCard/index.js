@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore';
-import get from 'lodash/get';
 import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
@@ -24,26 +23,6 @@ class WordCard extends Component<Props, State> {
     isFetchingDefinition: false
   };
 
-  handleRemoveClick = async () => {
-    // TODO - Persist UID somewhere
-    // https://firebase.google.com/docs/auth/web/auth-state-persistence
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        const { uid } = user;
-        const { firebaseId } = this.props;
-
-        const db = firebase.firestore();
-
-        db
-          .collection('users')
-          .doc(uid)
-          .collection('words')
-          .doc(firebaseId)
-          .delete();
-      }
-    });
-  };
-
   componentDidMount() {
     const { fetchDefinition } = this.props;
     if (fetchDefinition) {
@@ -51,30 +30,49 @@ class WordCard extends Component<Props, State> {
         {
           isFetchingDefinition: true
         },
-        this.fetchDefinition
+        this.fetchAndSaveDefinition
       );
     }
   }
 
-  fetchDefinition = () => {
+  handleRemoveClick = async () => {
     // TODO - Persist UID somewhere
     // https://firebase.google.com/docs/auth/web/auth-state-persistence
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const { uid } = user;
-        const { word, firebaseId } = this.props;
-
-        const definitionResponse = await fetchDefinition(word);
+        const { firebaseId: wordId } = this.props;
 
         const db = firebase.firestore();
         db
           .collection('users')
           .doc(uid)
           .collection('words')
-          .doc(firebaseId)
+          .doc(wordId)
+          .delete();
+      }
+    });
+  };
+
+  fetchAndSaveDefinition = () => {
+    // TODO - Persist UID somewhere
+    // https://firebase.google.com/docs/auth/web/auth-state-persistence
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const { word, firebaseId: wordId } = this.props;
+
+        const definitionList = await fetchDefinition(word);
+
+        const db = firebase.firestore();
+        db
+          .collection('users')
+          .doc(uid)
+          .collection('words')
+          .doc(wordId)
           .set(
             {
-              dictionaryData: definitionResponse,
+              definitionList,
               fetchDefinition: false
             },
             { merge: true }
@@ -91,10 +89,11 @@ class WordCard extends Component<Props, State> {
 
   render() {
     const { isFetchingDefinition } = this.state;
-    const { word, dictionaryData, fetchDefinition } = this.props;
-    const definitionList = get(dictionaryData, 'results', []);
-    const showDefinitionList = Boolean(definitionList.length);
-    const showNotFound = !fetchDefinition && isNull(dictionaryData);
+    const { word, definitionList, fetchDefinition } = this.props;
+
+    const showDefinitionList = !isNull(definitionList);
+    const showNotFound = !fetchDefinition && isNull(definitionList);
+
     return (
       <div className="word-card">
         <div onClick={this.handleRemoveClick} className="remove-icon-container">

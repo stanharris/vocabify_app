@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import 'firebase/firestore';
@@ -6,10 +7,10 @@ import WordCard from '../WordCard';
 import WordInput from '../WordInput';
 import './styles.css';
 
-class WordsView extends Component {
+class WordsView extends Component<{}> {
   state = {
     words: [],
-    listLength: 10
+    listLength: 10 // TODO - Remove/re-do
   };
 
   componentDidMount() {
@@ -24,7 +25,7 @@ class WordsView extends Component {
     });
   }
 
-  initWords = uid => {
+  initWords = (uid: string) => {
     const db = firebase.firestore();
     db
       .collection('users')
@@ -50,27 +51,27 @@ class WordsView extends Component {
   };
 
   handleMoreClick = () => {
-    const { listLength } = this.state;
-    this.setState(
-      {
-        listLength: listLength + 10
-      },
-      this.updateWords
-    );
+    // const { listLength } = this.state;
+    // this.setState(
+    //   {
+    //     listLength: listLength + 10
+    //   },
+    //   this.updateWords
+    // );
   };
 
   renderWordsList = () => {
     const { words } = this.state;
     if (words && words.length) {
       const wordsList = words.map(item => {
-        const { word, fetchDefinition, dictionaryData, id } = item;
+        const { word, fetchDefinition, definitionList, id } = item;
         return (
           <WordCard
             key={id}
             firebaseId={id}
             word={word}
             fetchDefinition={fetchDefinition}
-            dictionaryData={dictionaryData}
+            definitionList={definitionList}
           />
         );
       });
@@ -85,14 +86,14 @@ class WordsView extends Component {
   };
 
   renderShowMoreButton = () => {
-    const { listLength, wordsDataLength } = this.state;
-    if (listLength < wordsDataLength) {
-      return (
-        <button className="show-more-button" onClick={this.handleMoreClick}>
-          Show more
-        </button>
-      );
-    }
+    // const { listLength, wordsDataLength } = this.state;
+    // if (listLength < wordsDataLength) {
+    //   return (
+    //     <button className="show-more-button" onClick={this.handleMoreClick}>
+    //       Show more
+    //     </button>
+    //   );
+    // }
     return null;
   };
 

@@ -42,7 +42,7 @@ class ReviewView extends Component<{}> {
   render() {
     const { words } = this.state;
     const wordsPendingReview = words.filter(
-      word => isPast(word.reviewDate) && !isNull(word.dictionaryData)
+      word => isPast(word.reviewDate) && !isNull(word.definitionList)
     );
     const canReviewWords = Boolean(wordsPendingReview.length);
     const currentWord = wordsPendingReview[0];
