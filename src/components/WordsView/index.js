@@ -37,7 +37,10 @@ class WordsView extends Component<{}, State> {
             this.setState({ words, isFetchingWords: false });
           });
       } else {
-        // TODO - handle case of non-signed in users
+        this.setState({
+          words: [],
+          isFetchingWords: false
+        });
         // Unsubscribe listener?
       }
     });
