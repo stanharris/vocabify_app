@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 import './styles.css';
 
