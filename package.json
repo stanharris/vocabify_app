@@ -4,13 +4,11 @@
   "private": true,
   "dependencies": {
     "date-fns": "^1.29.0",
-    "firebase": "^4.9.1",
+    "firebase": "^5.2.0",
     "lodash": "^4.17.10",
-    "react": "^16.1.0",
-    "react-dom": "^16.1.0",
-    "react-redux": "^5.0.6",
-    "react-scripts": "1.0.17",
-    "redux": "^3.7.2"
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,7 +19,7 @@
     "flow": "flow"
   },
   "devDependencies": {
-    "flow-bin": "^0.75.0",
-    "prettier": "1.8.2"
+    "flow-bin": "^0.76.0",
+    "prettier": "1.13.7"
   }
 }
