@@ -6,15 +6,15 @@ import './styles.css';
 class DefinitionList extends PureComponent<{}> {
   renderDefinitionList = () =>
     this.props.definitionList.map((item, index) => {
-      const { definition, examples } = item;
+      const { definition, example } = item;
       const hasDefinition = Boolean(definition);
-      const hasExample = Boolean(examples);
+      const hasExample = Boolean(example);
       return (
         <div className="definition-item">
           <span className="definition-index">{index + 1}.</span>
           {hasDefinition && <p className="definition-text">{definition}</p>}
           {hasExample && (
-            <p className="definition-example">&quot;{examples[0]}&quot;</p>
+            <p className="definition-example">&quot;{example}&quot;</p>
           )}
         </div>
       );

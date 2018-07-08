@@ -23,9 +23,22 @@ const fetchDefinition = (word: string) =>
       const { ok } = request;
       const definitionResponse = await request.json();
 
-      const returnDefinitionList = ok && Boolean(definitionResponse.results);
+      const hasDefinition = ok && Boolean(definitionResponse.results);
 
-      resolve(returnDefinitionList ? definitionResponse.results : null);
+      resolve(
+        hasDefinition
+          ? definitionResponse.results.map(item => {
+              const { definition, examples, partOfSpeech } = item;
+              const hasExample = Boolean(examples);
+              const hasPartOfSpeech = Boolean(partOfSpeech);
+              return {
+                definition,
+                example: hasExample ? examples[0] : null,
+                partOfSpeech: hasPartOfSpeech ? partOfSpeech : null
+              };
+            })
+          : null
+      );
     } catch (error) {
       reject();
       // TODO - Log error
