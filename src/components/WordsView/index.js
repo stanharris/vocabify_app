@@ -30,6 +30,7 @@ class WordsView extends Component<{}, State> {
           .collection('users')
           .doc(uid)
           .collection('words')
+          .orderBy('dateAdded', 'desc')
           .onSnapshot(snapshot => {
             // Runs whenever words collection changes
             const { docs } = snapshot;

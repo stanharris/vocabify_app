@@ -92,7 +92,8 @@ class WordInput extends Component {
             word,
             fetchDefinition: true,
             reviewDate: addDays(new Date(), defaultReviewInterval),
-            reviewInterval: defaultReviewInterval
+            reviewInterval: defaultReviewInterval,
+            dateAdded: new Date()
           });
         this.setState({
           wordValue: '',
