@@ -18,6 +18,20 @@ class AppHeader extends PureComponent<Props, State> {
     showSignIn: false
   };
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          showSignIn: false
+        });
+      } else {
+        this.setState({
+          showSignIn: true
+        });
+      }
+    });
+  }
+
   handleSignInClick = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
@@ -33,19 +47,9 @@ class AppHeader extends PureComponent<Props, State> {
       });
   };
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          showSignIn: false
-        });
-      } else {
-        this.setState({
-          showSignIn: true
-        });
-      }
-    });
-  }
+  handleSignOutClick = () => {
+    firebase.auth().signOut();
+  };
 
   render() {
     const {
@@ -74,6 +78,9 @@ class AppHeader extends PureComponent<Props, State> {
           <div className="button-divider" />
           {showSignIn && (
             <button onClick={this.handleSignInClick}>Sign in</button>
+          )}
+          {!showSignIn && (
+            <button onClick={this.handleSignOutClick}>Sign out</button>
           )}
         </div>
       </header>
