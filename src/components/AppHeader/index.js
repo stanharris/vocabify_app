@@ -7,7 +7,9 @@ import './styles.css';
 
 type Props = {
   showWordsView: boolean,
-  showReviewView: boolean
+  showReviewView: boolean,
+  handleWordsClick: () => void,
+  handleReviewClick: () => void
 };
 
 type State = {

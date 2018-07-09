@@ -1,9 +1,14 @@
 // @flow
 import React, { PureComponent } from 'react';
 
+import { DefinitionList as DefinitionListType } from '../../types';
 import './styles.css';
 
-class DefinitionList extends PureComponent<{}> {
+type Props = {
+  definitionList: Array<DefinitionListType>
+};
+
+class DefinitionList extends PureComponent<Props> {
   renderDefinitionList = () =>
     this.props.definitionList.map((item, index) => {
       const { definition, example } = item;

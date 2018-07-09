@@ -5,9 +5,11 @@ import 'firebase/firestore';
 
 import WordCard from '../WordCard';
 import WordInput from '../WordInput';
+import Word from '../../types';
 import './styles.css';
 
 type State = {
+  words: Array<Word>,
   isFetchingWords: boolean
 };
 

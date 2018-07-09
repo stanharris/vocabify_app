@@ -5,7 +5,12 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import DefinitionList from '../DefinitionList';
+import Word from '../../types';
 import './styles.css';
+
+type Props = {
+  currentWord: Word
+};
 
 type State = {
   showDefinition: boolean

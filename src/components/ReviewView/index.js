@@ -5,11 +5,16 @@ import isNull from 'lodash/isNull';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import ReviewCard from '../../components/ReviewCard';
-import CompletedReview from '../../components/CompletedReview';
+import ReviewCard from '../ReviewCard';
+import CompletedReview from '../CompletedReview';
+import Word from '../../types';
 import './styles.css';
 
-class ReviewView extends Component<{}> {
+type State = {
+  words: Array<Word>
+};
+
+class ReviewView extends Component<{}, State> {
   state = {
     words: []
   };

@@ -6,12 +6,14 @@ import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
 import { fetchDefinition } from '../../utils';
+import { DefinitionList as DefinitionListType } from '../../types';
 import './styles.css';
 
 type Props = {
   firebaseId: string,
   fetchDefinition: boolean,
-  word: string
+  word: string,
+  definitionList: Array<DefinitionListType>
 };
 
 type State = {
