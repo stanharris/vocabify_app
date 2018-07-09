@@ -8,8 +8,10 @@ import './styles.css';
 type Props = {
   showWordsView: boolean,
   showReviewView: boolean,
+  showSettingsView: boolean,
   handleWordsClick: () => void,
-  handleReviewClick: () => void
+  handleReviewClick: () => void,
+  handleSettingsClick: () => void
 };
 
 type State = {
@@ -58,8 +60,10 @@ class AppHeader extends PureComponent<Props, State> {
     const {
       showWordsView,
       showReviewView,
+      showSettingsView,
       handleWordsClick,
-      handleReviewClick
+      handleReviewClick,
+      handleSettingsClick
     } = this.props;
     const { showSignIn } = this.state;
     return (
@@ -77,6 +81,12 @@ class AppHeader extends PureComponent<Props, State> {
             className={showReviewView ? 'active' : ''}
           >
             Review
+          </button>
+          <button
+            onClick={handleSettingsClick}
+            className={showSettingsView ? 'active' : ''}
+          >
+            Settings
           </button>
           <div className="button-divider" />
           {showSignIn && (
