@@ -12,8 +12,9 @@
   flex: 1;
 }
 
-.button-divider {
+.action-buttons {
   flex: 1;
+  text-align: right;
 }
 
 .header-navigation button {
@@ -32,7 +33,7 @@
   color: white;
 }
 
-.header-navigation button.active {
+.header-navigation .active button {
   color: white;
 }
 

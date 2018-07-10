@@ -1,24 +1,16 @@
 // @flow
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { NavLink } from 'react-router-dom';
 
 import './styles.css';
-
-type Props = {
-  showWordsView: boolean,
-  showReviewView: boolean,
-  showSettingsView: boolean,
-  handleWordsClick: () => void,
-  handleReviewClick: () => void,
-  handleSettingsClick: () => void
-};
 
 type State = {
   showSignIn: boolean
 };
 
-class AppHeader extends PureComponent<Props, State> {
+class AppHeader extends Component<{}, State> {
   state = {
     showSignIn: false
   };
@@ -57,44 +49,28 @@ class AppHeader extends PureComponent<Props, State> {
   };
 
   render() {
-    const {
-      showWordsView,
-      showReviewView,
-      showSettingsView,
-      handleWordsClick,
-      handleReviewClick,
-      handleSettingsClick
-    } = this.props;
     const { showSignIn } = this.state;
     return (
       <header className="app-header">
         <h1 className="header-logo">Vocabify</h1>
         <div className="header-navigation">
-          <button
-            onClick={handleWordsClick}
-            className={showWordsView ? 'active' : ''}
-          >
-            Words
-          </button>
-          <button
-            onClick={handleReviewClick}
-            className={showReviewView ? 'active' : ''}
-          >
-            Review
-          </button>
-          <button
-            onClick={handleSettingsClick}
-            className={showSettingsView ? 'active' : ''}
-          >
-            Settings
-          </button>
-          <div className="button-divider" />
-          {showSignIn && (
-            <button onClick={this.handleSignInClick}>Sign in</button>
-          )}
-          {!showSignIn && (
-            <button onClick={this.handleSignOutClick}>Sign out</button>
-          )}
+          <NavLink exact to="/">
+            <button>Words</button>
+          </NavLink>
+          <NavLink to="/review">
+            <button>Review</button>
+          </NavLink>
+          <div className="action-buttons">
+            <NavLink to="/settings">
+              <button>Settings</button>
+            </NavLink>
+            {showSignIn && (
+              <button onClick={this.handleSignInClick}>Sign in</button>
+            )}
+            {!showSignIn && (
+              <button onClick={this.handleSignOutClick}>Sign out</button>
+            )}
+          </div>
         </div>
       </header>
     );

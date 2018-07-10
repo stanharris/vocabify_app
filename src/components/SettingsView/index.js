@@ -10,7 +10,9 @@ class SettingsView extends Component<{}> {
   render() {
     return (
       <div className="settings-view">
-        <Card>Foo</Card>
+        <Card>
+          <h3>Settings</h3>
+        </Card>
       </div>
     );
   }
