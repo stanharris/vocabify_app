@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { NavLink } from 'react-router-dom';
 
+import cogIcon from '../../assets/img/cog.svg';
 import './styles.css';
 
 type State = {
@@ -62,7 +63,7 @@ class AppHeader extends Component<{}, State> {
           </NavLink>
           <div className="action-buttons">
             <NavLink to="/settings">
-              <button>Settings</button>
+              <img src={cogIcon} className="settings-icon" alt="" />
             </NavLink>
             {showSignIn && (
               <button onClick={this.handleSignInClick}>Sign in</button>

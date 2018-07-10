@@ -6,6 +6,14 @@
   margin: 16px auto 0;
 }
 
+.settings-view h3 {
+  font-family: 'Rasa', serif;
+  text-transform: capitalize;
+  font-size: 1.6rem;
+  margin: 0 0;
+  font-weight: 400;
+}
+
 @media (min-width: 700px) {
   .settings-view {
     margin-top: 32px;

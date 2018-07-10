@@ -12,11 +12,6 @@
   flex: 1;
 }
 
-.action-buttons {
-  flex: 1;
-  text-align: right;
-}
-
 .header-navigation button {
   background: 0;
   border: 0;
@@ -35,6 +30,28 @@
 
 .header-navigation .active button {
   color: white;
+}
+
+.action-buttons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.settings-icon {
+  transition: transform 0.2s, opacity 0.2s;
+  color: #fff;
+  fill: #fff;
+  cursor: pointer;
+  padding: 10px;
+  opacity: 0.8;
+}
+
+.settings-icon:hover,
+.active .settings-icon {
+  transform: rotate(60deg);
+  opacity: 1;
 }
 
 @media (min-width: 700px) {
