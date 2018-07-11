@@ -7,11 +7,9 @@
 }
 
 .settings-view h3 {
-  font-family: 'Rasa', serif;
   text-transform: capitalize;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   margin: 0 0;
-  font-weight: 400;
 }
 
 @media (min-width: 700px) {
