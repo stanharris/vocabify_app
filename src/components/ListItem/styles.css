@@ -1,13 +1,34 @@
 .list-item {
-  padding: 12px 8px;
+  padding: 12px 8px 12px 0;
   border-top: solid #e5d2c7 1px;
   margin-top: -1px;
   cursor: pointer;
   /* TODO - transition should come in fast, leave slow */
   transition: background 0.05s;
+  position: relative;
 }
 
-.list-item.active,
 .list-item:hover {
   background: #9d675b1a;
+}
+
+.list-text {
+  padding-left: 48px;
+}
+
+.check {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  color: #626262;
+  margin-top: 1px;
+}
+
+.active .check {
+  color: green;
+}
+
+.active .list-text {
+  font-weight: 600;
 }

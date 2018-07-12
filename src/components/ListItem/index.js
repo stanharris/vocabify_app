@@ -3,7 +3,14 @@ import React, { PureComponent } from 'react';
 
 import './styles.css';
 
-class ListItem extends PureComponent {
+type Props = {
+  id: string,
+  name: string,
+  enabled: boolean,
+  onClick: (string, boolean) => void
+};
+
+class ListItem extends PureComponent<Props> {
   handleClick = () => {
     this.props.onClick(this.props.id, !this.props.enabled);
   };
@@ -14,7 +21,14 @@ class ListItem extends PureComponent {
     if (enabled) classNames = `${classNames} active`;
     return (
       <div className={classNames} onClick={this.handleClick}>
-        {name} {enabled && 'tick icon'}
+        <div className="check">
+          {enabled ? (
+            <i class="material-icons">check_circle_outline</i>
+          ) : (
+            <i class="material-icons">radio_button_unchecked</i>
+          )}
+        </div>
+        <div className="list-text">{name}</div>
       </div>
     );
   }

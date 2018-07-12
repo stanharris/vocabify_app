@@ -16,6 +16,8 @@
 .error {
   color: #d32f2f; /* TODO - Make global css var */
   font-size: 0.9rem;
+  margin: 16px 0 0;
+  padding: 0;
 }
 
 @media (min-width: 700px) {
