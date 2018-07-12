@@ -2,5 +2,12 @@
   padding: 12px 8px;
   border-top: solid #e5d2c7 1px;
   margin-top: -1px;
+  cursor: pointer;
+  /* TODO - transition should come in fast, leave slow */
+  transition: background 0.05s;
 }
 
+.list-item.active,
+.list-item:hover {
+  background: #9d675b1a;
+}

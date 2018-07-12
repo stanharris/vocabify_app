@@ -6,10 +6,11 @@
   margin: 16px auto 0;
 }
 
-.settings-view h3 {
+.settings-view h1 {
   text-transform: capitalize;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin: 0 0;
+  font-weight: 400;
 }
 
 @media (min-width: 700px) {

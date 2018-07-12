@@ -5,14 +5,16 @@ import './styles.css';
 
 class ListItem extends PureComponent {
   handleClick = () => {
-    this.props.onClick(this.props.id, this.props.enabled);
+    this.props.onClick(this.props.id, !this.props.enabled);
   };
 
   render() {
     const { name, enabled } = this.props;
+    let classNames = 'list-item';
+    if (enabled) classNames = `${classNames} active`;
     return (
-      <div className="list-item" onClick={this.handleClick}>
-        {name} {enabled ? 'enabled' : 'disabled'}
+      <div className={classNames} onClick={this.handleClick}>
+        {name} {enabled && 'tick icon'}
       </div>
     );
   }

@@ -40,6 +40,20 @@ class SettingsView extends Component<{}> {
   };
 
   toggleSource = (id: string, enabled: boolean) => {
+    const { definitionSources } = this.state;
+    const updatedSources = definitionSources.map(source => {
+      if (source.id === id) {
+        return {
+          ...source,
+          enabled
+        };
+      }
+      return source;
+    });
+    this.setState({
+      definitionSources: updatedSources
+    });
+    // Update local state for instant UI
     // Update firestore
   };
 
@@ -57,8 +71,10 @@ class SettingsView extends Component<{}> {
     return (
       <div className="settings-view">
         <Card>
-          <h3>Settings</h3>
-          <List>{this.renderDefinitionSources()}</List>
+          <h1>Settings</h1>
+          <List title="Definition sources">
+            {this.renderDefinitionSources()}
+          </List>
         </Card>
       </div>
     );
