@@ -10,18 +10,33 @@ import './styles.css';
 
 class SettingsView extends Component<{}> {
   state = {
-    definitionSources: [
-      {
-        id: 'mock-id',
-        name: 'Oxford Dictionary',
-        enabled: true
-      },
-      {
-        id: 'mock-other-id',
-        name: 'Cambridge Dictionary',
-        enabled: true
+    definitionSources: []
+  };
+
+  componentDidMount() {
+    this.initSettings();
+  }
+
+  initSettings = () => {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const { uid } = user;
+        const db = firebase.firestore();
+        const sourcesRef = await db
+          .collection('users')
+          .doc(uid)
+          .collection('settings')
+          .doc('dictionarySources')
+          .get();
+        if (sourcesRef.exists) {
+          this.setState({
+            definitionSources: sourcesRef.data().sources
+          });
+        } else {
+          // TODO - Log error
+        }
       }
-    ]
+    });
   };
 
   toggleSource = (id: string, enabled: boolean) => {
