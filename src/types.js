@@ -10,3 +10,14 @@ export type Word = {
   reviewDate: Date,
   reviewInterval: number
 };
+
+export type DefinitionSource = {
+  id: string,
+  name: string,
+  enabled: boolean
+};
+
+export type ErrorType = {
+  hasError: boolean,
+  errorMessage: string
+};

@@ -1,16 +1,28 @@
 // @flow
-import React, { Component } from 'react';
+import * as React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import Card from '../Card';
 import List from '../List';
 import ListItem from '../ListItem';
+import { DefinitionSource, ErrorType } from '../../types';
 import './styles.css';
 
-class SettingsView extends Component<{}> {
+type State = {
+  definitionSources: Array<DefinitionSource>,
+  isLoading: boolean,
+  error: ErrorType
+};
+
+class SettingsView extends React.Component<{}, State> {
   state = {
-    definitionSources: []
+    definitionSources: [],
+    isLoading: false,
+    error: {
+      hasError: false,
+      errorMessage: ''
+    }
   };
 
   componentDidMount() {
@@ -18,6 +30,10 @@ class SettingsView extends Component<{}> {
   }
 
   initSettings = () => {
+    this.setState({
+      isLoading: true
+    });
+
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const { uid } = user;
@@ -30,10 +46,18 @@ class SettingsView extends Component<{}> {
           .get();
         if (sourcesRef.exists) {
           this.setState({
-            definitionSources: sourcesRef.data().sources
+            definitionSources: sourcesRef.data().sources,
+            isLoading: false
           });
         } else {
           // TODO - Log error
+          this.setState({
+            isLoading: false,
+            error: {
+              hasError: true,
+              errorMessage: 'Failed to fetch user settings.'
+            }
+          });
         }
       }
     });
@@ -68,13 +92,16 @@ class SettingsView extends Component<{}> {
     ));
 
   render() {
+    const { isLoading, error } = this.state;
+    const { hasError, errorMessage } = error;
     return (
       <div className="settings-view">
         <Card>
           <h1>Settings</h1>
-          <List title="Definition sources">
+          <List title="Definition sources" isLoading={isLoading}>
             {this.renderDefinitionSources()}
           </List>
+          {hasError && <p className="error">{errorMessage}</p>}
         </Card>
       </div>
     );
