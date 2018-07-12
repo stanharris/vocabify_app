@@ -5,24 +5,24 @@
   cursor: pointer;
   /* TODO - transition should come in fast, leave slow */
   transition: background 0.05s;
-  position: relative;
+  display: flex;
 }
 
 .list-item:hover {
   background: #9d675b1a;
 }
 
-.list-text {
-  padding-left: 48px;
+.check {
+  color: #626262;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
 }
 
-.check {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%) scale(0.9);
-  color: #626262;
-  margin-top: 1px;
+.list-text {
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .active .check {
