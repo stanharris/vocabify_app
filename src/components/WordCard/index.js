@@ -1,12 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
-import { fetchDefinition } from '../../utils';
-import { DefinitionList as DefinitionListType } from '../../types';
+import {
+  DefinitionList as DefinitionListType,
+  ErrorType,
+  DefinitionSource
+} from '../../types';
 import './styles.css';
 
 type Props = {
@@ -17,12 +19,21 @@ type Props = {
 };
 
 type State = {
-  isFetchingDefinition: boolean
+  isFetchingDefinition: boolean,
+  error: ErrorType
+};
+
+const sourceMapping = {
+  ZhzoOH1C99RAwDOzRfGF: 'wordsAPI'
 };
 
 class WordCard extends Component<Props, State> {
   state = {
-    isFetchingDefinition: false
+    isFetchingDefinition: false,
+    error: {
+      hasError: false,
+      errorMessage: ''
+    }
   };
 
   componentDidMount() {
@@ -46,8 +57,7 @@ class WordCard extends Component<Props, State> {
         const { firebaseId: wordId } = this.props;
 
         const db = firebase.firestore();
-        db
-          .collection('users')
+        db.collection('users')
           .doc(uid)
           .collection('words')
           .doc(wordId)
@@ -57,32 +67,39 @@ class WordCard extends Component<Props, State> {
   };
 
   fetchAndSaveDefinition = () => {
-    // TODO - Persist UID somewhere
-    // https://firebase.google.com/docs/auth/web/auth-state-persistence
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const { uid } = user;
-        const { word, firebaseId: wordId } = this.props;
-
-        const definitionList = await fetchDefinition(word);
-
+        const { word } = this.props;
         const db = firebase.firestore();
-        db
+        const sourcesRef = await db
           .collection('users')
           .doc(uid)
-          .collection('words')
-          .doc(wordId)
-          .set(
-            {
-              definitionList,
-              fetchDefinition: false
-            },
-            { merge: true }
-          );
-
-        this.setState({
-          isFetchingDefinition: false
-        });
+          .collection('settings')
+          .doc('dictionarySources')
+          .get();
+        if (sourcesRef.exists) {
+          const enabledSources = sourcesRef
+            .data()
+            .sources.filter(source => source.enabled);
+          enabledSources.forEach(source => {
+            const fetchDefinition = firebase
+              .functions()
+              .httpsCallable(sourceMapping[source.id]);
+            fetchDefinition({ word })
+              .then(response => console.log(response))
+              .catch(error => console.log(error));
+          });
+          // TODO - Save definition
+        } else {
+          // TODO - Ensure new loading state is cancelled here
+          this.setState({
+            error: {
+              hasError: true,
+              errorMessage: 'Failed to fetch dictionary sources.'
+            }
+          });
+        }
       } else {
         // TODO - handle case of non-signed in users
       }
@@ -90,8 +107,9 @@ class WordCard extends Component<Props, State> {
   };
 
   render() {
-    const { isFetchingDefinition } = this.state;
+    const { isFetchingDefinition, error } = this.state;
     const { word, definitionList, fetchDefinition } = this.props;
+    const { hasError, errorMessage } = error;
 
     const showDefinitionList = !isNull(definitionList);
     const showNotFound = !fetchDefinition && isNull(definitionList);
@@ -111,6 +129,7 @@ class WordCard extends Component<Props, State> {
         {showNotFound && (
           <div className="definition-not-found">Definition not found</div>
         )}
+        {hasError && <p className="error">{errorMessage}</p>}
       </div>
     );
   }

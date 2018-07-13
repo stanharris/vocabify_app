@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 import addDays from 'date-fns/add_days';
 
 import './styles.css';
@@ -27,8 +26,7 @@ class WordInput extends Component {
       if (user) {
         const { uid } = user;
         const db = firebase.firestore();
-        db
-          .collection('users')
+        db.collection('users')
           .doc(uid)
           .collection('words')
           .onSnapshot(snapshot => {
@@ -63,6 +61,7 @@ class WordInput extends Component {
 
   duplicateCheck = async word => {
     const { words } = this.state;
+    if (!words.length) return null;
     if (words.includes(word)) {
       this.setState({
         error: true,
@@ -84,8 +83,7 @@ class WordInput extends Component {
         const { uid } = user;
         const { wordValue: word } = this.state;
         const db = firebase.firestore();
-        db
-          .collection('users')
+        db.collection('users')
           .doc(uid)
           .collection('words')
           .add({
