@@ -74,11 +74,24 @@ class SettingsView extends React.Component<{}, State> {
       }
       return source;
     });
+
     this.setState({
       definitionSources: updatedSources
     });
-    // Update local state for instant UI
-    // Update firestore
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const { uid } = user;
+        const db = firebase.firestore();
+        db.collection('users')
+          .doc(uid)
+          .collection('settings')
+          .doc('dictionarySources')
+          .set({ sources: updatedSources });
+      } else {
+        // TODO - handle case of non-signed in users
+      }
+    });
   };
 
   renderDefinitionSources = () =>
