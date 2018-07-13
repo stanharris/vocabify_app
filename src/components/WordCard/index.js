@@ -23,6 +23,7 @@ type State = {
   error: ErrorType
 };
 
+// TODO - Move to separate file
 const sourceMapping = {
   ZhzoOH1C99RAwDOzRfGF: 'wordsAPI'
 };
@@ -70,7 +71,7 @@ class WordCard extends Component<Props, State> {
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const { uid } = user;
-        const { word } = this.props;
+        const { word, firebaseId: wordId } = this.props;
         const db = firebase.firestore();
         const sourcesRef = await db
           .collection('users')
@@ -82,14 +83,40 @@ class WordCard extends Component<Props, State> {
           const enabledSources = sourcesRef
             .data()
             .sources.filter(source => source.enabled);
-          enabledSources.forEach(source => {
+
+          // TODO - Run fetches in parallel
+          enabledSources.forEach(async source => {
             const fetchDefinition = firebase
               .functions()
               .httpsCallable(sourceMapping[source.id]);
-            fetchDefinition({ word })
-              .then(response => console.log(response))
-              .catch(error => console.log(error));
+            try {
+              const { data: definitionList } = await fetchDefinition({
+                word
+              });
+              db.collection('users')
+                .doc(uid)
+                .collection('words')
+                .doc(wordId)
+                .set(
+                  {
+                    definitionList,
+                    fetchDefinition: false
+                  },
+                  { merge: true }
+                );
+              this.setState({
+                isFetchingDefinition: false
+              });
+            } catch (error) {
+              this.setState({
+                error: {
+                  hasError: true,
+                  errorMessage: 'Failed to fetch dictionary sources.'
+                }
+              });
+            }
           });
+
           // TODO - Save definition
         } else {
           // TODO - Ensure new loading state is cancelled here
