@@ -68,6 +68,12 @@ class WordCard extends Component<Props, State> {
   };
 
   fetchAndSaveDefinition = () => {
+    // TODO - Refactor
+    // Gets auth state (should be in redux store)
+    // Gets enabled sources from settings (should happen once on app load then
+    // save in redux store)
+    // Fetches definition from enabled sources (keep here)
+    // Saves definition to firestore (keep here)
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const { uid } = user;
@@ -116,8 +122,6 @@ class WordCard extends Component<Props, State> {
               });
             }
           });
-
-          // TODO - Save definition
         } else {
           // TODO - Ensure new loading state is cancelled here
           this.setState({
