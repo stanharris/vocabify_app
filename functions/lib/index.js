@@ -10,15 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const node_fetch_1 = require("node-fetch");
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 exports.wordsAPI = functions.https.onCall((data, context) => new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
     const headers = new node_fetch_1.Headers();
-    headers.append('X-Mashape-Key', 'sGDbkk4oV4mshtHSJqX6FoPtRvrmp1S9XCqjsnzSWWhDPeohMt');
+    headers.append('X-Mashape-Key', functions.config().mashape.key);
     try {
         const request = yield node_fetch_1.default(`https://wordsapiv1.p.mashape.com/words/${data.word}`, {
             headers
