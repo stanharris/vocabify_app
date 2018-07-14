@@ -19,11 +19,6 @@ type State = {
   error: ErrorType
 };
 
-// TODO - Move to separate file
-const sourceMapping = {
-  ZhzoOH1C99RAwDOzRfGF: 'wordsAPI'
-};
-
 class WordCard extends Component<Props, State> {
   state = {
     isFetchingDefinition: false,
@@ -92,29 +87,19 @@ class WordCard extends Component<Props, State> {
           enabledSources.forEach(async source => {
             const fetchDefinition = firebase
               .functions()
-              .httpsCallable(sourceMapping[source.id]);
+              .httpsCallable(source.cloudFunctionId);
 
             try {
               const { data: definitionList } = await fetchDefinition({
                 word
               });
-              if (isNull(definitionList)) {
-                this.setState({
-                  isFetchingDefinition: false,
-                  hasFetched: true
-                });
-              } else {
-                db.collection('users')
-                  .doc(uid)
-                  .collection('words')
-                  .doc(wordId)
-                  .set(
-                    {
-                      definitionList
-                    },
-                    { merge: true }
-                  );
+              if (!isNull(definitionList)) {
+                this.saveDefinition(uid, wordId, definitionList);
               }
+              this.setState({
+                isFetchingDefinition: false,
+                hasFetched: true
+              });
             } catch (error) {
               this.renderError();
             }
@@ -124,6 +109,25 @@ class WordCard extends Component<Props, State> {
         }
       }
     });
+  };
+
+  saveDefinition = (
+    uid: string,
+    wordId: string,
+    definitionList: Array<DefinitionListType>
+  ) => {
+    const db = firebase.firestore();
+
+    db.collection('users')
+      .doc(uid)
+      .collection('words')
+      .doc(wordId)
+      .set(
+        {
+          definitionList
+        },
+        { merge: true }
+      );
   };
 
   renderError = () => {
@@ -150,16 +154,18 @@ class WordCard extends Component<Props, State> {
           <span className="icon">&times;</span>
         </div>
         <h3 className="title">{word}</h3>
-        {isFetchingDefinition && (
-          <p className="fetching-definition">Searching for definition...</p>
-        )}
         {showDefinitionList && (
           <DefinitionList definitionList={definitionList} />
+        )}
+        {isFetchingDefinition && (
+          <div className="fetching-definition">Searching for definition...</div>
         )}
         {showNotFound && (
           <div className="definition-not-found">Definition not found</div>
         )}
-        {hasError && <p className="error">{errorMessage}</p>}
+        {hasError && (
+          <div className="fetch-definition-error">{errorMessage}</div>
+        )}
       </div>
     );
   }

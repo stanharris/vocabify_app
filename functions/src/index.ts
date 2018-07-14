@@ -20,14 +20,15 @@ exports.wordsAPI = functions.https.onCall(
 
         resolve(
           hasDefinition
-            ? definitionResponse.results.map(item => {
+            ? definitionResponse.results.map((item, index) => {
                 const { definition, examples, partOfSpeech } = item;
                 const hasExample = Boolean(examples);
                 const hasPartOfSpeech = Boolean(partOfSpeech);
                 return {
                   definition,
                   example: hasExample ? examples[0] : null,
-                  partOfSpeech: hasPartOfSpeech ? partOfSpeech : null
+                  partOfSpeech: hasPartOfSpeech ? partOfSpeech : null,
+                  enabled: index < 3
                 };
               })
             : null

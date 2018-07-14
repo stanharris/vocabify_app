@@ -11,7 +11,10 @@ type Props = {
 class DefinitionList extends PureComponent<Props> {
   renderDefinitionList = () =>
     this.props.definitionList.map((item, index) => {
-      const { definition, example } = item;
+      const { definition, example, enabled } = item;
+
+      if (!enabled) return null;
+
       const hasDefinition = Boolean(definition);
       const hasExample = Boolean(example);
       return (

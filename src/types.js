@@ -1,6 +1,8 @@
 export type DefinitionList = {
   definition: string,
-  example: string
+  example: string,
+  partOfSpeech: string,
+  enabled: boolean
 };
 
 export type Word = {
