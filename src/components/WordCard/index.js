@@ -4,22 +4,18 @@ import firebase from 'firebase/app';
 import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
-import {
-  DefinitionList as DefinitionListType,
-  ErrorType,
-  DefinitionSource
-} from '../../types';
+import { DefinitionList as DefinitionListType, ErrorType } from '../../types';
 import './styles.css';
 
 type Props = {
   firebaseId: string,
-  fetchDefinition: boolean,
   word: string,
   definitionList: Array<DefinitionListType>
 };
 
 type State = {
   isFetchingDefinition: boolean,
+  hasFetched: boolean,
   error: ErrorType
 };
 
@@ -31,6 +27,7 @@ const sourceMapping = {
 class WordCard extends Component<Props, State> {
   state = {
     isFetchingDefinition: false,
+    hasFetched: false,
     error: {
       hasError: false,
       errorMessage: ''
@@ -38,14 +35,9 @@ class WordCard extends Component<Props, State> {
   };
 
   componentDidMount() {
-    const { fetchDefinition } = this.props;
-    if (fetchDefinition) {
-      this.setState(
-        {
-          isFetchingDefinition: true
-        },
-        this.fetchAndSaveDefinition
-      );
+    const { definitionList } = this.props;
+    if (isNull(definitionList)) {
+      this.fetchAndSaveDefinition();
     }
   }
 
@@ -79,12 +71,18 @@ class WordCard extends Component<Props, State> {
         const { uid } = user;
         const { word, firebaseId: wordId } = this.props;
         const db = firebase.firestore();
+
+        this.setState({
+          isFetchingDefinition: true
+        });
+
         const sourcesRef = await db
           .collection('users')
           .doc(uid)
           .collection('settings')
           .doc('dictionarySources')
           .get();
+
         if (sourcesRef.exists) {
           const enabledSources = sourcesRef
             .data()
@@ -95,55 +93,56 @@ class WordCard extends Component<Props, State> {
             const fetchDefinition = firebase
               .functions()
               .httpsCallable(sourceMapping[source.id]);
+
             try {
               const { data: definitionList } = await fetchDefinition({
                 word
               });
-              db.collection('users')
-                .doc(uid)
-                .collection('words')
-                .doc(wordId)
-                .set(
-                  {
-                    definitionList,
-                    fetchDefinition: false
-                  },
-                  { merge: true }
-                );
-              this.setState({
-                isFetchingDefinition: false
-              });
+              if (isNull(definitionList)) {
+                this.setState({
+                  isFetchingDefinition: false,
+                  hasFetched: true
+                });
+              } else {
+                db.collection('users')
+                  .doc(uid)
+                  .collection('words')
+                  .doc(wordId)
+                  .set(
+                    {
+                      definitionList
+                    },
+                    { merge: true }
+                  );
+              }
             } catch (error) {
-              this.setState({
-                error: {
-                  hasError: true,
-                  errorMessage: 'Failed to fetch dictionary sources.'
-                }
-              });
+              this.renderError();
             }
           });
         } else {
-          // TODO - Ensure new loading state is cancelled here
-          this.setState({
-            error: {
-              hasError: true,
-              errorMessage: 'Failed to fetch dictionary sources.'
-            }
-          });
+          this.renderError();
         }
-      } else {
-        // TODO - handle case of non-signed in users
+      }
+    });
+  };
+
+  renderError = () => {
+    this.setState({
+      isFetchingDefinition: false,
+      error: {
+        hasError: true,
+        errorMessage: 'Failed to fetch dictionary sources.'
       }
     });
   };
 
   render() {
-    const { isFetchingDefinition, error } = this.state;
-    const { word, definitionList, fetchDefinition } = this.props;
+    const { isFetchingDefinition, hasFetched, error } = this.state;
+    const { word, definitionList } = this.props;
     const { hasError, errorMessage } = error;
 
     const showDefinitionList = !isNull(definitionList);
-    const showNotFound = !fetchDefinition && isNull(definitionList);
+    const showNotFound = hasFetched && isNull(definitionList);
 
     return (
       <div className="word-card">

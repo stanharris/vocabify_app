@@ -88,10 +88,10 @@ class WordInput extends Component {
           .collection('words')
           .add({
             word,
-            fetchDefinition: true,
             reviewDate: addDays(new Date(), defaultReviewInterval),
             reviewInterval: defaultReviewInterval,
-            dateAdded: new Date()
+            dateAdded: new Date(),
+            definitionList: null
           });
         this.setState({
           wordValue: '',

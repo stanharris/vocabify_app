@@ -28,8 +28,7 @@ class WordsView extends Component<{}, State> {
       if (user) {
         const { uid } = user;
         const db = firebase.firestore();
-        db
-          .collection('users')
+        db.collection('users')
           .doc(uid)
           .collection('words')
           .orderBy('dateAdded', 'desc')
@@ -53,13 +52,12 @@ class WordsView extends Component<{}, State> {
     const { words } = this.state;
     if (words && words.length) {
       const wordsList = words.map(item => {
-        const { word, fetchDefinition, definitionList, id } = item;
+        const { word, definitionList, id } = item;
         return (
           <WordCard
             key={id}
             firebaseId={id}
             word={word}
-            fetchDefinition={fetchDefinition}
             definitionList={definitionList}
           />
         );
