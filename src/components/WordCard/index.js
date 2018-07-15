@@ -1,9 +1,10 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import firebase from 'firebase/app';
 import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
+import ManageDefinitionsModal from '../ManageDefinitionsModal';
 import { DefinitionList as DefinitionListType, ErrorType } from '../../types';
 import './styles.css';
 
@@ -16,6 +17,7 @@ type Props = {
 type State = {
   isFetchingDefinition: boolean,
   hasFetched: boolean,
+  showModal: boolean,
   error: ErrorType
 };
 
@@ -23,6 +25,7 @@ class WordCard extends Component<Props, State> {
   state = {
     isFetchingDefinition: false,
     hasFetched: false,
+    showModal: false,
     error: {
       hasError: false,
       errorMessage: ''
@@ -51,6 +54,18 @@ class WordCard extends Component<Props, State> {
           .doc(wordId)
           .delete();
       }
+    });
+  };
+
+  handleManageClick = () => {
+    this.setState({
+      showModal: true
+    });
+  };
+
+  handleModalClose = () => {
+    this.setState({
+      showModal: false
     });
   };
 
@@ -93,6 +108,7 @@ class WordCard extends Component<Props, State> {
               const { data: definitionList } = await fetchDefinition({
                 word
               });
+              // TODO - Return definition and move saveDefinition call to componentDidMount()
               if (!isNull(definitionList)) {
                 this.saveDefinition(uid, wordId, definitionList);
               }
@@ -141,7 +157,7 @@ class WordCard extends Component<Props, State> {
   };
 
   render() {
-    const { isFetchingDefinition, hasFetched, error } = this.state;
+    const { isFetchingDefinition, hasFetched, showModal, error } = this.state;
     const { word, definitionList } = this.props;
     const { hasError, errorMessage } = error;
 
@@ -149,24 +165,46 @@ class WordCard extends Component<Props, State> {
     const showNotFound = hasFetched && isNull(definitionList);
 
     return (
-      <div className="word-card">
-        <div onClick={this.handleRemoveClick} className="remove-icon-container">
-          <span className="icon">&times;</span>
+      <Fragment>
+        <ManageDefinitionsModal
+          isOpen={showModal}
+          handleModalClose={this.handleModalClose}
+        />
+
+        <div className="word-card">
+          <div
+            onClick={this.handleRemoveClick}
+            className="remove-icon-container"
+          >
+            <span className="icon">&times;</span>
+          </div>
+          <h3 className="title">{word}</h3>
+          {isFetchingDefinition && (
+            <div className="fetching-definition">
+              Searching for definition...
+            </div>
+          )}
+          {showNotFound && (
+            <div className="definition-not-found">Definition not found</div>
+          )}
+          {hasError && (
+            <div className="fetch-definition-error">{errorMessage}</div>
+          )}
+          {showDefinitionList && (
+            <DefinitionList definitionList={definitionList} />
+          )}
+          {showDefinitionList && (
+            <div className="word-card-actions">
+              <button
+                className="manage-definitions"
+                onClick={this.handleManageClick}
+              >
+                Manage Definitions
+              </button>
+            </div>
+          )}
         </div>
-        <h3 className="title">{word}</h3>
-        {showDefinitionList && (
-          <DefinitionList definitionList={definitionList} />
-        )}
-        {isFetchingDefinition && (
-          <div className="fetching-definition">Searching for definition...</div>
-        )}
-        {showNotFound && (
-          <div className="definition-not-found">Definition not found</div>
-        )}
-        {hasError && (
-          <div className="fetch-definition-error">{errorMessage}</div>
-        )}
-      </div>
+      </Fragment>
     );
   }
 }
