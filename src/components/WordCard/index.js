@@ -98,27 +98,33 @@ class WordCard extends Component<Props, State> {
             .data()
             .sources.filter(source => source.enabled);
 
-          // TODO - Run fetches in parallel
-          enabledSources.forEach(async source => {
+          const sourceRequests = enabledSources.map(async source => {
             const fetchDefinition = firebase
               .functions()
               .httpsCallable(source.cloudFunctionId);
 
-            try {
-              const { data: definitionList } = await fetchDefinition({
-                word
-              });
-              // TODO - Return definition and move saveDefinition call to componentDidMount()
-              if (!isNull(definitionList)) {
-                this.saveDefinition(uid, wordId, definitionList);
-              }
-              this.setState({
-                isFetchingDefinition: false,
-                hasFetched: true
-              });
-            } catch (error) {
-              this.renderError();
-            }
+            const { data: definitionList } = await fetchDefinition({
+              word
+            });
+
+            return definitionList
+              ? {
+                  source,
+                  definitionList
+                }
+              : null;
+          });
+
+          const values = await Promise.all(sourceRequests);
+          const definitionList = values.filter(value => value !== null);
+
+          if (definitionList.length) {
+            this.saveDefinition(uid, wordId, definitionList);
+          }
+
+          this.setState({
+            isFetchingDefinition: false,
+            hasFetched: true
           });
         } else {
           this.renderError();
@@ -127,11 +133,7 @@ class WordCard extends Component<Props, State> {
     });
   };
 
-  saveDefinition = (
-    uid: string,
-    wordId: string,
-    definitionList: Array<DefinitionListType>
-  ) => {
+  saveDefinition = (uid: string, wordId: string, definitionList) => {
     const db = firebase.firestore();
 
     db.collection('users')
@@ -169,6 +171,8 @@ class WordCard extends Component<Props, State> {
         <ManageDefinitionsModal
           isOpen={showModal}
           handleModalClose={this.handleModalClose}
+          word={word}
+          definitionList={definitionList}
         />
 
         <div className="word-card">
