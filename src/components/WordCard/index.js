@@ -5,8 +5,9 @@ import isNull from 'lodash/isNull';
 
 import DefinitionList from '../DefinitionList';
 import ManageDefinitionsModal from '../ManageDefinitionsModal';
+import Card from '../Card';
 import { DefinitionList as DefinitionListType, ErrorType } from '../../types';
-import './styles.css';
+import styles from './styles.module.css';
 
 type Props = {
   firebaseId: string,
@@ -175,39 +176,29 @@ class WordCard extends Component<Props, State> {
           definitionList={definitionList}
         />
 
-        <div className="word-card">
-          <div
-            onClick={this.handleRemoveClick}
-            className="remove-icon-container"
-          >
-            <span className="icon">&times;</span>
+        <Card className={styles.wordCard}>
+          <div onClick={this.handleRemoveClick} className={styles.removeIcon}>
+            <span className={styles.icon}>&times;</span>
           </div>
-          <h3 className="title">{word}</h3>
+          <h3 className={styles.title}>{word}</h3>
           {isFetchingDefinition && (
-            <div className="fetching-definition">
-              Searching for definition...
-            </div>
+            <div className={styles.fetching}>Searching for definition...</div>
           )}
           {showNotFound && (
-            <div className="definition-not-found">Definition not found</div>
+            <div className={styles.notFound}>Definition not found</div>
           )}
-          {hasError && (
-            <div className="fetch-definition-error">{errorMessage}</div>
-          )}
+          {hasError && <div className={styles.error}>{errorMessage}</div>}
           {showDefinitionList && (
             <DefinitionList definitionList={definitionList} />
           )}
           {showDefinitionList && (
-            <div className="word-card-actions">
-              <button
-                className="manage-definitions"
-                onClick={this.handleManageClick}
-              >
+            <div className={styles.actions}>
+              <button onClick={this.handleManageClick}>
                 Manage Definitions
               </button>
             </div>
           )}
-        </div>
+        </Card>
       </Fragment>
     );
   }
