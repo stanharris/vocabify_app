@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import firebase from 'firebase/app';
 import Modal from 'react-modal';
 
 import Card from '../Card';
@@ -22,7 +21,8 @@ class ManageDefinitionsModal extends Component<Props> {
       <List title={item.source.name}>
         {item.definitionList.map(definitionItem => (
           <ListItem
-            name={definitionItem.definition}
+            title={definitionItem.definition}
+            subtitle={definitionItem.example}
             enabled={definitionItem.enabled}
           />
         ))}

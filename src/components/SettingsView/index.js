@@ -98,7 +98,7 @@ class SettingsView extends React.Component<{}, State> {
     this.state.definitionSources.map(item => (
       <ListItem
         id={item.id}
-        name={item.name}
+        title={item.name}
         enabled={item.enabled}
         onClick={this.toggleSource}
       />

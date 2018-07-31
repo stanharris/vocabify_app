@@ -1,4 +1,4 @@
-.list-item {
+.item {
   padding: 12px 8px 12px 0;
   border-top: solid #e5d2c7 1px;
   margin-top: -1px;
@@ -8,7 +8,7 @@
   display: flex;
 }
 
-.list-item:hover {
+.item:hover {
   background: #9d675b1a;
 }
 
@@ -19,7 +19,16 @@
   align-items: center;
 }
 
-.list-text {
+.content {
+  padding: 0 8px;
+}
+
+.content p {
+  margin: 0;
+  padding: 0;
+}
+
+.subtitle {
   padding-left: 8px;
   display: flex;
   align-items: center;
@@ -29,6 +38,6 @@
   color: green;
 }
 
-.active .list-text {
+.active .title {
   font-weight: 600;
 }
