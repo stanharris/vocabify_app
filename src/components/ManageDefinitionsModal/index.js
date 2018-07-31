@@ -4,46 +4,47 @@ import firebase from 'firebase/app';
 import Modal from 'react-modal';
 
 import Card from '../Card';
-import './styles.css';
+import List from '../List';
+import ListItem from '../ListItem';
+import styles from './styles.module.css';
 
 Modal.setAppElement('#root');
 
-// Modal.defaultStyles = {
-//   overlay: {
-//     position: 'fixed',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: 'rgba(157, 103, 91, 1)',
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center'
-//   },
-//   content: {
-//     border: '1px solid #ccc',
-//     background: '#fff',
-//     overflow: 'auto',
-//     WebkitOverflowScrolling: 'touch',
-//     borderRadius: '4px',
-//     outline: 'none',
-//     padding: '20px'
-//   }
-// };
+type Props = {
+  word: string,
+  isOpen: boolean,
+  handleModalClose: () => void
+};
 
-class ManageDefinitionsModal extends Component<{}> {
+class ManageDefinitionsModal extends Component<Props> {
+  renderDefinitions = () =>
+    this.props.definitionList.map(item => (
+      <List title={item.source.name}>
+        {item.definitionList.map(definitionItem => (
+          <ListItem
+            name={definitionItem.definition}
+            enabled={definitionItem.enabled}
+          />
+        ))}
+      </List>
+    ));
+
   render() {
+    const { definitionList } = this.props;
     return (
       <Modal
         isOpen={this.props.isOpen}
         onRequestClose={this.props.handleModalClose}
-        className="content"
+        className={styles.content}
         overlayClassName={{
-          base: 'overlay',
-          afterOpen: 'after-open'
+          base: styles.overlay,
+          afterOpen: styles['after-open']
         }}
       >
-        <Card>Modal content</Card>
+        <Card>
+          <h2 className={styles.title}>{this.props.word}</h2>
+          {definitionList && this.renderDefinitions()}
+        </Card>
       </Modal>
     );
   }
