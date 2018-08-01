@@ -5,7 +5,7 @@ import 'firebase/auth';
 import { NavLink } from 'react-router-dom';
 
 import cogIcon from '../../assets/img/cog.svg';
-import './styles.css';
+import styles from './styles.module.css';
 
 type State = {
   showSignIn: boolean
@@ -52,18 +52,18 @@ class AppHeader extends Component<{}, State> {
   render() {
     const { showSignIn } = this.state;
     return (
-      <header className="app-header">
-        <h1 className="header-logo">Vocabify</h1>
-        <div className="header-navigation">
+      <header className={styles.appHeader}>
+        <h1 className={styles.headerLogo}>Vocabify</h1>
+        <div className={styles.headerNavigation}>
           <NavLink exact to="/">
             <button>Words</button>
           </NavLink>
           <NavLink to="/review">
             <button>Review</button>
           </NavLink>
-          <div className="action-buttons">
+          <div className={styles.actionButtons}>
             <NavLink to="/settings">
-              <img src={cogIcon} className="settings-icon" alt="" />
+              <img src={cogIcon} className={styles.settingsIcon} alt="" />
             </NavLink>
             {showSignIn && (
               <button onClick={this.handleSignInClick}>Sign in</button>
