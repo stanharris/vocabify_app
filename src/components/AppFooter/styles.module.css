@@ -1,9 +1,9 @@
-.app-footer {
+.appFooter {
   padding: 16px;
 }
 
-.app-footer a,
-.app-footer span {
+.appFooter a,
+.appFooter span {
   font-size: 0.8rem;
   font-weight: 600;
   color: rgb(200, 200, 200);
@@ -13,8 +13,8 @@
   cursor: pointer;
 }
 
-.app-footer a:hover,
-.app-footer span:hover {
+.appFooter a:hover,
+.appFooter span:hover {
   color: #fff;
   text-decoration: underline;
 }
