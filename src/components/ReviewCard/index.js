@@ -6,7 +6,7 @@ import 'firebase/firestore';
 
 import DefinitionList from '../DefinitionList';
 import Word from '../../types';
-import './styles.css';
+import styles from './styles.module.css';
 
 type Props = {
   currentWord: Word
@@ -28,8 +28,7 @@ class ReviewCard extends Component<Props, State> {
         const { reviewInterval, id: wordId } = this.props.currentWord;
 
         const db = firebase.firestore();
-        db
-          .collection('users')
+        db.collection('users')
           .doc(uid)
           .collection('words')
           .doc(wordId)
@@ -63,38 +62,38 @@ class ReviewCard extends Component<Props, State> {
     const { showDefinition } = this.state;
     const { word, definitionList, reviewInterval } = currentWord;
     return (
-      <div className="review-card">
+      <div className={styles.reviewCard}>
         {!showDefinition && (
-          <div className="review-intro">
+          <div className={styles.reviewIntro}>
             <h3>{word}</h3>
-            <p className="reminder">
+            <p className={styles.reminder}>
               (Try to remember the definition before checking)
             </p>
             <button
               onClick={this.onCheckDefinitionClick}
-              className="check-definition"
+              className={styles.checkDefinition}
             >
               Check definition
             </button>
           </div>
         )}
         {showDefinition && (
-          <div className="view-definition">
+          <div className={styles.viewDefinition}>
             <h3>{word}</h3>
             <DefinitionList definitionList={definitionList} />
-            <p className="difficulty">
+            <p className={styles.difficulty}>
               How difficult did you find this definition?
             </p>
-            <div className="difficulty-action-buttons">
-              <div className="button-container easy">
+            <div className={styles.actionButtons}>
+              <div className={`${styles.buttonContainer} ${styles.easy}`}>
                 <button onClick={this.onEasyButtonClick}>Easy</button>
-                <span className="interval">
+                <span className={styles.interval}>
                   (Review in {reviewInterval * 2} days)
                 </span>
               </div>
-              <div className="button-container hard">
+              <div className={`${styles.buttonContainer} ${styles.hard}`}>
                 <button onClick={this.onHardButtonClick}>Hard</button>
-                <span className="interval">
+                <span className={styles.interval}>
                   (Review in {reviewInterval} days)
                 </span>
               </div>

@@ -1,4 +1,4 @@
-.no-words-card {
+.noWordsCard {
   box-sizing: border-box;
   background: #ffeade;
   border-radius: 2px;
@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.no-words-card img {
+.noWordsCard img {
   width: 176px;
   height: 176px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -18,7 +18,7 @@
   border-radius: 50%;
 }
 
-.no-words-card h2 {
+.noWordsCard h2 {
   font-size: 1.4rem;
   padding: 40px 0 16px;
   margin: 0;

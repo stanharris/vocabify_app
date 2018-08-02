@@ -1,18 +1,18 @@
-.app-header {
+.appHeader {
   display: flex;
 }
 
-.header-logo {
+.headerLogo {
   display: none;
 }
 
-.header-navigation {
+.headerNavigation {
   text-align: left;
   display: flex;
   flex: 1;
 }
 
-.header-navigation button {
+.headerNavigation button {
   background: 0;
   border: 0;
   transition: color 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -24,22 +24,22 @@
   cursor: pointer;
 }
 
-.header-navigation button:hover {
+.headerNavigation button:hover {
   color: white;
 }
 
-.header-navigation .active button {
+.headerNavigation .active button {
   color: white;
 }
 
-.action-buttons {
+.actionButtons {
   flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.settings-icon {
+.settingsIcon {
   transition: transform 0.2s, opacity 0.2s;
   color: #fff;
   fill: #fff;
@@ -48,14 +48,14 @@
   opacity: 0.8;
 }
 
-.settings-icon:hover,
-.active .settings-icon {
+.settingsIcon:hover,
+.active .settingsIcon {
   transform: rotate(60deg);
   opacity: 1;
 }
 
 @media (min-width: 700px) {
-  .header-logo {
+  .headerLogo {
     font-family: 'Rasa', serif;
     margin: 0;
     padding: 10px 24px;

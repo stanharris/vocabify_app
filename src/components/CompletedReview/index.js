@@ -2,12 +2,12 @@
 import React, { PureComponent } from 'react';
 
 import summerImg from '../../assets/img/summer.svg';
-import './styles.css';
+import styles from './styles.module.css';
 
 class CompletedReview extends PureComponent<{}> {
   render() {
     return (
-      <div className="no-words-card">
+      <div className={styles.noWordsCard}>
         <img src={summerImg} alt="" />
         <h2>
           All done for today{' '}

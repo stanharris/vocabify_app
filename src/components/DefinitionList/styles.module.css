@@ -1,32 +1,26 @@
-.definition-list {
+.definitionList {
   text-align: left;
 }
 
-.lexical-category {
-  margin: 16px 0 0;
-  font-style: italic;
-  font-family: "Rasa", serif;
-}
-
-.definition-item {
+.definitionItem {
   margin-top: 8px;
-  font-family: "Rasa", serif;
+  font-family: 'Rasa', serif;
 }
 
-.definition-index {
+.index {
   position: absolute;
   font-size: 1.1rem;
   font-weight: 600;
 }
 
-.definition-text {
+.definition {
   margin: 0;
   font-size: 1.1rem;
   padding-left: 24px;
   line-height: 1.4rem;
 }
 
-.definition-example {
+.example {
   font-size: 1.1rem;
   margin: 0;
   color: #626262;

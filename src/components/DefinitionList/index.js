@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import flatten from 'lodash/flatten';
 
 import { DefinitionList as DefinitionListType } from '../../types';
-import './styles.css';
+import styles from './styles.module.css';
 
 type Props = {
   definitionList: Array<DefinitionListType>
@@ -24,11 +24,11 @@ class DefinitionList extends PureComponent<Props> {
       const hasDefinition = Boolean(definition);
       const hasExample = Boolean(example);
       return (
-        <div className="definition-item">
-          <span className="definition-index">{index + 1}.</span>
-          {hasDefinition && <p className="definition-text">{definition}</p>}
+        <div className={styles.definitionItem}>
+          <span className={styles.index}>{index + 1}.</span>
+          {hasDefinition && <p className={styles.definition}>{definition}</p>}
           {hasExample && (
-            <p className="definition-example">&quot;{example}&quot;</p>
+            <p className={styles.example}>&quot;{example}&quot;</p>
           )}
         </div>
       );
@@ -39,7 +39,9 @@ class DefinitionList extends PureComponent<Props> {
     if (!definitionList) {
       return null;
     }
-    return <div className="definition-list">{this.renderDefinitionList()}</div>;
+    return (
+      <div className={styles.definitionList}>{this.renderDefinitionList()}</div>
+    );
   }
 }
 
