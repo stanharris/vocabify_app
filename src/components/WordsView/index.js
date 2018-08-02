@@ -1,82 +1,62 @@
 // @flow
 import React, { Component } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import {
+  firestoreConnect,
+  isLoaded,
+  isEmpty,
+  getVal
+} from 'react-redux-firebase';
 
 import WordCard from '../WordCard';
 import WordInput from '../WordInput';
 import Word from '../../types';
 import './styles.css';
 
-type State = {
-  words: Array<Word>,
-  isFetchingWords: boolean
-};
-
-class WordsView extends Component<{}, State> {
-  state = {
-    isFetchingWords: true,
-    words: []
-  };
-
-  componentDidMount() {
-    this.initWords();
-  }
-
-  initWords = () => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        const { uid } = user;
-        const db = firebase.firestore();
-        db.collection('users')
-          .doc(uid)
-          .collection('words')
-          .orderBy('dateAdded', 'desc')
-          .onSnapshot(snapshot => {
-            // Runs whenever words collection changes
-            const { docs } = snapshot;
-            const words = docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            this.setState({ words, isFetchingWords: false });
-          });
-      } else {
-        this.setState({
-          words: [],
-          isFetchingWords: false
-        });
-        // Unsubscribe listener?
-      }
+class WordsView extends Component<{}> {
+  renderWordsList = words => {
+    const wordsList = words.map(item => {
+      const { word, definitionList, id } = item;
+      return (
+        <WordCard
+          key={id}
+          firebaseId={id}
+          word={word}
+          definitionList={definitionList}
+        />
+      );
     });
-  };
-
-  renderWordsList = () => {
-    const { words } = this.state;
-    if (words && words.length) {
-      const wordsList = words.map(item => {
-        const { word, definitionList, id } = item;
-        return (
-          <WordCard
-            key={id}
-            firebaseId={id}
-            word={word}
-            definitionList={definitionList}
-          />
-        );
-      });
-      return <div className="word-list-container">{wordsList}</div>;
-    }
-    return <p className="words-status">No words added</p>;
+    return <div className="word-list-container">{wordsList}</div>;
   };
 
   render() {
-    const { isFetchingWords } = this.state;
+    const { words } = this.props;
+    const loadingText = <p className="words-status">Loading...</p>;
+    const emptyText = <p className="words-status">No words added</p>;
     return (
       <div>
         <WordInput />
-        {isFetchingWords && <p className="words-status">Loading...</p>}
-        {!isFetchingWords && this.renderWordsList()}
+        {!isLoaded(words)
+          ? loadingText
+          : isEmpty(words)
+            ? emptyText
+            : this.renderWordsList(words)}
       </div>
     );
   }
 }
 
-export default WordsView;
+export default compose(
+  // firestoreConnect(props => [
+  //   {
+  //     collection: 'users',
+  //     doc: props.uid,
+  //     queryParams: ['orderByKey']
+  //   }
+  // ]),
+  firestoreConnect(props => [`users/${props.uid}/words`]),
+  connect((state, props) => ({
+    words: getVal(state, `firestore/ordered/users/0/words`)
+  }))
+)(WordsView);
