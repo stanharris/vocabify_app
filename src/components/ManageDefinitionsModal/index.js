@@ -38,7 +38,7 @@ class ManageDefinitionsModal extends Component<Props> {
         className={styles.content}
         overlayClassName={{
           base: styles.overlay,
-          afterOpen: styles['after-open']
+          afterOpen: styles.afterOpen
         }}
       >
         <Card>
