@@ -55,14 +55,14 @@ class AppHeader extends Component<{}, State> {
       <header className={styles.appHeader}>
         <h1 className={styles.headerLogo}>Vocabify</h1>
         <div className={styles.headerNavigation}>
-          <NavLink exact to="/">
+          <NavLink exact to="/" activeClassName={styles.active}>
             <button>Words</button>
           </NavLink>
-          <NavLink to="/review">
+          <NavLink to="/review" activeClassName={styles.active}>
             <button>Review</button>
           </NavLink>
           <div className={styles.actionButtons}>
-            <NavLink to="/settings">
+            <NavLink to="/settings" activeClassName={styles.active}>
               <img src={cogIcon} className={styles.settingsIcon} alt="" />
             </NavLink>
             {showSignIn && (
