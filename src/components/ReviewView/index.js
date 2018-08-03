@@ -8,7 +8,7 @@ import 'firebase/firestore';
 import ReviewCard from '../ReviewCard';
 import CompletedReview from '../CompletedReview';
 import Word from '../../types';
-import './styles.css';
+import styles from './styles.module.css';
 
 type State = {
   words: Array<Word>
@@ -28,8 +28,7 @@ class ReviewView extends Component<{}, State> {
       if (user) {
         const { uid } = user;
         const db = firebase.firestore();
-        db
-          .collection('users')
+        db.collection('users')
           .doc(uid)
           .collection('words')
           .onSnapshot(snapshot => {
@@ -53,7 +52,7 @@ class ReviewView extends Component<{}, State> {
     const canReviewWords = Boolean(wordsPendingReview.length);
     const currentWord = wordsPendingReview[0];
     return (
-      <div className="review-view">
+      <div className={styles.reviewView}>
         {canReviewWords && (
           <ReviewCard key={currentWord.id} currentWord={currentWord} />
         )}

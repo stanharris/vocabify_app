@@ -1,4 +1,4 @@
-.review-view {
+.reviewView {
   box-sizing: border-box;
   max-width: 304px;
   width: calc(100% - 30px);
@@ -7,7 +7,7 @@
 }
 
 @media (min-width: 700px) {
-  .review-view {
+  .reviewView {
     margin-top: 32px;
     max-width: 512px;
   }

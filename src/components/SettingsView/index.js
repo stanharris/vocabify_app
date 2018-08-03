@@ -7,7 +7,7 @@ import Card from '../Card';
 import List from '../List';
 import ListItem from '../ListItem';
 import { DefinitionSource, ErrorType } from '../../types';
-import './styles.css';
+import styles from './styles.module.css';
 
 type State = {
   definitionSources: Array<DefinitionSource>,
@@ -108,13 +108,13 @@ class SettingsView extends React.Component<{}, State> {
     const { isLoading, error } = this.state;
     const { hasError, errorMessage } = error;
     return (
-      <div className="settings-view">
+      <div className={styles.settingsView}>
         <Card>
           <h1>Settings</h1>
           <List title="Definition sources" isLoading={isLoading}>
             {this.renderDefinitionSources()}
           </List>
-          {hasError && <p className="error">{errorMessage}</p>}
+          {hasError && <p className={styles.error}>{errorMessage}</p>}
         </Card>
       </div>
     );

@@ -1,4 +1,4 @@
-.settings-view {
+.settingsView {
   box-sizing: border-box;
   max-width: 304px;
   width: calc(100% - 30px);
@@ -6,7 +6,7 @@
   margin: 16px auto 0;
 }
 
-.settings-view h1 {
+.settingsView h1 {
   text-transform: capitalize;
   font-size: 1.3rem;
   margin: 0 0;
@@ -21,7 +21,7 @@
 }
 
 @media (min-width: 700px) {
-  .settings-view {
+  .settingsView {
     margin-top: 32px;
     max-width: 512px;
   }
