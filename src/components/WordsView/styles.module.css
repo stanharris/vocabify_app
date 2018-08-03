@@ -1,0 +1,18 @@
+.wordListContainer {
+  padding: 0 16px;
+}
+
+.wordsStatus {
+  color: rgb(220, 220, 220);
+  padding-top: 40px;
+}
+
+@media (min-width: 700px) {
+  .wordListContainer {
+    padding-top: 64px;
+  }
+
+  .wordListContainer .word-card:nth-child(n + 2) {
+    display: block;
+  }
+}

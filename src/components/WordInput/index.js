@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import addDays from 'date-fns/add_days';
 
-import './styles.css';
+import styles from './styles.module.css';
 
 const initialState = {
   wordValue: '',
@@ -122,9 +122,9 @@ class WordInput extends Component {
       errorMessage,
       isDuplicate
     } = this.state;
-    const errorElement = <p className="error-message">{errorMessage}</p>;
+    const errorElement = <p className={styles.errorMessage}>{errorMessage}</p>;
     return (
-      <div className="word-input-container">
+      <div className={styles.wordInputContainer}>
         <input
           placeholder="Add word..."
           type="text"
@@ -134,7 +134,7 @@ class WordInput extends Component {
           onKeyPress={this.handleKey}
         />
         <button
-          className="add-word-button"
+          className={styles.addWordButton}
           disabled={disableAddWordButton || isDuplicate}
           onClick={this.onAddWordClick}
         >

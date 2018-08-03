@@ -8,11 +8,12 @@ import {
   isEmpty,
   getVal
 } from 'react-redux-firebase';
+import orderBy from 'lodash/orderBy';
 
 import WordCard from '../WordCard';
 import WordInput from '../WordInput';
 import Word from '../../types';
-import './styles.css';
+import styles from './styles.module.css';
 
 type Props = {
   words: Array<Word>
@@ -31,13 +32,13 @@ class WordsView extends Component<Props> {
         />
       );
     });
-    return <div className="word-list-container">{wordsList}</div>;
+    return <div className={styles.wordListContainer}>{wordsList}</div>;
   };
 
   render() {
     const { words } = this.props;
-    const loadingText = <p className="words-status">Loading...</p>;
-    const emptyText = <p className="words-status">No words added</p>;
+    const loadingText = <p className={styles.wordsStatus}>Loading...</p>;
+    const emptyText = <p className={styles.wordsStatus}>No words added</p>;
     return (
       <div>
         <WordInput />
@@ -52,15 +53,12 @@ class WordsView extends Component<Props> {
 }
 
 export default compose(
-  // firestoreConnect(props => [
-  //   {
-  //     collection: 'users',
-  //     doc: props.uid,
-  //     queryParams: ['orderByKey']
-  //   }
-  // ]),
   firestoreConnect(props => [`users/${props.uid}/words`]),
-  connect((state, props) => ({
-    words: getVal(state, `firestore/ordered/users/0/words`)
-  }))
+  connect((state, props) => {
+    const words = getVal(state, `firestore/ordered/users/0/words`);
+    const sortedWords = orderBy(words, ['dateAdded'], ['desc']);
+    return {
+      words: sortedWords
+    };
+  })
 )(WordsView);

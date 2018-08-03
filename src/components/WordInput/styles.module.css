@@ -1,4 +1,4 @@
-.word-input-container {
+.wordInputContainer {
   display: inline-block;
   box-sizing: border-box;
   background: #ffeade;
@@ -12,7 +12,7 @@
   text-align: left;
 }
 
-.word-input-container input {
+.wordInputContainer input {
   background: none;
   border: 0;
   outline: 0;
@@ -23,15 +23,15 @@
   font-size: 1rem;
 }
 
-.word-input-container input::placeholder {
+.wordInputContainer input::placeholder {
   color: #626262;
 }
 
-.word-input-container input:invalid {
+.wordInputContainer input:invalid {
   box-shadow: none;
 }
 
-.add-word-button {
+.addWordButton {
   transition: opacity 0.2s, color 0.2s;
   background: 0;
   border: 0;
@@ -45,16 +45,16 @@
   height: 25px;
 }
 
-.add-word-button:hover {
+.addWordButton:hover {
   color: #6b5d2e;
 }
 
-.add-word-button:disabled {
+.addWordButton:disabled {
   opacity: 0;
   cursor: default;
 }
 
-.error-message {
+.errorMessage {
   color: #d32f2f;
   font-size: 0.8rem;
   line-height: 1.2rem;
@@ -64,7 +64,7 @@
 }
 
 @media (min-width: 700px) {
-  .word-input-container {
+  .wordInputContainer {
     margin-top: 32px;
   }
 }
