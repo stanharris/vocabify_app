@@ -58,6 +58,7 @@ class ReviewCard extends Component<Props, State> {
   };
 
   render() {
+    // TODO - Break down into smaller components
     const { currentWord } = this.props;
     const { showDefinition } = this.state;
     const { word, definitionList, reviewInterval } = currentWord;

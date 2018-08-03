@@ -1,4 +1,4 @@
-.review-card {
+.reviewCard {
   box-sizing: border-box;
   background: #ffeade;
   border-radius: 2px;
@@ -8,11 +8,11 @@
   position: relative;
 }
 
-.review-card .review-intro {
+.reviewIntro {
   text-align: center;
 }
 
-.review-card h3 {
+.reviewCard h3 {
   font-family: 'Rasa', serif;
   text-transform: capitalize;
   font-size: 2rem;
@@ -20,14 +20,14 @@
   font-weight: 400;
 }
 
-.review-intro .reminder {
+.reminder {
   color: rgba(0, 0, 0, 0.54);
   font-size: 0.8rem;
   font-weight: 600;
   margin-top: 30px;
 }
 
-.review-intro button.check-definition {
+.checkDefinition {
   transition: background 0.1s;
   background: #8c571a;
   border: none;
@@ -44,11 +44,11 @@
   margin: 32px auto 16px;
 }
 
-.review-intro button.check-definition:hover {
+.checkDefinition:hover {
   background: #a26621;
 }
 
-.review-card .view-definition {
+.viewDefinition {
   text-align: center;
 }
 
@@ -63,7 +63,7 @@
   padding-top: 40px;
 }
 
-.difficulty-action-buttons {
+.actionButtons {
   margin-top: 20px;
   font-family: 'Open Sans', sans-serif;
   overflow: visible;
@@ -71,7 +71,7 @@
   height: 70px;
 }
 
-.difficulty-action-buttons button {
+.actionButtons button {
   transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   background: 0;
   border: 0;
@@ -88,24 +88,24 @@
   color: #704616;
 }
 
-.difficulty-action-buttons button:hover {
+.actionButtons button:hover {
   background: rgba(157, 103, 91, 0.1);
 }
 
-.difficulty-action-buttons .button-container {
+.buttonContainer {
   text-align: center;
   position: absolute;
 }
 
-.difficulty-action-buttons .easy {
+.easy {
   left: 0;
 }
 
-.difficulty-action-buttons .hard {
+.hard {
   right: 0;
 }
 
-.difficulty-action-buttons .interval {
+.interval {
   display: block;
   font-size: 11px;
   color: rgba(0, 0, 0, 0.54);
