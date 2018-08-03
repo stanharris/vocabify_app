@@ -10,7 +10,11 @@ import ReviewView from './components/ReviewView';
 import SettingsView from './components/SettingsView';
 import './App.css';
 
-class App extends Component<{}> {
+type Props = {
+  uid: string
+};
+
+class App extends Component<Props> {
   render() {
     const { uid } = this.props;
     return (

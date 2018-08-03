@@ -14,7 +14,11 @@ import WordInput from '../WordInput';
 import Word from '../../types';
 import './styles.css';
 
-class WordsView extends Component<{}> {
+type Props = {
+  words: Array<Word>
+};
+
+class WordsView extends Component<Props> {
   renderWordsList = words => {
     const wordsList = words.map(item => {
       const { word, definitionList, id } = item;
